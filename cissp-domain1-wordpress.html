@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 1 – Security & Risk Management | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --border: #e2e8f0;
+  --border2: #cbd5e1;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --blue: #3b82f6;
+  --blue-bg: #eff6ff;
+  --blue-border: #bfdbfe;
+  --teal: #0d9488;
+  --teal-bg: #f0fdfa;
+  --teal-border: #99f6e4;
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fecaca;
+  --purple: #7c3aed;
+  --purple-bg: #f5f3ff;
+  --purple-border: #ddd6fe;
+  --gold: #b45309;
+  --gold-bg: #fefce8;
+  --gold-border: #fef08a;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+/* Header */
+.hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f2744 100%); border-radius: 16px; padding: 2rem 2rem 1.75rem; margin-bottom: 2rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(59,130,246,.12); }
+.hero::after { content: ''; position: absolute; bottom: -40px; left: 30%; width: 160px; height: 160px; border-radius: 50%; background: rgba(13,148,136,.08); }
+.hero-inner { position: relative; }
+.hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(59,130,246,.2); color: #93c5fd; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; border: 1px solid rgba(59,130,246,.3); }
+.hero h1 { font-size: clamp(22px, 4vw, 30px); font-weight: 600; color: #f8fafc; margin-bottom: 6px; }
+.hero p { color: #94a3b8; font-size: 14px; margin-bottom: 16px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-pill { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: #cbd5e1; font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+
+/* Tabs */
+.tabs-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2rem; box-shadow: var(--shadow); }
+.tabs-nav { display: flex; overflow-x: auto; border-bottom: 1px solid var(--border); background: var(--surface2); scrollbar-width: none; }
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn { flex-shrink: 0; background: none; border: none; padding: 12px 16px; font-size: 12px; font-weight: 600; color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; transition: all .2s; display: flex; align-items: center; gap: 6px; letter-spacing: .3px; }
+.tab-btn:hover { color: var(--text); background: rgba(0,0,0,.03); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--surface); }
+.tab-btn i { font-size: 15px; }
+.tab-panel { display: none; padding: 1.5rem; }
+.tab-panel.active { display: block; }
+
+/* Section */
+.section { margin-bottom: 1.75rem; }
+.section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text3); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* Cards grid */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; transition: all .2s; }
+.card:hover { border-color: var(--border2); box-shadow: var(--shadow-md); }
+.card.open { border-color: var(--blue-border); background: var(--blue-bg); }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.card.open .card-label { color: var(--blue); }
+.card-arrow { color: var(--text3); font-size: 16px; transition: transform .2s; flex-shrink: 0; }
+.card.open .card-arrow { transform: rotate(180deg); color: var(--blue); }
+.card-body { display: none; font-size: 13px; color: var(--text2); line-height: 1.65; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.card.open .card-body { display: block; }
+
+/* Formula bar */
+.formula-bar { background: #0f172a; border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.formula-item { display: flex; align-items: center; gap: 8px; }
+.formula-key { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #fbbf24; }
+.formula-eq { font-size: 11px; color: #64748b; }
+.formula-val { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #e2e8f0; }
+
+/* RMF flow */
+.rmf-flow { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; align-items: center; }
+.rmf-step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 10px; font-size: 11px; font-weight: 600; color: var(--blue); display: flex; flex-direction: column; align-items: center; min-width: 78px; text-align: center; }
+.rmf-step span { font-size: 9px; font-weight: 400; color: var(--text3); margin-top: 2px; }
+.rmf-arrow { color: var(--text3); font-size: 13px; }
+
+/* RMM scale */
+.rmm-scale { display: flex; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 8px; }
+.rmm-level { flex: 1; text-align: center; padding: 7px 4px; font-size: 10px; font-weight: 600; color: #fff; }
+
+/* Classification tiers */
+.cls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.cls-cell { border-radius: var(--radius); padding: 14px; border: 1px solid; text-align: center; }
+.cls-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.cls-desc { font-size: 11px; line-height: 1.5; }
+
+/* Role grid */
+.role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.role-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+.role-icon { font-size: 22px; color: var(--text3); margin-bottom: 8px; }
+.role-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.role-items { font-size: 11px; color: var(--text2); line-height: 1.8; list-style: none; }
+.role-items li::before { content: '› '; color: var(--text3); }
+
+/* Controls matrix */
+.matrix-wrap { overflow-x: auto; margin-bottom: 12px; }
+.matrix-table { border-collapse: collapse; min-width: 560px; width: 100%; font-size: 11px; }
+.matrix-table th { padding: 7px 8px; background: var(--surface2); border: 1px solid var(--border); font-size: 10px; font-weight: 600; color: var(--text2); white-space: nowrap; text-align: center; }
+.matrix-table th:first-child { text-align: left; min-width: 110px; }
+.matrix-table td { padding: 8px; border: 1px solid var(--border); text-align: center; cursor: pointer; transition: all .15s; font-size: 10px; color: var(--text3); }
+.matrix-table td:first-child { font-weight: 600; color: var(--text); text-align: left; background: var(--surface2); font-size: 11px; }
+.matrix-table td:not(:first-child):hover { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-border); }
+.matrix-hint { font-size: 11px; color: var(--text3); }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 14px; }
+.tl-dot { position: absolute; left: -24px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); border: 2px solid var(--surface); box-shadow: 0 0 0 2px var(--blue-border); }
+.tl-year { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 2px; }
+.tl-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.tl-desc { font-size: 12px; color: var(--text2); line-height: 1.55; }
+
+/* Social engineering */
+.se-principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.se-pill { background: var(--purple-bg); border: 1px solid var(--purple-border); border-radius: var(--radius); padding: 10px 12px; font-size: 12px; font-weight: 600; color: var(--purple); }
+.se-pill span { display: block; font-size: 11px; font-weight: 400; color: var(--text2); margin-top: 3px; line-height: 1.45; }
+
+/* Attack types list */
+.attack-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+.attack-item { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 12px; }
+.attack-name { font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.attack-def { color: var(--text2); line-height: 1.5; }
+
+/* Info / warn boxes */
+.info-box { background: var(--blue-bg); border: 1px solid var(--blue-border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12.5px; color: #1e40af; line-height: 1.6; margin-bottom: 12px; display: flex; gap: 8px; align-items: flex-start; }
+.warn-box { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12.5px; color: #92400e; line-height: 1.6; margin-bottom: 12px; display: flex; gap: 8px; align-items: flex-start; }
+.danger-box { background: var(--red-bg); border: 1px solid var(--red-border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12.5px; color: #991b1b; line-height: 1.6; margin-bottom: 12px; display: flex; gap: 8px; align-items: flex-start; }
+.box-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* Risk response */
+.response-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.response-card { border-radius: var(--radius); padding: 12px 14px; border: 1px solid; }
+
+/* Footer */
+.page-footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); }
+.page-footer a { color: var(--blue); text-decoration: none; }
+.page-footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge"><i class="ti ti-shield-check"></i> CISSP · Domain 1</div>
+      <h1>Security &amp; Risk Management</h1>
+      <p>Risk terminology · Quantitative analysis · Controls · Personnel · Social engineering · Laws &amp; ethics</p>
+      <div class="hero-pills">
+        <span class="hero-pill">Risk Formulas</span>
+        <span class="hero-pill">NIST RMF</span>
+        <span class="hero-pill">Controls Matrix</span>
+        <span class="hero-pill">Social Engineering</span>
+        <span class="hero-pill">Cyber &amp; Privacy Laws</span>
+        <span class="hero-pill">ISC² Ethics</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('risk',this)"><i class="ti ti-chart-bar"></i> Risk Management</button>
+      <button class="tab-btn" onclick="switchTab('controls',this)"><i class="ti ti-shield"></i> Security Controls</button>
+      <button class="tab-btn" onclick="switchTab('personnel',this)"><i class="ti ti-users"></i> Personnel</button>
+      <button class="tab-btn" onclick="switchTab('social',this)"><i class="ti ti-masks-theater"></i> Social Engineering</button>
+      <button class="tab-btn" onclick="switchTab('laws',this)"><i class="ti ti-gavel"></i> Laws &amp; Ethics</button>
+    </div>
+
+    <!-- RISK MANAGEMENT -->
+    <div id="tab-risk" class="tab-panel active">
+
+      <div class="section">
+        <div class="section-title">Core risk formulas</div>
+        <div class="formula-bar">
+          <div class="formula-item"><span class="formula-key">SLE</span><span class="formula-eq">=</span><span class="formula-val">AV × EF</span></div>
+          <div class="formula-item"><span class="formula-key">ALE</span><span class="formula-eq">=</span><span class="formula-val">SLE × ARO</span></div>
+          <div class="formula-item"><span class="formula-key">Value of Safeguard</span><span class="formula-eq">=</span><span class="formula-val">(ALE_pre – ALE_post) – ACS</span></div>
+          <div class="formula-item"><span class="formula-key">Total Risk</span><span class="formula-eq">=</span><span class="formula-val">AV × Vulnerability × Threats</span></div>
+          <div class="formula-item"><span class="formula-key">Residual Risk</span><span class="formula-eq">=</span><span class="formula-val">Total Risk – Controls Gap</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Risk terminology — tap any card to expand</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Asset</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Tangible or intangible item of value. Valued in monetary ($) or non-monetary terms (time, productivity, R&D). All assets must be identified, valued, and classified before controls can be applied.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Threat</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Any potential action or inaction that can cause damage to an asset. Threat Agents intentionally exploit vulnerabilities. Threat Events may be accidental or intentional.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Vulnerability</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Weakness in an asset or absence/weakness in a safeguard. Exposure Factor (EF) = percentage of asset lost in an incident. Every event of exposure is a risk.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Risk</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Risk = Threat × Vulnerability. Risk = Probability of harm × Severity of harm. Possibility that a threat will exploit a vulnerability. Risk management is primarily the responsibility of upper management.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Exposure</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Possibility that a vulnerability can or will be exploited. Threat vectors include: email, web, external drives, WiFi, physical, mobile, cloud, social media, supply chain.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Breach</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Security being bypassed or thwarted by a Threat Agent. An Attack is an intentional attempted exploitation of a vulnerability. A breach may or may not result in successful data compromise.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Risk Appetite</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Total amount of risk the organisation is willing to accept overall. Risk Capacity = maximum risk the org can absorb. Risk Tolerance = per-individual-asset acceptable amount/level of risk.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Inherent vs Residual Risk</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Inherent/Initial Risk = natural native risk prior to any management efforts. Residual Risk (which management chooses to accept) = Total Risk – Controls Gap. Control Risk is introduced by countermeasures.</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Risk response strategies</div>
+        <div class="response-grid">
+          <div class="response-card" style="background:var(--teal-bg);border-color:var(--teal-border)"><div style="font-weight:600;color:var(--teal);font-size:13px;margin-bottom:4px;">Mitigation / Reduction</div><div style="font-size:12px;color:var(--text2)">Apply a safeguard, control or countermeasure to reduce the risk to an acceptable level.</div></div>
+          <div class="response-card" style="background:var(--blue-bg);border-color:var(--blue-border)"><div style="font-weight:600;color:var(--blue);font-size:13px;margin-bottom:4px;">Assignment / Transfer</div><div style="font-size:12px;color:var(--text2)">Insurance or outsourcing — shift the financial liability of risk to a third party.</div></div>
+          <div class="response-card" style="background:var(--purple-bg);border-color:var(--purple-border)"><div style="font-weight:600;color:var(--purple);font-size:13px;margin-bottom:4px;">Deterrence</div><div style="font-size:12px;color:var(--text2)">Auditing, cameras, banners, guards — discourage attacks before they occur.</div></div>
+          <div class="response-card" style="background:var(--amber-bg);border-color:var(--amber-border)"><div style="font-weight:600;color:var(--amber);font-size:13px;margin-bottom:4px;">Avoidance</div><div style="font-size:12px;color:var(--text2)">Choose an alternate approach entirely — e.g. fly instead of drive to eliminate a specific risk.</div></div>
+          <div class="response-card" style="background:var(--surface2);border-color:var(--border)"><div style="font-weight:600;color:var(--text);font-size:13px;margin-bottom:4px;">Acceptance</div><div style="font-size:12px;color:var(--text2)">Cost of safeguard outweighs the risk. Must be formally documented and signed. Becomes Residual Risk.</div></div>
+          <div class="response-card" style="background:var(--red-bg);border-color:var(--red-border)"><div style="font-weight:600;color:var(--red);font-size:13px;margin-bottom:4px;">⚠ Reject / Ignore</div><div style="font-size:12px;color:#991b1b">Considered NEGLIGENCE in court. Never an acceptable risk management strategy.</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Risk frameworks</div>
+        <div style="margin-bottom:14px;">
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px;">NIST RMF SP 800-37 Rev.2 — 7 Steps</div>
+          <div class="rmf-flow">
+            <div class="rmf-step" style="border-color:var(--blue-border);color:var(--blue);">Prepare<span>Org context</span></div>
+            <span class="rmf-arrow">›</span>
+            <div class="rmf-step" style="border-color:var(--teal-border);color:var(--teal);">Categorise<span>Impact level</span></div>
+            <span class="rmf-arrow">›</span>
+            <div class="rmf-step" style="border-color:var(--amber-border);color:var(--amber);">Select<span>Baseline ctrls</span></div>
+            <span class="rmf-arrow">›</span>
+            <div class="rmf-step" style="border-color:var(--purple-border);color:var(--purple);">Implement<span>Deploy ctrls</span></div>
+            <span class="rmf-arrow">›</span>
+            <div class="rmf-step" style="border-color:var(--blue-border);color:var(--blue);">Assess<span>Verify eff.</span></div>
+            <span class="rmf-arrow">›</span>
+            <div class="rmf-step" style="border-color:var(--teal-border);color:var(--teal);">Authorise<span>ATO decision</span></div>
+            <span class="rmf-arrow">›</span>
+            <div class="rmf-step" style="border-color:var(--amber-border);color:var(--amber);">Monitor<span>Continuous</span></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px;">Risk Maturity Model (RMM)</div>
+          <div class="rmm-scale">
+            <div class="rmm-level" style="background:#94a3b8;">Adhoc</div>
+            <div class="rmm-level" style="background:#60a5fa;">Preliminary</div>
+            <div class="rmm-level" style="background:#3b82f6;">Defined</div>
+            <div class="rmm-level" style="background:#1d4ed8;">Integrated</div>
+            <div class="rmm-level" style="background:#1e3a8a;">Optimised</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECURITY CONTROLS -->
+    <div id="tab-controls" class="tab-panel">
+      <div class="section">
+        <div class="section-title">Controls matrix — hover any cell for example</div>
+        <div class="matrix-wrap">
+          <table class="matrix-table" id="ctrlMatrix">
+            <thead>
+              <tr>
+                <th>Form \ Type</th>
+                <th>Preventive</th><th>Deterrent</th><th>Detective</th>
+                <th>Compensating</th><th>Corrective</th><th>Recovery</th><th>Directive</th>
+              </tr>
+            </thead>
+            <tbody id="matrixBody"></tbody>
+          </table>
+        </div>
+        <p class="matrix-hint">Hover any cell to see a real-world example control.</p>
+      </div>
+      <div class="section">
+        <div class="section-title">Control types explained</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Preventive</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Deployed to thwart or stop unwanted/unauthorised activity before it occurs. Removes or reduces a vulnerability. Examples: Separation of duties, Job rotation, DLP, Pen testing, auditing.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Deterrent</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Deployed to discourage security policy violations. Does not prevent but discourages. Examples: Guards, cameras, warning banners, disciplinary policies.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Detective</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Deployed to discover or detect unwanted/unauthorised activity after it occurs. Examples: Guards, job rotation, mandatory vacations, audit trails, IDS/IPS, SIEM.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Compensating</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Alternative control when the primary control is not feasible. Provides an alternate means to satisfy the requirement. Examples: DRP, Backup systems, clipping levels.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Corrective</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Modifies environment to return system to normal after an incident. Examples: Backup and restore, reboot, antivirus quarantine, patching.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Recovery</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Extension of Corrective controls with more advanced/complex abilities. Examples: Fault-tolerant drives, Hot/warm/cold sites, RAID, full system redundancy.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Directive</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Security policies, escape routes, loose attempt monitoring, supervision, guidance from security guard. Directs people in compliant behaviours.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">SCA — Security Control Assessment</div>
+        <div class="info-box"><i class="ti ti-info-circle box-icon"></i>If a security control's benefit cannot be quantified, evaluated, or compared — it DOES NOT actually provide security.</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">SCA definition</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Formal evaluation of a security infrastructure's individual mechanism against a baseline of reliability expectations. Generally implemented by federal agencies based on NIST 800-53.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">SCA Goal 1</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Ensure the effectiveness of the security mechanism deployed in the environment.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">SCA Goal 2</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Evaluate the quality and thoroughness of the Risk Management (RM) process employed.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">SCA Goal 3</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Produce a report of the relative strength and weaknesses of the deployed security infrastructure.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONNEL -->
+    <div id="tab-personnel" class="tab-panel">
+      <div class="section">
+        <div class="section-title">Personnel security roles</div>
+        <div class="role-grid">
+          <div class="role-card"><div class="role-icon"><i class="ti ti-briefcase"></i></div><div class="role-name">Hiring</div><ul class="role-items"><li>Create JD / PD</li><li>Job classification</li><li>Background checks</li><li>Social media review</li><li>Standardised interviews</li><li>Legally defensible decisions</li></ul></div>
+          <div class="role-card"><div class="role-icon"><i class="ti ti-door-enter"></i></div><div class="role-name">Onboarding</div><ul class="role-items"><li>Grant IAM / least privilege</li><li>NDA signing</li><li>Acceptable Use Policy</li><li>Employment agreements</li><li>Security awareness training</li></ul></div>
+          <div class="role-card"><div class="role-icon"><i class="ti ti-eye"></i></div><div class="role-name">Employee Oversight</div><ul class="role-items"><li>Mandatory vacations</li><li>Separation of duties</li><li>Job rotation</li><li>Cross-training</li><li>UBA / UEBA monitoring</li></ul></div>
+          <div class="role-card"><div class="role-icon"><i class="ti ti-door-exit"></i></div><div class="role-name">Offboarding</div><ul class="role-items"><li>Disable account first</li><li>Delete after interval</li><li>Exit interview</li><li>Return assets</li><li>NDA reminder</li></ul></div>
+          <div class="role-card"><div class="role-icon"><i class="ti ti-building-community"></i></div><div class="role-name">Third-Party Risk</div><ul class="role-items"><li>VMS — Vendor Mgmt System</li><li>SLAs with penalties</li><li>Risk mgmt governing body</li><li>Multiparty risk awareness</li><li>PII obligations</li></ul></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Key concepts</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Mandatory Vacations</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Used as a peer review process. Peer uses the SAME ACCOUNT of the person on vacation. Common in the financial industry. Purpose: to detect abuse, fraud or negligence. Forces dependency exposure.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Separation of Duties</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">No single person controls a critical process end-to-end. Prevents fraud and errors by requiring collusion between multiple parties to subvert controls. Essential in high-risk environments.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Collusion</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Several people work together to perpetrate a crime. Countered by separation of duties, job rotation, and cross-training. People are the weakest link in the security chain but the key asset if trained.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">UBA / UEBA</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">User Behaviour Analytics / User & Entity Behaviour Analysis. Analyses the behaviour of users, subjects, visitors, and entities for specific security goals such as insider threat detection.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Principle of Least Privilege</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Minimum amount of access necessary for the job. IAM accounts should be provisioned based on Job Description (JD) and responsibilities. Regular review and audit of JD required.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">CISO / CSO role</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Enforces administrative controls and compliance/policy requirements. Reports to senior management. Responsible for organisation-wide security posture and strategy.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIAL ENGINEERING -->
+    <div id="tab-social" class="tab-panel">
+      <div class="section">
+        <div class="section-title">The 7 core principles</div>
+        <div class="se-principles">
+          <div class="se-pill">Authority<span>Attacker claims valid internal/external authority to compel compliance</span></div>
+          <div class="se-pill">Intimidation<span>Uses threats, confidence or harm to force a quick response</span></div>
+          <div class="se-pill">Consensus<span>Exploits tendency to mimic what others are doing</span></div>
+          <div class="se-pill">Scarcity<span>Creates artificial urgency — limited time / limited availability</span></div>
+          <div class="se-pill">Urgency<span>Forces quick action before victim can carefully consider</span></div>
+          <div class="se-pill">Familiarity<span>Exploits natural trust in what feels familiar or known</span></div>
+          <div class="se-pill">Trust<span>Develops relationship with victim over time before exploiting</span></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Attack types</div>
+        <div class="attack-list">
+          <div class="attack-item"><div class="attack-name">Phishing</div><div class="attack-def">Deceptive email to steal credentials or install malware</div></div>
+          <div class="attack-item"><div class="attack-name">Spear Phishing</div><div class="attack-def">Phishing crafted to a specific group or individual</div></div>
+          <div class="attack-item"><div class="attack-name">Whaling</div><div class="attack-def">Targets CEO/C-level execs with detailed research and planning. BEC/CEO Fraud</div></div>
+          <div class="attack-item"><div class="attack-name">Vishing</div><div class="attack-def">Voice-based phishing. SpIT = Spam over Internet Telephony</div></div>
+          <div class="attack-item"><div class="attack-name">Smishing</div><div class="attack-def">SMS phishing. SPIM = Spam over Instant Messaging</div></div>
+          <div class="attack-item"><div class="attack-name">Tailgating</div><div class="attack-def">Unauthorised physical access without victim's knowledge</div></div>
+          <div class="attack-item"><div class="attack-name">Piggybacking</div><div class="attack-def">Like tailgating but victim is tricked into giving consent</div></div>
+          <div class="attack-item"><div class="attack-name">Dumpster Diving</div><div class="attack-def">Gathering intelligence from discarded materials</div></div>
+          <div class="attack-item"><div class="attack-name">Shoulder Surfing</div><div class="attack-def">Visually observing credentials or sensitive info</div></div>
+          <div class="attack-item"><div class="attack-name">Baiting</div><div class="attack-def">Drops infected USB drives hoping someone uses them</div></div>
+          <div class="attack-item"><div class="attack-name">Typosquatting</div><div class="attack-def">Mistyped URLs redirect to malicious sites</div></div>
+          <div class="attack-item"><div class="attack-name">Doxing</div><div class="attack-def">Collects and publicly releases info to damage the target's reputation</div></div>
+          <div class="attack-item"><div class="attack-name">Influence Campaigns</div><div class="attack-def">Hybrid warfare — manipulates public opinion via social media</div></div>
+          <div class="attack-item"><div class="attack-name">Drive-by Downloads</div><div class="attack-def">Malware installs silently when user visits a compromised website</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Email countermeasures</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">SPF</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Sender Policy Framework — verifies that the sending mail server is authorised by the domain's DNS records to send email on its behalf. Prevents domain spoofing.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">DKIM</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">DomainKeys Identified Mail — cryptographic signature in email headers that verifies the email was not altered in transit and came from the stated domain.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">DMARC</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Domain Message Authentication Reporting and Conformance — builds on SPF and DKIM to filter spoofed messages and generate reports on email authentication failures.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Awareness training</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Three levels: 1. Awareness — brings security to forefront. 2. Training — targeted to job function groups. 3. Education — deep learning beyond immediate work needs. Security Champions encourage peers.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAWS & ETHICS -->
+    <div id="tab-laws" class="tab-panel">
+      <div class="section">
+        <div class="section-title">ISC² Code of Ethics</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Preamble</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Safety and welfare of society requires adherence to highest ethical standards. Strict adherence is a condition of CISSP certification. Act honorably, honestly, justly, responsibly, and legally.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Canon 1</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Protect Society, the Common Good, necessary public trust and confidence, and the Infrastructure. Promote and preserve public trust. Discourage unsafe practices.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Canon 2</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Act honorably, honestly, justly, responsibly and legally. Tell the truth. Observe all contracts and agreements. Give prudent advice — avoid unnecessary alarm or unwarranted comfort.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Canon 3</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Provide diligent and competent service to principals. Render only services for which you are fully competent. Respect client trust and privileges granted to you.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Canon 4</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Advance and protect the profession. Maintain competence; keep skills and knowledge current. Sponsor those best qualified for professional advancement.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">RFC 1087 (Jan 1989)</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Defines unethical internet behaviour — Internet Activities Board (IAB): 1. Unauthorised access 2. Misuse of internet 3. Wastes resources 4. Destroys integrity 5. Compromises privacy.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">US cyber laws chronology</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1984 — CCCA</div><div class="tl-name">Comprehensive Crime Control Act</div><div class="tl-desc">First federal computer crime law. Established basis for computer crime prosecution.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1986 — CFAA</div><div class="tl-name">Computer Fraud and Abuse Act</div><div class="tl-desc">Outlawed malicious code. Covered Federal Interest Computers. Imprisonment regardless of intent.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1991 — Federal Sentencing Guidelines</div><div class="tl-name">Prudent Man Rule</div><div class="tl-desc">Minimise punishment by demonstrating due diligence. 3 burdens of proof for negligence.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1994 — CAAA</div><div class="tl-name">Computer Abuse Amendments Act</div><div class="tl-desc">Expanded CFAA to international commerce. Civil action enabled for victims.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1996 — NIIPA</div><div class="tl-name">National Information Infrastructure Protection Act</div><div class="tl-desc">Extended protections to railroads, gas pipelines, power grids, and telecom circuits.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2002 — FISMA</div><div class="tl-name">Federal Information Security Management Act</div><div class="tl-desc">NIST standards mandated for federal information systems.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2010 — RMF</div><div class="tl-name">NIST Risk Management Framework</div><div class="tl-desc">SP 800-37 established. NIST 800-53 for federal, 800-171 for non-federal.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2014 — CEA / NCPA / FISMA 2014</div><div class="tl-name">Cybersecurity Enhancement + FISMA Modernisation</div><div class="tl-desc">DHS integration centre. NIST CSF (voluntary). Centralised federal cybersecurity responsibility.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Privacy laws chronology</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">1791 — 4th Amendment</div><div class="tl-name">"Every man's house is his castle"</div><div class="tl-desc">Constitutional foundation of US privacy rights.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">1974 — Privacy Act</div><div class="tl-name">Federal data disclosure law</div><div class="tl-desc">Controls FED's ability to disclose information. Written consent required. Formal access process.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">1986 — ECPA</div><div class="tl-name">Electronic Communications Privacy Act</div><div class="tl-desc">Crime to invade electronic privacy. $500 and 5 years prison for mobile wiretapping.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">1996 — HIPAA</div><div class="tl-name">Health Insurance Portability and Accountability Act</div><div class="tl-desc">Protects health information for insurance and health maintenance organisations.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">1998 — COPPA / ITADA</div><div class="tl-name">Children's Online Privacy + Identity Theft Act</div><div class="tl-desc">Parental consent for under-13s. Identity theft made a crime — up to 15 years / $250K fine.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">1999 — GLBA</div><div class="tl-name">Gramm-Leach-Bliley Act</div><div class="tl-desc">Relaxed barriers between banks, insurance, and credit providers.</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--purple)"></div><div class="tl-year">2018 / 2020 — GDPR / CCPA</div><div class="tl-name">EU GDPR + California Consumer Privacy Act</div><div class="tl-desc">GDPR in effect 2018. CCPA modelled on GDPR, in effect 2020. Privacy Shield invalidated 2020 (Schrems II).</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tabs-wrap -->
+
+  <div class="page-footer">
+    <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 1 — Security &amp; Risk Management</p>
+    <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All formulas and frameworks subject to exam version updates.</p>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleCard(el) { el.classList.toggle('open'); }
+
+// Controls matrix data
+var forms = ['Administrative','Technical/Logical','Physical'];
+var types = ['Preventive','Deterrent','Detective','Compensating','Corrective','Recovery','Directive'];
+var examples = {
+  'Administrative-Preventive':'Security policies, background checks, separation of duties',
+  'Administrative-Deterrent':'Warning banners, disciplinary policy notices',
+  'Administrative-Detective':'Mandatory vacations, job rotation, audits',
+  'Administrative-Compensating':'Alternate approval workflows',
+  'Administrative-Corrective':'Incident response procedures',
+  'Administrative-Recovery':'BCP/DRP documentation, vital records program',
+  'Administrative-Directive':'Security awareness training, directives',
+  'Technical/Logical-Preventive':'Firewalls, encryption, MFA, ACLs',
+  'Technical/Logical-Deterrent':'Login warning banners, honeypots',
+  'Technical/Logical-Detective':'IDS/IPS, SIEM, audit logs, DLP',
+  'Technical/Logical-Compensating':'Read-only access as fallback control',
+  'Technical/Logical-Corrective':'Antivirus quarantine, automated patching',
+  'Technical/Logical-Recovery':'Fault-tolerant systems, RAID, hot standby',
+  'Technical/Logical-Directive':'Access control rules, group policies',
+  'Physical-Preventive':'Locks, mantraps, badge access systems',
+  'Physical-Deterrent':'Uniformed guards, CCTV cameras, fences',
+  'Physical-Detective':'Motion sensors, security cameras, alarms',
+  'Physical-Compensating':'Secondary exit monitoring station',
+  'Physical-Corrective':'Fire suppression systems, emergency exits',
+  'Physical-Recovery':'Hot/warm/cold alternate sites, mobile facilities',
+  'Physical-Directive':'Posted escape routes, safety procedures'
+};
+var tbody = document.getElementById('matrixBody');
+forms.forEach(function(f) {
+  var tr = document.createElement('tr');
+  var td0 = document.createElement('td'); td0.textContent = f; tr.appendChild(td0);
+  types.forEach(function(t) {
+    var td = document.createElement('td');
+    td.textContent = '●';
+    td.title = examples[f+'-'+t] || '';
+    td.addEventListener('mouseenter', function() { this.textContent = examples[f+'-'+t] || '—'; });
+    td.addEventListener('mouseleave', function() { this.textContent = '●'; });
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
