@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 7 – Security Operations | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#f8fafc;--sf:#fff;--s2:#f1f5f9;
+  --bd:#e2e8f0;--bd2:#cbd5e1;
+  --tx:#0f172a;--t2:#475569;--t3:#94a3b8;
+  --sl:#0369a1;--sl-bg:#f0f9ff;--sl-bd:#bae6fd;
+  --bl:#3b82f6;--bl-bg:#eff6ff;--bl-bd:#bfdbfe;
+  --tl:#0d9488;--tl-bg:#f0fdfa;--tl-bd:#99f6e4;
+  --am:#d97706;--am-bg:#fffbeb;--am-bd:#fde68a;
+  --rd:#dc2626;--rd-bg:#fef2f2;--rd-bd:#fecaca;
+  --pu:#7c3aed;--pu-bg:#f5f3ff;--pu-bd:#ddd6fe;
+  --gn:#16a34a;--gn-bg:#f0fdf4;--gn-bd:#bbf7d0;
+  --r:10px;--rs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.06);--shm:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.6;}
+.pw{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.hero{background:linear-gradient(135deg,#172554 0%,#1e3a8a 55%,#0f1f4a 100%);border-radius:16px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-40px;width:210px;height:210px;border-radius:50%;background:rgba(59,130,246,.18);}
+.hero::after{content:'';position:absolute;bottom:-40px;left:30%;width:170px;height:170px;border-radius:50%;background:rgba(13,148,136,.1);}
+.hi{position:relative;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,.25);color:#93c5fd;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(59,130,246,.35);}
+.hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;color:#f8fafc;margin-bottom:6px;}
+.hero p{color:#94a3b8;font-size:14px;margin-bottom:16px;}
+.hpills{display:flex;flex-wrap:wrap;gap:8px;}
+.hpill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:11px;padding:3px 10px;border-radius:20px;}
+.tw{background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh);}
+.tn{display:flex;overflow-x:auto;border-bottom:1px solid var(--bd);background:var(--s2);scrollbar-width:none;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;background:none;border:none;padding:12px 16px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.tb:hover{color:var(--tx);background:rgba(0,0,0,.03);}
+.tb.active{color:var(--sl);border-bottom-color:var(--sl);background:var(--sf);}
+.tb i{font-size:15px;}
+.tp{display:none;padding:1.5rem;}
+.tp.active{display:block;}
+.sec{margin-bottom:1.75rem;}
+.sh{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sh::after{content:'';flex:1;height:1px;background:var(--bd);}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;}
+.card:hover{border-color:var(--bd2);box-shadow:var(--shm);}
+.card.open{border-color:var(--sl-bd);background:var(--sl-bg);}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.cl{font-size:13px;font-weight:600;color:var(--tx);}
+.card.open .cl{color:var(--sl);}
+.ca{color:var(--t3);font-size:16px;transition:transform .2s;flex-shrink:0;}
+.card.open .ca{transform:rotate(180deg);color:var(--sl);}
+.cb{display:none;font-size:13px;color:var(--t2);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
+.card.open .cb{display:block;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.tbl th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--t2);border-bottom:2px solid var(--bd);background:var(--s2);}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top;line-height:1.55;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--s2);}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;}
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:14px;}
+.kv{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;}
+.kv-k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:4px;}
+.kv-v{font-size:13px;color:var(--tx);font-weight:500;}
+.kv-n{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.4;}
+.ibox{background:var(--bl-bg);border:1px solid var(--bl-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#1e40af;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.wbox{background:var(--am-bg);border:1px solid var(--am-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.tbox{background:var(--gn-bg);border:1px solid var(--gn-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#14532d;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.rbox{background:var(--rd-bg);border:1px solid var(--rd-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#991b1b;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.bi{font-size:16px;flex-shrink:0;margin-top:1px;}
+.flow{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.fs{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;}
+.fn{font-size:11px;font-weight:700;color:var(--sl);min-width:22px;flex-shrink:0;margin-top:1px;}
+.ft{font-size:12.5px;color:var(--tx);line-height:1.55;}
+.ft strong{font-weight:600;}
+.site-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.site-card{border-radius:var(--r);padding:14px;border:1px solid;}
+.site-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.site-sub{font-size:11px;margin-bottom:8px;}
+.site-list{font-size:11px;line-height:1.8;list-style:none;}
+.site-list li::before{content:'› ';color:var(--t3);}
+.backup-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.backup-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:13px 14px;}
+.backup-name{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:4px;}
+.backup-spec{font-size:12px;color:var(--t2);line-height:1.6;}
+.backup-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;margin-top:5px;font-weight:600;}
+.drp-test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;}
+.drp-test{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px;}
+.drp-test-name{font-size:12px;font-weight:700;color:var(--tx);margin-bottom:3px;}
+.drp-test-desc{font-size:11px;color:var(--t2);line-height:1.5;}
+.drp-test-tag{display:inline-block;font-size:9px;padding:2px 7px;border-radius:10px;margin-top:5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.ir-phase{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:14px;}
+.ir-card{border-radius:var(--r);padding:13px 14px;border:1px solid;}
+.ir-num{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.ir-title{font-size:13px;font-weight:700;margin-bottom:6px;}
+.ir-list{font-size:11px;line-height:1.8;list-style:none;}
+.ir-list li::before{content:'› ';color:var(--t3);}
+.pf{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--bd);font-size:12px;color:var(--t3);}
+.pf a{color:var(--sl);text-decoration:none;}
+.pf a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="pw">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hi">
+    <div class="hbadge"><i class="ti ti-shield-bolt"></i> CISSP · Domain 7 · 13% of exam</div>
+    <h1>Security Operations</h1>
+    <p>Incident response · Forensics · BCP/DRP · Recovery sites · Backups · Change management · Investigations</p>
+    <div class="hpills">
+      <span class="hpill">Incident response lifecycle</span>
+      <span class="hpill">Digital forensics</span>
+      <span class="hpill">eDiscovery &amp; EDRM</span>
+      <span class="hpill">BCP / DRP phases</span>
+      <span class="hpill">MTD / RTO / RPO / WRT</span>
+      <span class="hpill">Hot / warm / cold sites</span>
+      <span class="hpill">Backup types</span>
+      <span class="hpill">Change management</span>
+    </div>
+  </div>
+
+    <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;">
+      <i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz
+    </button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tw">
+  <div class="tn">
+    <button class="tb active" onclick="sw('ir',this)"><i class="ti ti-alert-circle"></i> Incident response</button>
+    <button class="tb" onclick="sw('forensics',this)"><i class="ti ti-search"></i> Forensics</button>
+    <button class="tb" onclick="sw('bcp',this)"><i class="ti ti-clock-shield"></i> BCP</button>
+    <button class="tb" onclick="sw('drp',this)"><i class="ti ti-building-warehouse"></i> DRP &amp; recovery sites</button>
+    <button class="tb" onclick="sw('backup',this)"><i class="ti ti-database-backup"></i> Backups &amp; RAID</button>
+    <button class="tb" onclick="sw('ops',this)"><i class="ti ti-settings-cog"></i> Security operations</button>
+  </div>
+
+  <!-- INCIDENT RESPONSE -->
+  <div id="tab-ir" class="tp active">
+    <div class="sec">
+      <div class="sh">Incident response lifecycle</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Event = anything that happens, documented and analysed. Security Incident = event that adversely impacts ability to do business. Security Intrusion = evidence attacker attempted or gained access. The FIRST priority is always containment — stop the bleeding before investigating.</div>
+      <div class="ir-phase">
+        <div class="ir-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+          <div class="ir-num" style="color:var(--bl)">Phase 1</div>
+          <div class="ir-title" style="color:var(--bl)">Preparation</div>
+          <ul class="ir-list"><li>Develop IR policy &amp; procedures</li><li>Build &amp; train IR team</li><li>Deploy detection tools</li><li>Establish communication plan</li><li>Define escalation paths</li><li>IRP — Immediate Response Procedure</li></ul>
+        </div>
+        <div class="ir-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+          <div class="ir-num" style="color:var(--tl)">Phase 2</div>
+          <div class="ir-title" style="color:var(--tl)">Detection &amp; analysis</div>
+          <ul class="ir-list"><li>Identify indicators of compromise</li><li>Triage — severity classification</li><li>Correlate events via SIEM</li><li>Document timeline of events</li><li>Determine scope &amp; impact</li></ul>
+        </div>
+        <div class="ir-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+          <div class="ir-num" style="color:var(--am)">Phase 3</div>
+          <div class="ir-title" style="color:var(--am)">Containment</div>
+          <ul class="ir-list"><li>Short-term: isolate affected systems</li><li>Long-term: patch &amp; harden</li><li>Preserve evidence (forensic copy)</li><li>Investigate on backup — NOT production</li><li>Never hack back or avenge</li></ul>
+        </div>
+        <div class="ir-card" style="background:var(--rd-bg);border-color:var(--rd-bd)">
+          <div class="ir-num" style="color:var(--rd)">Phase 4</div>
+          <div class="ir-title" style="color:var(--rd)">Eradication</div>
+          <ul class="ir-list"><li>Remove malware, backdoors, artefacts</li><li>Identify root cause</li><li>Close all entry points</li><li>Patch vulnerable systems</li><li>Validate removal is complete</li></ul>
+        </div>
+        <div class="ir-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+          <div class="ir-num" style="color:var(--pu)">Phase 5</div>
+          <div class="ir-title" style="color:var(--pu)">Recovery</div>
+          <ul class="ir-list"><li>Restore from clean backups</li><li>Return systems to production</li><li>Monitor closely for recurrence</li><li>Validate all systems operational</li><li>SRP — Secondary Response Procedure</li></ul>
+        </div>
+        <div class="ir-card" style="background:var(--gn-bg);border-color:var(--gn-bd)">
+          <div class="ir-num" style="color:var(--gn)">Phase 6</div>
+          <div class="ir-title" style="color:var(--gn)">Lessons learned</div>
+          <ul class="ir-list"><li>Post-incident review (PIR)</li><li>Root cause analysis (RCA)</li><li>Update IR procedures</li><li>Share findings with team</li><li>Improve detection capabilities</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Attack categories &amp; motivation</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Attack category</th><th>Motivation</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Military / intelligence</strong></td><td>Extract classified information — Advanced Persistent Threats (APT)</td><td>State-sponsored espionage, nation-state hacking</td></tr>
+            <tr><td><strong>Business attacks</strong></td><td>Financial gain — disrupt operations or steal IP</td><td>Ransomware disrupts availability, corporate espionage</td></tr>
+            <tr><td><strong>Financial attacks</strong></td><td>Direct monetary theft</td><td>Banking trojans, payment card skimming, crypto theft</td></tr>
+            <tr><td><strong>Terrorist attacks</strong></td><td>Instil fear, disrupt normal life</td><td>Critical infrastructure attacks, power grid disruption</td></tr>
+            <tr><td><strong>Grudge attacks</strong></td><td>Damage organisation or person — sabotage</td><td>Disgruntled employee, insider threat, sabotage</td></tr>
+            <tr><td><strong>Thrill attacks</strong></td><td>Bragging rights, challenge, fun</td><td>Script kiddies, CTF gone too far</td></tr>
+            <tr><td><strong>Hacktivist attacks</strong></td><td>Political/social motivation combined with hacking</td><td>LulzSec, Anonymous — LOIC (Low Orbit Ion Cannon) for DoS</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Key incident response concepts</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Investigate on a backup</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">NEVER investigate on the production system — evidence will be contaminated and systems may remain compromised. Create a forensic bit-level copy first (write blocker, calculate hash). All investigation happens on the copy. Original evidence must be preserved and documented with chain of custody.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Never hack back</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attempting to hack back or avenge a crime is illegal — you will likely hit innocent compromised systems and commit crimes yourself. Call expert when in doubt. Have a SPOC (Single Point of Contact) who liaises with law enforcement. Consult senior management officials before any external action.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Mitigation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Limit the effect or scope of an incident — stopping further damage without necessarily resolving the root cause. Includes: network isolation, account lockout, firewall rule changes, service shutdown. Speed is critical — faster mitigation limits blast radius.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Interview vs interrogation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Interview: gather facts and determine substance of a case — seek information for investigation. Interrogation: evidence retrieval method — ultimately obtain a confession — used when information gathering is for court use. Never interview or interrogate alone — have 1–2 observers. Have questions prepared in advance.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Call tree (comms matrix)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">A disaster plan must contain a call tree — list of individuals to be notified of an incident. Defines who contacts whom and in what order. Ensures communication occurs quickly and systematically without confusion during a crisis. Keep updated and tested regularly.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">MOM — investigations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Means, Opportunity, and Motive — the three elements investigators use to determine suspects. Means: capability to commit the act. Opportunity: access and chance to act. Motive: reason to commit the act. All three must be established to identify a likely suspect.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Investigation types</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Administrative investigations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Examine operational issues or security violations. Limited to operational conclusions only — documentation need not be as thorough as criminal. Resolving the issue is the primary goal. May result in disciplinary action, policy changes, or employee termination.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Criminal investigations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Must meet "beyond a reasonable doubt" standard of evidence. Law enforcement involvement. Highest evidentiary standard. Chain of custody must be rigorously maintained. Never contaminate evidence — all actions documented and timestamped.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Civil investigations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Must meet "preponderance of the evidence" standard — more likely than not (51%). Lower burden of proof than criminal. Results in financial penalties, not imprisonment. Examples: breach of contract, negligence claims, IP theft.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Regulatory investigations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Government agencies may conduct. Third-party regulatory investigations for industry-specific standards — PCI DSS (Payment Card Industry). Conducted by industry regulators: FTC, FCC, SEC, HIPAA Office for Civil Rights. Can result in fines, sanctions, or licence revocation.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORENSICS -->
+  <div id="tab-forensics" class="tp">
+    <div class="sec">
+      <div class="sh">Digital forensics — six guiding principles</div>
+      <div class="rbox"><i class="ti ti-alert-triangle bi"></i>Always work on COPIES of evidence. Never alter original digital evidence. The moment original evidence is modified, it may become inadmissible in court. Use write blockers, calculate hashes (MD5/SHA), and document everything.</div>
+      <div class="flow">
+        <div class="fs"><span class="fn">1</span><span class="ft">All general forensic and procedural principles must be applied when dealing with digital evidence.</span></div>
+        <div class="fs"><span class="fn">2</span><span class="fn" style="background:none;"></span></div>
+        <div class="fs"><span class="fn">2</span><span class="ft">Actions taken should NOT change that evidence. Use write blockers. Calculate hash BEFORE and AFTER to verify integrity.</span></div>
+        <div class="fs"><span class="fn">3</span><span class="ft">Only trained persons should access original digital evidence. Untrained handling is grounds for evidence exclusion.</span></div>
+        <div class="fs"><span class="fn">4</span><span class="ft">All activity relating to seizure, access, storage, or transfer of digital evidence must be fully documented, preserved, and available for review.</span></div>
+        <div class="fs"><span class="fn">5</span><span class="ft">An individual is responsible for all actions taken with digital evidence while it is in their possession.</span></div>
+        <div class="fs"><span class="fn">6</span><span class="ft">Any agency responsible for seizing, accessing, storing, or transferring digital evidence is responsible for compliance with these principles.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Evidence types</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Evidence type</th><th>Description</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Real / Object evidence</strong></td><td>Physical items — weapon, computer, keyboard, hard drive, fingerprints</td><td>Must be authenticated. May be conclusive (DNA).</td></tr>
+            <tr><td><strong>Documentary evidence</strong></td><td>Written documents, contracts, logs, policies</td><td>Must be authenticated. Best Evidence Rule applies — originals preferred.</td></tr>
+            <tr><td><strong>Testimonial evidence</strong></td><td>Witness testimony under oath</td><td>Direct evidence: oral testimony. Expert opinion: witness accepted as expert in field.</td></tr>
+            <tr><td><strong>Demonstrative evidence</strong></td><td>Supports testimonial evidence — charts, diagrams, models</td><td>Must assist the jury in understanding a case. Cannot stand alone.</td></tr>
+            <tr><td><strong>Conclusive evidence</strong></td><td>Irrefutable — cannot be contradicted</td><td>Requires no other corroboration. Rare.</td></tr>
+            <tr><td><strong>Circumstantial evidence</strong></td><td>Used to infer/assume another fact</td><td>Cannot stand alone — used to support other evidence.</td></tr>
+            <tr><td><strong>Hearsay evidence</strong></td><td>Second-hand — something a witness heard another say</td><td>Generally inadmissible. Exception: business records created in normal course of business — audit trails ARE admissible.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Evidence rules &amp; admissibility</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Three requirements for admissibility</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">1. Relevant: must be related to determining a fact in the case. 2. Material: the fact it seeks to determine must be related (material) to the case. 3. Competent: must be obtained legally — evidence from illegal search = inadmissible. All three must be satisfied.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Best Evidence Rule</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Original documents are preferred — copies are secondary evidence. Best evidence is used at trial because it is most reliable. Oral evidence is NOT best evidence (though it may provide interpretation). Secondary evidence (copies, oral) is not permitted if the original is available.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Parol Evidence Rule</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">No verbal agreement can modify a written agreement. If something was agreed verbally but not in the written contract, the written contract governs. Protects the integrity of formal written agreements.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Chain of custody</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Documentation of every person who handled the evidence, when, and what was done. Must include: Description, Time/date, Location, Name of handler, Relevant circumstances. Any break in chain of custody can make evidence inadmissible. Use a bound notebook (pages attached to binding) — most preferred in legal investigation. Never loose-leaf.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Locard's Exchange Principle</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Perpetrators always leave something behind and take something away. Every contact leaves a trace. In digital forensics: attacker logs, malware signatures, modified files, registry entries, network connections. Basis for evidence collection strategy.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Search &amp; seizure authority</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Voluntary surrender: subject gives evidence willingly. Subpoena/court order: compels individual or organisation to surrender evidence. Plain view doctrine: no warrant needed if evidence is in plain view. Search warrant: needed when accessing evidence without tipping off the owner (4th Amendment). Exigent circumstances: warrantless search permitted to prevent destruction of evidence.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Forensic analysis types</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Media analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Identification and extraction of information from storage media. Magnetic media (HDDs, tapes), optical media (CDs, DVDs), memory (RAM, SSDs). Techniques: recovery of deleted files from unallocated sectors, live analysis of connected media (especially encrypted), static analysis of forensic images. Write blocker = hardware device preventing writes to original media. Calculate hash before and after imaging — MD5 or SHA-256.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">In-memory analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Capture RAM contents (memory dump) and calculate hash. Volatile memory — must be captured before system is powered off or rebooted. Contains: running processes, network connections, encryption keys, passwords in cleartext, malware artifacts. Critical for detecting fileless malware that exists only in memory.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Network analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Collect and correlate: IDS/IPS logs, network flow data, packet captures, firewall logs, SPAN port captures. Produces comprehensive picture of network activity during an incident. Depends on preexisting security controls — retrospective capture requires prior logging infrastructure. NetFlow = metadata. PCAP = full packet contents.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Software analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Code review for: backdoors, logic bombs, security vulnerabilities. Log review: application and database server logs. Hash value validation using NSRL (National Software Reference Library — 130M+ application hashes). Detects: SQL injection attacks, privilege escalations, application-layer attacks. Malware reverse engineering.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Hardware / embedded device analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Reviews contents of: PCs, smartphones, tablets, cars, security systems, IoT devices. May require specialised tools. Firmware extraction and analysis. Evidence from mobile devices requires special handling — JTAG or chip-off techniques for locked devices. Faraday bags prevent remote wipe during seizure.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">eDiscovery — EDRM 9-step process</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>eDiscovery FACILITATES the processing of electronic information for DISCLOSURE. The Electronic Discovery Reference Model (EDRM) describes a STANDARD PROCESS. Legal hold (litigation hold) = Step 3 Preservation — suspends normal data destruction schedules.</div>
+      <div class="flow">
+        <div class="fs"><span class="fn">1</span><span class="ft"><strong>Information governance</strong> — Ensures information is well organised for future eDiscovery requests before litigation begins.</span></div>
+        <div class="fs"><span class="fn">2</span><span class="ft"><strong>Identification</strong> — Locates information that may be responsive to a discovery request when litigation is likely.</span></div>
+        <div class="fs"><span class="fn">3</span><span class="ft"><strong>Preservation (Legal Hold)</strong> — Ensures information is protected against alteration or deletion. Suspends normal retention/destruction schedules. Spoliation = failure to preserve = court sanctions.</span></div>
+        <div class="fs"><span class="fn">4</span><span class="ft"><strong>Collection</strong> — Gathers relevant information centrally for the eDiscovery process.</span></div>
+        <div class="fs"><span class="fn">5</span><span class="ft"><strong>Processing</strong> — Rough-cut of irrelevant information. Result is screened, reduced information set.</span></div>
+        <div class="fs"><span class="fn">6</span><span class="ft"><strong>Review</strong> — Examines remaining information for relevancy and removes anything protected by attorney-client privilege.</span></div>
+        <div class="fs"><span class="fn">7</span><span class="ft"><strong>Analysis</strong> — Performs deeper inspection of content and context of remaining information.</span></div>
+        <div class="fs"><span class="fn">8</span><span class="ft"><strong>Production</strong> — Formats for sharing and delivery to opposing counsel and other parties.</span></div>
+        <div class="fs"><span class="fn">9</span><span class="ft"><strong>Presentation</strong> — Displays information to witnesses, the court, and other parties.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BCP -->
+  <div id="tab-bcp" class="tp">
+    <div class="sec">
+      <div class="sh">BCP vs DRP — understanding the difference</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">BCP</div><div class="kv-v">Business Continuity Planning</div><div class="kv-n">PROACTIVE. Ensures business can continue operating during an emergency. Broad focus — people, processes, facilities. Developed BEFORE the disaster. People are always #1 priority.</div></div>
+        <div class="kv"><div class="kv-k">DRP</div><div class="kv-v">Disaster Recovery Planning</div><div class="kv-n">REACTIVE. Allows execution of BCP after disaster strikes. Heavy IT focus — systems, data, infrastructure. Enables fastest possible recovery of critical IT systems.</div></div>
+        <div class="kv"><div class="kv-k">BCM</div><div class="kv-v">Business Continuity Management</div><div class="kv-n">Umbrella term covering BOTH BCP and DRP. Addresses Availability as the primary CIA component. Senior management must drive and approve.</div></div>
+        <div class="kv"><div class="kv-k">MOR</div><div class="kv-v">Minimum Operating Requirements</div><div class="kv-n">Minimum requirements for critical systems to function. Defines the floor below which operations cannot continue.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">BCP — four phases</div>
+      <div class="flow">
+        <div class="fs"><span class="fn">1</span><span class="ft"><strong>Project scope &amp; planning / Initiation</strong> — Business Organisation Analysis (BOA). Form BCP team (senior staff, business units, IS, security, coordinators). Define scope. Identify legal and regulatory requirements. Get management support and approval.</span></div>
+        <div class="fs"><span class="fn">2</span><span class="ft"><strong>Business Impact Analysis (BIA)</strong> — Identify and prioritise critical systems. Risk identification (threat/vulnerability analysis). Likelihood assessment (ARO). Impact assessment (EF%, SLE, ALE). Resource prioritisation. MTD, RTO, RPO, WRT established here. Document and submit to senior management.</span></div>
+        <div class="fs"><span class="fn">3</span><span class="ft"><strong>Continuity planning</strong> — Strategy development bridges gap between BIA and continuity planning. Provisions and processes: people, buildings/facilities, infrastructure. Plan approval (senior management MUST approve — this is critical). Plan implementation. Training and education. Vital records programme.</span></div>
+        <div class="fs"><span class="fn">4</span><span class="ft"><strong>Approval &amp; implementation</strong> — Testing and exercise. Maintenance (living document — update regularly). Awareness training for all employees. Continuous review as business changes.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Critical BCP/DRP metrics — must memorise</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">MTD / MTO</div><div class="kv-v">Maximum Tolerable Downtime</div><div class="kv-n">Maximum length of time a business function can be inoperable without causing irreparable harm. MTD ≥ RTO + WRT. The hard deadline.</div></div>
+        <div class="kv"><div class="kv-k">RTO</div><div class="kv-v">Recovery Time Objective</div><div class="kv-n">Allowable amount of downtime — how quickly a system must be restored. RTO &lt; MTD. About business PROCESSES not just hardware.</div></div>
+        <div class="kv"><div class="kv-k">RPO</div><div class="kv-v">Recovery Point Objective</div><div class="kv-n">Amount of data the organisation is willing to lose. Point in time data must be recovered to. Determines backup frequency.</div></div>
+        <div class="kv"><div class="kv-k">WRT</div><div class="kv-v">Work Recovery Time</div><div class="kv-n">Time needed to reconfigure systems and restore operations after recovery. WRT + RTO must be ≤ MTD.</div></div>
+        <div class="kv"><div class="kv-k">MTTF</div><div class="kv-v">Mean Time to Failure</div><div class="kv-n">Average time a new system runs before failing — approximates End of Life (EOL).</div></div>
+        <div class="kv"><div class="kv-k">MTTR</div><div class="kv-v">Mean Time to Repair</div><div class="kv-n">Average time to repair a failed system. How soon can it be fixed?</div></div>
+        <div class="kv"><div class="kv-k">MTBF</div><div class="kv-v">Mean Time Between Failures</div><div class="kv-n">MTTF + MTTR. How long a repaired system functions on average between failures.</div></div>
+      </div>
+      <div class="tbox"><i class="ti ti-bulb bi"></i>Formula to memorise: <strong>MTD ≥ RTO + WRT</strong>. RTO 5 mins–hours = Hot site. RTO 1–2 days = Warm site. RTO 3–5 days = Mobile site. RTO 1–2 weeks = Cold site.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">BCP documentation components</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Statement of importance</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Signed by senior management — demonstrates commitment and authority. Sets the tone for the entire BCP programme. Critical for organisational buy-in and funding.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Statement of priorities</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Ranks critical business functions and IT systems in order of importance. Drives recovery sequencing — most critical systems recovered first. Based on BIA findings and senior management input.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Risk assessment</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Documents identified threats, likelihood, and impact. Forms the basis for risk acceptance and mitigation decisions. Must be updated regularly as the threat landscape changes.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Vital records programme</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Identifies and protects records critical for operations and legal compliance. Must have offsite backup copies. Examples: contracts, financial records, IP documentation, regulatory filings.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Emergency response guidelines</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Simple yet comprehensive instructions for use during or immediately after a disaster. Like an airline emergency evacuation document — clear, simple, actionable. First task on arriving at site: ASSESS THE SITUATION.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Software escrow</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Source code maintained by a neutral third party. Released to end user if the software vendor goes out of business. Protects against vendor failure disrupting critical business operations that depend on proprietary software.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRP & RECOVERY SITES -->
+  <div id="tab-drp" class="tp">
+    <div class="sec">
+      <div class="sh">Alternate processing sites — comparison</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Best practice: Restore 50% of highest priority systems first, then move to lower priority to achieve minimum operating capacity. Recovery team moves to alternate site — most critical data moved first. Salvage team returns to primary site — least critical data moved first.</div>
+      <div class="site-grid">
+        <div class="site-card" style="background:var(--rd-bg);border-color:var(--rd-bd)">
+          <div class="site-title" style="color:var(--rd)">Hot site</div>
+          <div class="site-sub" style="color:#991b1b">Hours to be up · Highest cost</div>
+          <ul class="site-list"><li>Fully configured, all apps installed</li><li>Up-to-date mirror of production</li><li>24/7 availability, exclusive use</li><li>For extremely urgent critical processing</li><li>Short AND long term use</li><li>Disadvantage: extra admin overhead, costly</li></ul>
+        </div>
+        <div class="site-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+          <div class="site-title" style="color:var(--am)">Warm site</div>
+          <div class="site-sub" style="color:#92400e">12 hours to be up · Moderate cost</div>
+          <ul class="site-list"><li>Facility available, apps may not be configured</li><li>External connections and long-lead hardware present</li><li>Workstations delivered, data restored</li><li>Non-exclusive use</li><li>Less costly, more location choices</li><li>Takes time to start production processing</li></ul>
+        </div>
+        <div class="site-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+          <div class="site-title" style="color:var(--bl)">Cold site</div>
+          <div class="site-sub" style="color:#1e40af">1–2 weeks to be up · Lowest cost</div>
+          <ul class="site-list"><li>Only power and HVAC — no hardware installed</li><li>Most commonly used despite least readiness</li><li>Non-exclusive — lowest cost</li><li>False sense of security if untested</li><li>Requires most lead time</li></ul>
+        </div>
+        <div class="site-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+          <div class="site-title" style="color:var(--pu)">Mobile / rolling site</div>
+          <div class="site-sub" style="color:#5b21b6">3–5 days to be up</div>
+          <ul class="site-list"><li>Mobile homes or HVAC trucks</li><li>Can be considered a cold site</li><li>Useful for disaster-struck areas</li><li>Deployed to the incident location</li></ul>
+        </div>
+        <div class="site-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+          <div class="site-title" style="color:var(--tl)">Redundant / mirrored site</div>
+          <div class="site-sub" style="color:#0f766e">Potential zero downtime</div>
+          <ul class="site-list"><li>Exact replica — fully active</li><li>Highest cost — highest availability</li><li>Real-time or near real-time replication</li><li>Failover is automatic or near-immediate</li></ul>
+        </div>
+        <div class="site-card" style="background:var(--gn-bg);border-color:var(--gn-bd)">
+          <div class="site-title" style="color:var(--gn)">Reciprocal agreement (MAA)</div>
+          <div class="site-sub" style="color:#14532d">Mutual Aid Agreement</div>
+          <ul class="site-list"><li>Arrangement with similar organisation</li><li>Cheapest option</li><li>Must be exactly the same infrastructure</li><li>NOT enforceable — only good short term</li><li>What if disaster affects both? Risk!</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Data replication methods</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Electronic vaulting</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Transfer of backup data to an offsite storage location via communication lines. Batch process — data is backed up periodically and transmitted. Not real-time. Good for RPO measured in hours. Lower bandwidth requirement than remote journaling.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Remote journaling</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Parallel processing of transactions to an alternative site via communication lines. Near real-time — each transaction is immediately transmitted. Better RPO than electronic vaulting. Database transactions replicated as they occur.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Remote mirroring (database shadowing)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Live processing with remote journaling AND creating duplicate database sets on multiple servers. True real-time replication — RPO approaches zero. Creates exact mirror of production database at alternate site. Highest cost — highest data protection.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">DRP test types — least to most disruptive</div>
+      <div class="drp-test-grid">
+        <div class="drp-test">
+          <div class="drp-test-name">Read-through / desk check</div>
+          <div class="drp-test-desc">Simplest. Distribute copies of DRP to team members. Each person reads and reviews the plan. Most critical — ensures everyone has current version.</div>
+          <span class="drp-test-tag" style="background:var(--gn-bg);color:var(--gn);">Least disruptive</span>
+        </div>
+        <div class="drp-test">
+          <div class="drp-test-name">Structured walk-through (table-top)</div>
+          <div class="drp-test-desc">Team gathers in conference room. Role-plays a disaster scenario. No actual systems involved — discussion only.</div>
+          <span class="drp-test-tag" style="background:var(--tl-bg);color:var(--tl);">Low impact</span>
+        </div>
+        <div class="drp-test">
+          <div class="drp-test-name">Simulation test</div>
+          <div class="drp-test-desc">Scenario response tested. May involve non-critical business units and operations personnel. Response measures tested in a practice environment.</div>
+          <span class="drp-test-tag" style="background:var(--bl-bg);color:var(--bl);">Moderate</span>
+        </div>
+        <div class="drp-test">
+          <div class="drp-test-name">Parallel test</div>
+          <div class="drp-test-desc">Relocate personnel to alternate site. Run critical systems at alternate site. PRIMARY SITE REMAINS OPERATIONAL. Both sites run simultaneously.</div>
+          <span class="drp-test-tag" style="background:var(--am-bg);color:var(--am);">Significant</span>
+        </div>
+        <div class="drp-test">
+          <div class="drp-test-name">Full-interruption test</div>
+          <div class="drp-test-desc">Relocate personnel to alternate site AND SHUT DOWN PRIMARY SITE. Most realistic — most risky. Complex and expensive. May cause actual disruption.</div>
+          <span class="drp-test-tag" style="background:var(--rd-bg);color:var(--rd);">Most disruptive</span>
+        </div>
+      </div>
+      <div class="wbox"><i class="ti ti-alert-triangle bi"></i>DRP is a LIVING DOCUMENT — must be updated regularly as systems and business processes change. DRP should be classified as extremely sensitive — contains details attackers could exploit. Senior management approval required before any change to DRP.</div>
+    </div>
+  </div>
+
+  <!-- BACKUPS & RAID -->
+  <div id="tab-backup" class="tp">
+    <div class="sec">
+      <div class="sh">Backup types — comparison</div>
+      <div class="backup-row">
+        <div class="backup-card">
+          <div class="backup-name">Full backup</div>
+          <div class="backup-spec">Backs up ALL files. Archive bit cleared (set to 0) after backup. Advantage: only one tape/set needed for full restore — fastest recovery. Disadvantage: most time-consuming and storage-intensive to create. Baseline for all other backup types.</div>
+          <span class="backup-tag" style="background:var(--gn-bg);color:var(--gn);border:1px solid var(--gn-bd);">Easiest restore · Slowest to create</span>
+        </div>
+        <div class="backup-card">
+          <div class="backup-name">Incremental backup</div>
+          <div class="backup-spec">Backs up ONLY files changed since LAST BACKUP (full OR incremental). Archive bit cleared after backup. Advantage: smallest backup size, fastest to create. Disadvantage: restore requires full backup + ALL incremental backups in sequence — complex and unreliable.</div>
+          <span class="backup-tag" style="background:var(--bl-bg);color:var(--bl);border:1px solid var(--bl-bd);">Fastest to create · Slowest restore</span>
+        </div>
+        <div class="backup-card">
+          <div class="backup-name">Differential backup</div>
+          <div class="backup-spec">Backs up ALL files changed since LAST FULL BACKUP. Does NOT clear the archive bit. Advantage: restore only needs full backup + latest differential — simpler and faster than incremental. Disadvantage: grows larger each day between full backups.</div>
+          <span class="backup-tag" style="background:var(--am-bg);color:var(--am);border:1px solid var(--am-bd);">Middle ground · Full + 1 diff to restore</span>
+        </div>
+      </div>
+      <div class="tbox"><i class="ti ti-bulb bi"></i>Key distinction: Incremental clears the archive bit after each backup — each incremental captures ONLY what changed since the LAST backup (any type). Differential does NOT clear the archive bit — each differential captures EVERYTHING since the last FULL backup.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">RAID levels — reference</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>RAID level</th><th>Method</th><th>Min drives</th><th>Fault tolerance</th><th>Performance</th></tr></thead>
+          <tbody>
+            <tr><td><strong>RAID 0</strong></td><td>Striping only — no redundancy</td><td>2</td><td><span class="pill" style="background:var(--rd-bg);color:var(--rd);">None</span></td><td>Fastest reads/writes</td></tr>
+            <tr><td><strong>RAID 1</strong></td><td>Mirroring — exact duplicate</td><td>2</td><td><span class="pill" style="background:var(--gn-bg);color:var(--gn);">1 drive failure</span></td><td>Good read, slower write</td></tr>
+            <tr><td><strong>RAID 3</strong></td><td>Byte-level striping + dedicated parity drive</td><td>3</td><td><span class="pill" style="background:var(--tl-bg);color:var(--tl);">1 drive failure</span></td><td>Good read, parity = bottleneck</td></tr>
+            <tr><td><strong>RAID 5</strong></td><td>Block-level striping + distributed parity</td><td>3</td><td><span class="pill" style="background:var(--tl-bg);color:var(--tl);">1 drive failure</span></td><td>Good read/write — most popular</td></tr>
+            <tr><td><strong>RAID 6</strong></td><td>Dual parity distributed over all drives</td><td>4</td><td><span class="pill" style="background:var(--gn-bg);color:var(--gn);">2 drive failures</span></td><td>Slightly slower write than RAID 5</td></tr>
+            <tr><td><strong>RAID 10 (1+0)</strong></td><td>Mirroring + striping</td><td>4</td><td><span class="pill" style="background:var(--gn-bg);color:var(--gn);">Multiple failures</span></td><td>Best of RAID 1 + RAID 0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Tape rotation schemes</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Grandfather-Father-Son (GFS)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Three-tier rotation: Daily (Son) — weekly (Father) — monthly (Grandfather). Most common scheme. Provides short-term, medium-term, and long-term recovery points. Balances tape usage with recovery capability.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Tower of Hanoi</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Mathematical rotation scheme based on the Tower of Hanoi puzzle. Uses fewer tapes than GFS for same retention period. More complex to administer. Provides longer retention history with fewer media sets.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Six cartridge weekly</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Uses six cartridges — one per business day plus a weekly. Simple and straightforward. Most suitable for smaller environments with shorter retention requirements.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY OPERATIONS -->
+  <div id="tab-ops" class="tp">
+    <div class="sec">
+      <div class="sh">Change management process</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Primary goal of change management is to PREVENT security compromises. FIRST STEP in any change process = Management approval. Change and configuration management together protect the organisation from development-related security issues.</div>
+      <div class="flow">
+        <div class="fs"><span class="fn">1</span><span class="ft"><strong>Request Control</strong> — Organised framework for users to request modifications. Managers conduct cost/benefit analysis. Developers prioritise tasks. Formal change request submitted.</span></div>
+        <div class="fs"><span class="fn">2</span><span class="ft"><strong>Change Control</strong> — Multiple developers create and test solution before rolling to production. Includes: quality control restrictions, deployment tools, documentation of coded changes, minimising security impact of new code.</span></div>
+        <div class="fs"><span class="fn">3</span><span class="ft"><strong>Release Control</strong> — Once changes are finalised, approved for release through formal procedure. Rollback plan must exist. Change management board reviews and authorises deployment.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Configuration management</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Configuration identification</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Administrators document the configuration of covered software products throughout the organisation. Establishes baseline configurations for all systems. CI (Configuration Item) = component whose state is recorded.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Configuration control</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Ensures changes to software versions are made in accordance with change control and configuration management policies. Updates can only be made from authorised distributions. Prevents unauthorised changes.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Configuration status accounting</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Formalised procedures to keep track of all authorised changes that take place. Audit trail of all configuration modifications. CMDB (Configuration Management Database) holds relationships between system components.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Configuration audit</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Periodic audit to ensure actual production environment is consistent with accounting records. Detects unauthorised configuration changes. Validates baseline compliance. Schedule: at minimum annually or after major changes.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Patch management &amp; vulnerability remediation</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Patch types</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Hotfix/Security fix: single patch addressing a specific vulnerability. Service pack: collection of multiple unrelated patches in one large bundle. Patch management system prevents outages from known attacks by ensuring systems are patched. Note: patches aren't available for zero-day attacks. Patching reduces vulnerabilities — it does not eliminate them.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Phlashing attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Malicious variation of firmware/BIOS update that introduces remote control or other malicious features into a device. BIOS attack = phlashing attack. UEFI is the replacement for BIOS. Firmware version control must be maintained — updates should be manual and from trusted sources.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Zero-day vulnerability</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Vulnerability for which no patch exists. Window of exposure from discovery to patch release. Defence: defence in depth, network segmentation, application whitelisting, anomaly-based IDS. Threat intelligence feeds help identify zero-days being exploited in the wild.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Trusted recovery &amp; system resilience</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Trusted recovery</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Ensures security is not breached when a system crashes or fails. Required for B3 and A1 TCSEC level systems. System must restart in SECURE MODE. Startup in maintenance mode — access only by privileged users from privileged terminals. All security controls must remain intact after recovery.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Fail states</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Fail-safe: terminates program execution and protects system from compromise on failure. DOORS fail-safe = UNLOCK (allows safe evacuation). Fail-secure: maintains security state on failure. DOORS fail-secure = LOCK (most conservative from security perspective). Fail-soft: terminates non-critical processing but system continues. Fail-hard (BSOD): complete failure — human must investigate.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Fault tolerance</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">System continues to function despite failure. RAID provides fault tolerance for storage. Server clustering: group of independent servers managed as single system — all online, all processing. Server clustering vs grid computing: cluster = same OS/applications; grid = different OS/apps working on same problem.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">UPS types</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Online UPS: AC line voltage charges batteries — power always flows through UPS — zero transfer time. Standby UPS: inactive until power goes down — small transfer delay. Best practice: Online UPS for critical systems, standby for less critical. UPS provides short-term power — generator provides long-term.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Personnel security in operations</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Mandatory vacations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Peer uses the SAME ACCOUNT of person on vacation — used as a peer review process. Common in financial industry. Purpose: detect abuse, fraud, or negligence. Minimum one week. Forces dependency exposure — processes that only one person knows become visible.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Job rotation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Employees rotate roles — limits how long a person is assigned to a security-related task. Detects collusion and reduces fraud. Builds cross-coverage knowledge. Prevents any individual from having unchecked long-term control over a process.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Need-to-know in operations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Subject is given only the information required to perform their assigned task — business justification required. Applies even if employee has appropriate clearance level. Combined with least privilege, forms the foundation of access control in operations.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Agreements — NDA, AUP, non-compete</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">NDA: protects confidential information from disclosure — survives employment. AUP (Acceptable Use Policy): defines permitted use of corporate resources. Non-compete: restricts working for competitors after leaving. All signed at onboarding. Reminds departing employees of obligations at exit interview.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tabs -->
+
+<script id="qdata" type="application/json">[{"q": "During incident response, what is the FIRST priority after detecting a breach?", "opts": ["Eradication of malware", "Evidence collection", "Containment to stop ongoing damage", "Notify law enforcement"], "answer": "Containment to stop ongoing damage", "exp": "FIRST priority = CONTAINMENT - stop the bleeding. Short-term: isolate affected systems. Long-term: patch and harden. Preserve evidence (forensic copy) before containment if possible, but stopping active damage takes precedence. Never hack back or try to avenge the attack."}, {"q": "Before analysing a compromised server, what must happen FIRST?", "opts": ["Notify users", "Delete suspicious files", "Create a forensic bit-for-bit copy and calculate hash", "Reinstall the OS"], "answer": "Create a forensic bit-for-bit copy and calculate hash", "exp": "ALWAYS work on COPIES of evidence - never the original. Create forensic bit-level image using a write blocker. Calculate MD5/SHA hash BEFORE and AFTER imaging to verify integrity. All investigation happens on the copy. Chain of custody maintained throughout."}, {"q": "Criminal investigations require what standard of evidence?", "opts": ["Preponderance of evidence", "Clear and convincing evidence", "Beyond a reasonable doubt", "Balance of probabilities"], "answer": "Beyond a reasonable doubt", "exp": "Criminal = beyond a reasonable doubt (highest standard). Civil = preponderance of evidence (more likely than not, 51%+). Administrative = lowest standard - resolving the operational issue is primary goal. Evidence must be: Relevant, Material (related to the case), and Competent (legally obtained)."}, {"q": "The EDRM Preservation step (Step 3) corresponds to which concept?", "opts": ["Data archiving", "Legal hold", "Forensic imaging", "Evidence collection"], "answer": "Legal hold", "exp": "EDRM Step 3 = Preservation = Legal Hold. Suspends normal data destruction schedules when litigation is anticipated or reasonably foreseeable. Failure to preserve = spoliation (can result in court sanctions and adverse inferences). Step 2 = Identification. Step 4 = Collection."}, {"q": "An organisation's MTD is 24 hours. RTO is 8 hours. Maximum acceptable WRT is:", "opts": ["8 hours", "16 hours", "24 hours", "32 hours"], "answer": "16 hours", "exp": "MTD >= RTO + WRT. Therefore: WRT <= MTD - RTO = 24 - 8 = 16 hours maximum. WRT = time needed to reconfigure systems and restore operations after technical recovery. MTD = the hard business deadline. Exceeding MTD causes irreparable business harm."}, {"q": "A warm site becomes operational within approximately:", "opts": ["Minutes", "1-2 hours", "12 hours", "1-2 weeks"], "answer": "12 hours", "exp": "Site recovery times: Hot site = hours (fully configured). Warm site = ~12 hours (facility + connections ready, workstations may need setup). Mobile site = 3-5 days. Cold site = 1-2 weeks (only power/HVAC). Redundant site = potential zero downtime. Choose based on RTO requirements."}, {"q": "Which backup strategy requires full + ONLY THE MOST RECENT backup tape to restore?", "opts": ["Full backup alone", "Incremental", "Differential", "Grandfather-Father-Son"], "answer": "Differential", "exp": "Differential = full backup + LATEST differential (2 tapes). Incremental = full backup + ALL incrementals in sequence (many tapes, complex, fails if any tape missing). Differential grows larger between full backups but is simpler to restore. Choose based on backup window vs restore time requirements."}, {"q": "Recovery team vs salvage team during disaster execution - what is the difference?", "opts": ["Recovery stays at primary; salvage goes to alternate", "Recovery goes to alternate (most critical first); salvage returns to primary (least critical first)", "Both teams work at alternate site", "Salvage handles media; recovery handles personnel"], "answer": "Recovery goes to alternate (most critical first); salvage returns to primary (least critical first)", "exp": "Recovery team: moves to alternate site - most critical data moved FIRST. Salvage team: returns to primary site after disaster - least critical data moved FIRST. Best practice: restore 50% of highest priority systems first then move to lower priority to achieve minimum operating capacity."}, {"q": "RAID 5 requires a minimum of how many drives and tolerates how many failures?", "opts": ["2 drives; 1 failure", "3 drives; 1 failure", "4 drives; 2 failures", "3 drives; 2 failures"], "answer": "3 drives; 1 failure", "exp": "RAID 5 = distributed parity, minimum 3 drives, tolerates 1 failure. Most popular for balanced performance. RAID 6 = 4 drives minimum, tolerates 2 failures. RAID 0 = no redundancy (striping only). RAID 1 = mirroring (2 drives, 1 failure). RAID 10 = mirroring + striping, best performance."}, {"q": "Which fire suppression system is MOST suitable for computer rooms with human occupants?", "opts": ["Deluge system", "Wet pipe sprinkler", "Dry pipe sprinkler", "Preaction system"], "answer": "Preaction system", "exp": "Preaction = combination of dry and wet pipe - MOST suitable for computer rooms with humans. Requires two triggers before water releases (prevents accidental discharge). Deluge = massive water volume instantly = NOT suitable for computers or occupied spaces. CO2 removes oxygen - dangerous for humans."}, {"q": "An attacker changes small amounts in many financial transactions to avoid detection. This is a:", "opts": ["Logic bomb", "Salami attack", "Data diddling", "Buffer overflow"], "answer": "Salami attack", "exp": "Salami attack = small amounts stolen repeatedly assuming they go unnoticed. Classic: rounding fractional cents to attacker's account. Accumulates significantly over time. Data diddling = small subtle changes to data during input/processing/storage. Both require comprehensive audit trails to detect."}, {"q": "Which DRP test type is MOST disruptive?", "opts": ["Read-through test", "Structured walk-through", "Parallel test", "Full-interruption test"], "answer": "Full-interruption test", "exp": "Full-interruption: PRIMARY SITE SHUT DOWN, personnel relocate to alternate site. Most disruptive, most realistic, most expensive. Risk: may cause actual business disruption. Parallel test = both sites run simultaneously (safer). Read-through = least disruptive (just read and review the plan)."}, {"q": "The 1991 Federal Sentencing Guidelines Prudent Man Rule requires demonstrating:", "opts": ["Due diligence only", "Due care only", "Both due care AND due diligence", "Zero tolerance for incidents"], "answer": "Both due care AND due diligence", "exp": "Prudent Man Rule: to minimise punishment, demonstrate BOTH due care (implementing reasonable controls) AND due diligence (investigating vulnerabilities). Three negligence burdens: legally recognised obligation existed, failed to comply with standards, causal relationship between negligence and damage."}, {"q": "Who APPROVES the BCP?", "opts": ["BCP Coordinator", "IT Department", "Senior Management", "Board of Directors"], "answer": "Senior Management", "exp": "BCP requires SENIOR MANAGEMENT APPROVAL - their sign-off provides authority, funding, and organisational commitment. BCP Statement of Importance is signed by senior management. Without management support, the BCP lacks authority and resources. Senior management drives the entire Business Continuity Management programme."}, {"q": "An attack by a disgruntled employee seeking revenge falls under which category?", "opts": ["Military/intelligence attacks", "Business attacks", "Grudge attacks", "Hacktivist attacks"], "answer": "Grudge attacks", "exp": "Computer crime categories: Military/Intelligence (APT, state-sponsored), Business (ransomware, IP theft), Financial (banking trojans), Terrorist (infrastructure), Grudge (DISGRUNTLED EMPLOYEES - sabotage, insider threat), Thrill (bragging rights, script kiddies), Hacktivist (political/social - Anonymous, LulzSec)."}, {"q": "A Faraday bag in digital forensics is used to:", "opts": ["Waterproof the device", "Prevent remote wiping of mobile devices", "Shield from physical damage", "Power down safely"], "answer": "Prevent remote wiping of mobile devices", "exp": "Faraday bags block wireless signals - preventing remote wiping of mobile devices seized as evidence before analysis. Critical: if a device connects to a network after seizure, it could be remotely wiped or altered, destroying evidence. Also prevents incoming calls that could modify the device state."}, {"q": "The FIRST task when the disaster recovery team arrives at the alternate site is:", "opts": ["Begin restoring critical systems", "Contact vendors for hardware", "ASSESS the situation", "Implement the DRP immediately"], "answer": "ASSESS the situation", "exp": "FIRST task = ASSESS THE SITUATION - understand what happened, what is working, what is damaged, what resources are available. Only after assessment can recovery be effectively prioritised. Emergency response guidelines should be simple, clear, and actionable - like an airline evacuation document."}, {"q": "Electronic vaulting differs from remote mirroring in that:", "opts": ["Electronic vaulting is real-time; mirroring is batch", "Electronic vaulting is batch; mirroring is real-time", "Both are identical processes", "Vaulting uses satellites; mirroring uses fibre"], "answer": "Electronic vaulting is batch; mirroring is real-time", "exp": "Electronic vaulting = BATCH process, data transmitted periodically (RPO measured in hours). Remote journaling = near real-time transaction replication. Remote mirroring (database shadowing) = TRUE real-time replication (RPO approaches zero, highest cost). Choose based on RTO/RPO requirements."}, {"q": "Incremental backup clears the archive bit. What does restoring require?", "opts": ["Only the last incremental", "Full + ALL incrementals in sequence", "Only the full backup", "Full + last incremental only"], "answer": "Full + ALL incrementals in sequence", "exp": "Incremental clears archive bit each time - captures only changes since the LAST backup of ANY type. Restore = full backup + ALL incrementals IN ORDER (complex; if any tape is damaged, restore fails). Differential does NOT clear archive bit - restore = full + latest differential only (simpler)."}, {"q": "Computer crime categories include hacktivist attacks. Which tool is associated with Anonymous?", "opts": ["Metasploit", "LOIC (Low Orbit Ion Cannon)", "Nessus", "Wireshark"], "answer": "LOIC (Low Orbit Ion Cannon)", "exp": "LOIC (Low Orbit Ion Cannon) = DDoS tool used by hacktivist groups like Anonymous and LulzSec. Hacktivist attacks combine hacking with political/social activism. They use hybrid warfare tactics including social media campaigns (Influence Campaigns). Legal implications: participants in LOIC-based attacks have been prosecuted."}]</script>
+
+<!-- QUIZ -->
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 7 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="pf">
+  <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 7 — Security Operations</p>
+  <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams &amp; Memory Palace. For educational purposes.</p>
+</div>
+
+</div>
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function tg(el){el.classList.toggle('open');}
+// clean duplicate step
+document.querySelectorAll('.fn').forEach(n=>{if(n.textContent.trim()==='')n.closest('.fs')?.remove();});
+</script>
+
+<script>
+var QS = JSON.parse(document.getElementById('qdata').textContent);
+var qst = {i:0, s:0};
+function openQuiz(){document.getElementById('quizOv').style.display='flex';qst={i:0,s:0};renderQ();}
+function closeQ(){document.getElementById('quizOv').style.display='none';}
+function renderQ(){
+  var t=document.getElementById('qTitle'), b=document.getElementById('qBody');
+  if(qst.i>=QS.length){
+    var p=Math.round(qst.s/QS.length*100);
+    t.textContent='Quiz complete';
+    b.innerHTML='<div style="text-align:center;padding:1.5rem 0;">'
+      +'<div style="font-size:48px;margin-bottom:.5rem;">'+(p>=80?'&#127942;':p>=60?'&#9989;':'&#128218;')+'</div>'
+      +'<div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qst.s+'/'+QS.length+'</div>'
+      +'<div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(p>=80?'Excellent &#8212; exam ready!':p>=60?'Good &#8212; review weak areas':'Needs more review &#8212; keep studying')+'</div>'
+      +'<button onclick="qst={i:0,s:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button>'
+      +'<button onclick="closeQ()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button>'
+      +'</div>';
+    return;
+  }
+  var q=QS[qst.i];
+  t.textContent='Question '+(qst.i+1)+' of '+QS.length;
+  var pct=Math.round(qst.i/QS.length*100);
+  var h='<div>';
+  h+='<div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div>';
+  h+='<div id="qopts" style="display:flex;flex-direction:column;gap:8px;">';
+  q.opts.forEach(function(opt,i){
+    h+='<button data-i="'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;transition:all .15s;">'
+      +'<span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';
+  });
+  h+='</div><div id="qexp"></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;">';
+  h+='<span style="font-size:12px;color:#94a3b8;">Score: '+qst.s+'</span>';
+  h+='<div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div>';
+  h+='<span style="font-size:12px;color:#94a3b8;">'+pct+'%</span></div></div>';
+  b.innerHTML=h;
+}
+function ansQ(chosen){
+  var q=QS[qst.i];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){
+    b.onclick=null; b.style.cursor='default';
+    if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}
+    if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}
+  });
+  var ok=(chosen===correct);
+  if(ok) qst.s++;
+  var next=qst.i+1;
+  document.getElementById('qexp').innerHTML=
+    '<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'
+    +(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecada;')
+    +'"><span style="font-weight:700;">'+(ok?'&#10003; Correct! ':'&#10007; Incorrect. ')+'</span>'+q.exp+'</div>'
+    +'<div style="margin-top:10px;display:flex;justify-content:flex-end;">'
+    +'<button onclick="qst.i++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'
+    +(next<QS.length?'Next &#8594;':'See results')+'</button></div>';
+}
+</script>
+</body>
+</html>

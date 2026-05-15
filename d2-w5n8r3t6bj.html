@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 2 – Asset Security | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --border: #e2e8f0;
+  --border2: #cbd5e1;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --blue: #3b82f6; --blue-bg: #eff6ff; --blue-border: #bfdbfe;
+  --teal: #0d9488; --teal-bg: #f0fdfa; --teal-border: #99f6e4;
+  --amber: #d97706; --amber-bg: #fffbeb; --amber-border: #fde68a;
+  --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
+  --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+  --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+  --radius: 10px; --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,.06); --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+.hero { background: linear-gradient(135deg, #0f2744 0%, #1a3a5c 50%, #0d2f45 100%); border-radius: 16px; padding: 2rem 2rem 1.75rem; margin-bottom: 2rem; position: relative; overflow: hidden; }
+.hero::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; background:rgba(13,148,136,.15); }
+.hero::after { content:''; position:absolute; bottom:-30px; left:40%; width:140px; height:140px; border-radius:50%; background:rgba(124,58,237,.1); }
+.hero-inner { position: relative; }
+.hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(13,148,136,.2); color:#5eead4; font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:20px; margin-bottom:12px; border:1px solid rgba(13,148,136,.3); }
+.hero h1 { font-size:clamp(22px,4vw,30px); font-weight:600; color:#f8fafc; margin-bottom:6px; }
+.hero p { color:#94a3b8; font-size:14px; margin-bottom:16px; }
+.hero-pills { display:flex; flex-wrap:wrap; gap:8px; }
+.hero-pill { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); color:#cbd5e1; font-size:11px; padding:3px 10px; border-radius:20px; }
+
+.tabs-wrap { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:2rem; box-shadow:var(--shadow); }
+.tabs-nav { display:flex; overflow-x:auto; border-bottom:1px solid var(--border); background:var(--surface2); scrollbar-width:none; }
+.tabs-nav::-webkit-scrollbar { display:none; }
+.tab-btn { flex-shrink:0; background:none; border:none; padding:12px 16px; font-size:12px; font-weight:600; color:var(--text2); cursor:pointer; border-bottom:2px solid transparent; transition:all .2s; display:flex; align-items:center; gap:6px; letter-spacing:.3px; }
+.tab-btn:hover { color:var(--text); background:rgba(0,0,0,.03); }
+.tab-btn.active { color:var(--teal); border-bottom-color:var(--teal); background:var(--surface); }
+.tab-btn i { font-size:15px; }
+.tab-panel { display:none; padding:1.5rem; }
+.tab-panel.active { display:block; }
+
+.section { margin-bottom:1.75rem; }
+.section-title { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1.2px; color:var(--text3); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:10px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; cursor:pointer; transition:all .2s; }
+.card:hover { border-color:var(--border2); box-shadow:var(--shadow-md); }
+.card.open { border-color:var(--teal-border); background:var(--teal-bg); }
+.card-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.card-label { font-size:13px; font-weight:600; color:var(--text); }
+.card.open .card-label { color:var(--teal); }
+.card-arrow { color:var(--text3); font-size:16px; transition:transform .2s; flex-shrink:0; }
+.card.open .card-arrow { transform:rotate(180deg); color:var(--teal); }
+.card-body { display:none; font-size:13px; color:var(--text2); line-height:1.65; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+.card.open .card-body { display:block; }
+
+/* Classification tiers */
+.cls-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--text3); margin-bottom:8px; }
+.cls-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(175px,1fr)); gap:8px; margin-bottom:16px; }
+.cls-cell { border-radius:var(--radius); padding:14px; border:1px solid; text-align:center; }
+.cls-name { font-size:13px; font-weight:700; margin-bottom:4px; }
+.cls-desc { font-size:11px; line-height:1.5; }
+
+/* Lifecycle flow */
+.lc-flow { display:flex; overflow-x:auto; gap:0; margin-bottom:14px; padding-bottom:4px; }
+.lc-step { flex-shrink:0; min-width:100px; padding:12px 10px; text-align:center; border:1px solid var(--border); position:relative; background:var(--surface); }
+.lc-step:not(:first-child) { border-left:none; }
+.lc-step:first-child { border-radius:var(--radius) 0 0 var(--radius); }
+.lc-step:last-child { border-radius:0 var(--radius) var(--radius) 0; }
+.lc-arrow { position:absolute; right:-8px; top:50%; transform:translateY(-50%); color:var(--text3); font-size:14px; z-index:1; background:var(--surface); }
+.lc-num { font-size:10px; color:var(--text3); margin-bottom:4px; }
+.lc-name { font-size:12px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.lc-note { font-size:10px; color:var(--text2); line-height:1.4; }
+
+/* Roles */
+.role-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(155px,1fr)); gap:8px; margin-bottom:12px; }
+.role-card { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius); padding:14px; }
+.role-icon { font-size:22px; color:var(--text3); margin-bottom:8px; }
+.role-name { font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+.role-items { font-size:11px; color:var(--text2); line-height:1.8; list-style:none; }
+.role-items li::before { content:'› '; color:var(--text3); }
+
+/* Table */
+.data-table { width:100%; border-collapse:collapse; font-size:12px; }
+.data-table th { text-align:left; padding:8px 10px; font-size:11px; font-weight:600; color:var(--text2); border-bottom:2px solid var(--border); background:var(--surface2); }
+.data-table td { padding:9px 10px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:top; line-height:1.55; }
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:var(--surface2); }
+.pill { display:inline-block; font-size:10px; padding:2px 8px; border-radius:20px; font-weight:600; }
+
+/* GDPR steps */
+.gdpr-flow { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+.gdpr-step { display:flex; align-items:flex-start; gap:12px; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; }
+.gdpr-num { font-size:11px; font-weight:700; color:var(--teal); min-width:18px; flex-shrink:0; margin-top:1px; }
+.gdpr-text { font-size:12.5px; color:var(--text); line-height:1.55; }
+.gdpr-text strong { font-weight:600; }
+
+/* Sanitisation */
+.san-level { display:flex; gap:0; border-radius:var(--radius); overflow:hidden; margin-bottom:14px; }
+.san-lv { flex:1; text-align:center; padding:12px 8px; }
+.san-lv-name { font-size:12px; font-weight:700; margin-bottom:3px; }
+.san-lv-desc { font-size:10px; line-height:1.4; }
+
+.info-box { background:var(--blue-bg); border:1px solid var(--blue-border); border-radius:var(--radius-sm); padding:10px 14px; font-size:12.5px; color:#1e40af; line-height:1.6; margin-bottom:12px; display:flex; gap:8px; align-items:flex-start; }
+.warn-box { background:var(--amber-bg); border:1px solid var(--amber-border); border-radius:var(--radius-sm); padding:10px 14px; font-size:12.5px; color:#92400e; line-height:1.6; margin-bottom:12px; display:flex; gap:8px; align-items:flex-start; }
+.danger-box { background:var(--red-bg); border:1px solid var(--red-border); border-radius:var(--radius-sm); padding:10px 14px; font-size:12.5px; color:#991b1b; line-height:1.6; margin-bottom:12px; display:flex; gap:8px; align-items:flex-start; }
+.box-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+
+.page-footer { text-align:center; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); font-size:12px; color:var(--text3); }
+.page-footer a { color:var(--teal); text-decoration:none; }
+.page-footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge"><i class="ti ti-database"></i> CISSP · Domain 2</div>
+      <h1>Asset Security</h1>
+      <p>Classification · Ownership roles · Data lifecycle · Retention · Privacy · Media sanitisation</p>
+      <div class="hero-pills">
+        <span class="hero-pill">Govt &amp; Commercial Classification</span>
+        <span class="hero-pill">Data Owner / Custodian</span>
+        <span class="hero-pill">6-Stage Lifecycle</span>
+        <span class="hero-pill">GDPR Rights</span>
+        <span class="hero-pill">NIST SP 800-88</span>
+        <span class="hero-pill">Data Remanence</span>
+      </div>
+      <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('cls',this)"><i class="ti ti-layout-grid"></i> Classification</button>
+      <button class="tab-btn" onclick="switchTab('ownership',this)"><i class="ti ti-users"></i> Ownership roles</button>
+      <button class="tab-btn" onclick="switchTab('lifecycle',this)"><i class="ti ti-arrows-loop"></i> Data lifecycle</button>
+      <button class="tab-btn" onclick="switchTab('retention',this)"><i class="ti ti-archive"></i> Retention &amp; handling</button>
+      <button class="tab-btn" onclick="switchTab('privacy',this)"><i class="ti ti-shield-lock"></i> Privacy</button>
+      <button class="tab-btn" onclick="switchTab('san',this)"><i class="ti ti-trash"></i> Sanitisation</button>
+    </div>
+
+    <!-- CLASSIFICATION -->
+    <div id="tab-cls" class="tab-panel active">
+      <div class="section">
+        <div class="cls-label">Government / military classification</div>
+        <div class="cls-grid">
+          <div class="cls-cell" style="background:var(--red-bg);border-color:var(--red-border)"><div class="cls-name" style="color:var(--red)">Top Secret</div><div class="cls-desc" style="color:#991b1b">Grave damage to national security if disclosed</div></div>
+          <div class="cls-cell" style="background:var(--amber-bg);border-color:var(--amber-border)"><div class="cls-name" style="color:var(--amber)">Secret</div><div class="cls-desc" style="color:#92400e">Serious damage to national security</div></div>
+          <div class="cls-cell" style="background:var(--blue-bg);border-color:var(--blue-border)"><div class="cls-name" style="color:var(--blue)">Confidential</div><div class="cls-desc" style="color:#1e40af">Damage to national security</div></div>
+          <div class="cls-cell" style="background:var(--surface2);border-color:var(--border)"><div class="cls-name" style="color:var(--text)">Unclassified</div><div class="cls-desc" style="color:var(--text2)">Cleared for public release</div></div>
+        </div>
+        <div class="cls-label" style="margin-top:8px">Commercial / private sector classification</div>
+        <div class="cls-grid">
+          <div class="cls-cell" style="background:var(--red-bg);border-color:var(--red-border)"><div class="cls-name" style="color:var(--red)">Confidential</div><div class="cls-desc" style="color:#991b1b">Highest sensitivity — trade secrets, PII, financial data</div></div>
+          <div class="cls-cell" style="background:var(--amber-bg);border-color:var(--amber-border)"><div class="cls-name" style="color:var(--amber)">Private</div><div class="cls-desc" style="color:#92400e">Personnel data, salaries, internal HR records</div></div>
+          <div class="cls-cell" style="background:var(--blue-bg);border-color:var(--blue-border)"><div class="cls-name" style="color:var(--blue)">Sensitive</div><div class="cls-desc" style="color:#1e40af">Requires extra care — internal projects and plans</div></div>
+          <div class="cls-cell" style="background:var(--surface2);border-color:var(--border)"><div class="cls-name" style="color:var(--text)">Public</div><div class="cls-desc" style="color:var(--text2)">No harm if released — marketing, press releases</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Classification concepts — tap to expand</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Who classifies data?</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">The Data Owner (Senior Management) is responsible for classifying data. Classification is based on the value of the data and impact if disclosed, altered, or destroyed. Not the IT department.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Classification criteria</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Determined by: value to the organisation, age of the data, usefulness, and level of damage caused if disclosed. Sensitivity labels are based on sensitivity and need to keep information secret.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Declassification</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Classification levels can change over time. Declassification must be formally approved by the Data Owner. Re-classification can also increase protection levels if risk changes.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Sensitivity labels (MAC)</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Used in Mandatory Access Control (MAC) systems. Labels attached to objects (data) and subjects (users). User clearance must be ≥ data classification level to gain access.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Asset inventory</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">All assets must be identified, assigned an owner, valued, and classified before controls can be applied. Includes tangible (hardware, media) and intangible (data, IP, reputation) assets.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Scoping &amp; tailoring</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Scoping — identifying which parts of a framework apply to your environment. Tailoring — customising a baseline of controls to fit your organisation's specific needs and risk posture.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OWNERSHIP -->
+    <div id="tab-ownership" class="tab-panel">
+      <div class="section">
+        <div class="section-title">Data roles — accountability not legal ownership</div>
+        <div class="info-box"><i class="ti ti-info-circle box-icon"></i>In the CISSP context, "ownership" means accountability for the data — not legal title. Each role carries distinct responsibilities that cannot be delegated away.</div>
+        <div class="role-grid">
+          <div class="role-card">
+            <div class="role-icon"><i class="ti ti-building"></i></div>
+            <div class="role-name">Data Owner</div>
+            <ul class="role-items"><li>Senior management / executive</li><li>Classifies and values data</li><li>Assigns classification labels</li><li>Approves access control policy</li><li>Ultimately accountable</li></ul>
+          </div>
+          <div class="role-card">
+            <div class="role-icon"><i class="ti ti-tool"></i></div>
+            <div class="role-name">Data Custodian</div>
+            <ul class="role-items"><li>IT / technical staff</li><li>Implements owner's controls</li><li>Performs backups &amp; recovery</li><li>Maintains audit logs</li><li>Day-to-day data security</li></ul>
+          </div>
+          <div class="role-card">
+            <div class="role-icon"><i class="ti ti-user-check"></i></div>
+            <div class="role-name">Data User</div>
+            <ul class="role-items"><li>Any person accessing data</li><li>Accesses only what is needed</li><li>Follows security policy</li><li>Reports security incidents</li><li>Responsible for proper use</li></ul>
+          </div>
+          <div class="role-card">
+            <div class="role-icon"><i class="ti ti-writing"></i></div>
+            <div class="role-name">Data Controller</div>
+            <ul class="role-items"><li>GDPR context</li><li>Determines purpose &amp; means</li><li>Primary legal accountability</li><li>Must appoint DPO if required</li><li>Breach notification obligation</li></ul>
+          </div>
+          <div class="role-card">
+            <div class="role-icon"><i class="ti ti-arrows-transfer-down"></i></div>
+            <div class="role-name">Data Processor</div>
+            <ul class="role-items"><li>GDPR context</li><li>Processes on behalf of controller</li><li>Third-party / cloud providers</li><li>Bound by data processing agreement</li><li>Cannot sub-process without consent</li></ul>
+          </div>
+          <div class="role-card">
+            <div class="role-icon"><i class="ti ti-id"></i></div>
+            <div class="role-name">Data Subject</div>
+            <ul class="role-items"><li>Individual the data is about</li><li>Right to access their data (SAR)</li><li>Right to rectification</li><li>Right to erasure</li><li>Right to object to processing</li></ul>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">System roles</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">System Owner</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Responsible for the system that processes data. Creates and maintains the security plan for the system. Different from Data Owner — focuses on infrastructure not information.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">System Administrator</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Technical role implementing controls on the system per the System Owner's direction. Manages user accounts, patches, and access configurations.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Security Administrator</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Manages security-specific configurations — firewall rules, IDS/IPS settings, encryption keys, and security policies. Reports to CISO.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">DPO — Data Protection Officer</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Required under GDPR for organisations processing large volumes of personal data. Advises on compliance, monitors adherence, acts as contact point for supervisory authorities.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIFECYCLE -->
+    <div id="tab-lifecycle" class="tab-panel">
+      <div class="section">
+        <div class="section-title">Data lifecycle — 6 stages</div>
+        <div class="lc-flow">
+          <div class="lc-step" style="background:var(--blue-bg);border-color:var(--blue-border)"><div class="lc-num" style="color:var(--blue)">01</div><div class="lc-name" style="color:var(--blue)">Create</div><div class="lc-note" style="color:#1e40af">Data enters — generated, collected or received</div><span class="lc-arrow" style="background:var(--blue-bg)">›</span></div>
+          <div class="lc-step"><div class="lc-num">02</div><div class="lc-name">Store</div><div class="lc-note">Classify &amp; apply controls before storing</div><span class="lc-arrow">›</span></div>
+          <div class="lc-step"><div class="lc-num">03</div><div class="lc-name">Use</div><div class="lc-note">Access controlled by least privilege</div><span class="lc-arrow">›</span></div>
+          <div class="lc-step"><div class="lc-num">04</div><div class="lc-name">Share</div><div class="lc-note">NDAs, DPAs, encryption in transit</div><span class="lc-arrow">›</span></div>
+          <div class="lc-step"><div class="lc-num">05</div><div class="lc-name">Archive</div><div class="lc-note">Retained per policy, access restricted</div><span class="lc-arrow">›</span></div>
+          <div class="lc-step" style="background:var(--red-bg);border-color:var(--red-border)"><div class="lc-num" style="color:var(--red)">06</div><div class="lc-name" style="color:var(--red)">Destroy</div><div class="lc-note" style="color:#991b1b">Sanitise — shred, purge, incinerate</div></div>
+        </div>
+        <div class="info-box"><i class="ti ti-info-circle box-icon"></i>Security controls must be applied at EVERY stage of the lifecycle — not just at rest or in transit.</div>
+      </div>
+      <div class="section">
+        <div class="section-title">Data states &amp; required protection</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Data at rest</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Stored on media — hard drives, SSDs, tapes, cloud. Controls: AES-256 encryption at rest, access controls, physical security, full-disk encryption (FDE), database encryption.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Data in transit</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Moving across a network or between systems. Controls: TLS/SSL, VPN, IPSec, SFTP, HTTPS. Never send sensitive data over unencrypted channels.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Data in use</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Actively being processed in RAM or CPU. Hardest state to protect. Controls: Trusted Execution Environments (TEE), memory encryption, DLP tools, endpoint controls, screen lock, clear desk policy.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Asset valuation</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Tangible assets</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Physical assets: hardware, servers, media, facilities. Valued in monetary terms. Easier to quantify for QRA calculations (AV, SLE, ALE).</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Intangible assets</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Non-physical: data, intellectual property, brand reputation, trade secrets, customer trust. Often harder to value but frequently the most critical. Loss can be catastrophic and irreversible.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">ACV vs replacement cost</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">ACV (Actual Cash Value) = current depreciated value. Replacement cost = cost to replace with new equivalent. Insurance policies may use either — understand which applies for DRP/BCP planning.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RETENTION -->
+    <div id="tab-retention" class="tab-panel">
+      <div class="section">
+        <div class="section-title">Retention concepts — tap to expand</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Retention policy</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Defines how long different categories of data are kept. Driven by: legal/regulatory requirements, business need, litigation hold, and cost. Data must not be kept longer than necessary — excessive retention increases risk and liability.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Legal / litigation hold</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Suspends normal destruction schedules when litigation is anticipated. All potentially relevant data must be preserved. Failure to preserve = spoliation — can result in court sanctions. Relates to EDRM Step 3: Preservation.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Vital records program</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Identifies and protects records critical for business operations and legal compliance. Key records must have offsite backup copies and be part of BCP/DRP. Examples: contracts, financial records, IP documentation.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Data minimisation</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Collect only what is needed for a specific, stated purpose. GDPR principle. Reduces risk — you cannot breach data you do not have. Excess data collection creates unnecessary liability.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Data remanence</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Residual data that remains on media after deletion attempts. Deleting a file or formatting media does NOT remove data — it only marks sectors as available. True destruction requires degaussing, overwriting, or physical destruction.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Object reuse</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">When storage media is reassigned to a new user/process, residual data from the previous use may be accessible. OS must clear/overwrite memory/disk before reuse. Relevant to both RAM and storage media sanitisation.</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Handling requirements by classification level</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Classification</th><th>Storage</th><th>Transmission</th><th>Disposal</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)">Top Secret / Confidential</span></td><td>Encrypted, physically secured, need-to-know access only</td><td>Encrypted channels only — no public networks</td><td>Incineration or degaussing + physical destruction</td></tr>
+              <tr><td><span class="pill" style="background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)">Secret / Private</span></td><td>Encrypted, access logged and audited</td><td>VPN or encrypted email, labelled envelopes</td><td>Cross-cut shredding or degaussing</td></tr>
+              <tr><td><span class="pill" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)">Sensitive</span></td><td>Password protected, access controlled</td><td>Secure email, internal systems preferred</td><td>Shredding or secure deletion tools</td></tr>
+              <tr><td><span class="pill" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border)">Public / Unclassified</span></td><td>Standard controls</td><td>No special requirements</td><td>Standard recycling acceptable</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIVACY -->
+    <div id="tab-privacy" class="tab-panel">
+      <div class="section">
+        <div class="section-title">Privacy core concepts — tap to expand</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">PII</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Personally Identifiable Information — any data that can identify an individual directly (name, SSN, passport) or indirectly (IP address, device ID, location data). Gathering PII mandates addressing privacy obligations.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">PHI</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Protected Health Information — under HIPAA. Any health information that can identify a patient. Includes medical records, diagnoses, treatment plans, insurance info. Requires administrative, physical, and technical safeguards.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Privacy by design</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Privacy built into systems from the start — not added as an afterthought. GDPR principle. 7 foundations: proactive, privacy as default, embedded in design, full functionality, end-to-end security, visibility, respect for user privacy.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Anonymisation vs pseudonymisation</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Anonymisation — data cannot be re-identified even with additional info. Falls outside GDPR scope. Pseudonymisation — data replaced with pseudonyms; re-identification is possible with additional data. Still personal data under GDPR.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Valid consent (GDPR)</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Must be: freely given, specific, informed, and unambiguous. Pre-ticked boxes are NOT valid consent. Withdrawal must be as easy as giving consent. Children under 16 require parental consent (member states can lower to 13).</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Cross-border data transfer</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">GDPR restricts transfer of personal data outside EEA. Mechanisms: Standard Contractual Clauses (SCCs), Binding Corporate Rules (BCRs), Adequacy decisions. Privacy Shield was invalidated by Schrems II ruling (2020).</div></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">GDPR — 6 lawful bases for processing (must satisfy at least one)</div>
+        <div class="gdpr-flow">
+          <div class="gdpr-step"><span class="gdpr-num">1</span><span class="gdpr-text"><strong>Consent</strong> — data subject has given clear, specific, informed, unambiguous consent</span></div>
+          <div class="gdpr-step"><span class="gdpr-num">2</span><span class="gdpr-text"><strong>Contract</strong> — processing is necessary to perform a contract with the data subject</span></div>
+          <div class="gdpr-step"><span class="gdpr-num">3</span><span class="gdpr-text"><strong>Legal obligation</strong> — processing is required to comply with the law</span></div>
+          <div class="gdpr-step"><span class="gdpr-num">4</span><span class="gdpr-text"><strong>Vital interests</strong> — necessary to protect someone's life</span></div>
+          <div class="gdpr-step"><span class="gdpr-num">5</span><span class="gdpr-text"><strong>Public task</strong> — processing for an official function or task in the public interest</span></div>
+          <div class="gdpr-step"><span class="gdpr-num">6</span><span class="gdpr-text"><strong>Legitimate interests</strong> — balance between org interest and data subject rights (requires Legitimate Interests Assessment — LIA)</span></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">GDPR — data subject rights</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Right to access (SAR)</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Subject Access Request — can request a copy of their personal data held. Must be fulfilled within 30 days. No charge for first request.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Right to rectification</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Right to correct inaccurate or incomplete personal data without undue delay.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Right to erasure</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">"Right to be forgotten." Applies when: no longer necessary, consent withdrawn, unlawfully processed. Not absolute — exemptions exist for legal obligations and public interest.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Right to portability</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Receive personal data in a structured, machine-readable format and transmit it to another controller.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Right to restrict</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Data subject can request processing be temporarily halted while accuracy or lawfulness is contested.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Right to object</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Object to processing based on legitimate interests or direct marketing. Controller must stop unless it can demonstrate compelling legitimate grounds.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SANITISATION -->
+    <div id="tab-san" class="tab-panel">
+      <div class="section">
+        <div class="section-title">NIST SP 800-88 — three sanitisation levels</div>
+        <div class="san-level">
+          <div class="san-lv" style="background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:var(--radius) 0 0 var(--radius)">
+            <div class="san-lv-name" style="color:var(--teal)">Clear</div>
+            <div class="san-lv-desc" style="color:#0f766e">Logical overwrite. Protects against simple non-invasive recovery. Suitable for reuse in same security domain.</div>
+          </div>
+          <div class="san-lv" style="background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:0">
+            <div class="san-lv-name" style="color:var(--amber)">Purge</div>
+            <div class="san-lv-desc" style="color:#92400e">Overwriting, degaussing, or cryptographic erasure. Protects against lab-level attack. Media may be reused at same/lower classification.</div>
+          </div>
+          <div class="san-lv" style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:0 var(--radius) var(--radius) 0">
+            <div class="san-lv-name" style="color:var(--red)">Destroy</div>
+            <div class="san-lv-desc" style="color:#991b1b">Disintegration, pulverisation, melting, incineration, shredding. Highest assurance. Media cannot be reused.</div>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Sanitisation methods compared</div>
+        <div class="warn-box"><i class="ti ti-alert-triangle box-icon"></i>Deleting a file or formatting media does NOT destroy data — it only removes the directory entry. Forensic tools can reconstruct data. Proper sanitisation is mandatory before disposal or reuse.</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Method</th><th>How it works</th><th>Effective against</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Overwriting (Clearing)</strong></td><td>Writes patterns of 0s and 1s over all addressable locations. DoD 5220.22-M (7-pass). NIST 800-88 recommends 1-pass for modern drives.</td><td>Software-based recovery</td><td>Reusing media within same security domain</td></tr>
+              <tr><td><strong>Degaussing (Purging)</strong></td><td>Exposes media to strong magnetic field, destroying magnetic encoding. Renders HDDs and tapes unreadable and usually inoperable.</td><td>Magnetic media recovery attacks</td><td>Before disposal of HDDs, tapes. Not effective on SSDs or optical media.</td></tr>
+              <tr><td><strong>Physical destruction</strong></td><td>Shredding, incineration, disintegration, pulverising, chipping. Highest assurance — no possibility of recovery.</td><td>All recovery methods</td><td>Highly classified data, SSDs, optical media, end-of-life hardware</td></tr>
+              <tr><td><strong>Cryptographic erasure</strong></td><td>Destroys the encryption key used to encrypt the drive. Data remains but is cryptographically inaccessible. Requires data to have been encrypted from the start.</td><td>Recovery without key</td><td>Cloud storage, self-encrypting drives (SEDs), when physical destruction is not possible</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">Media-specific guidance — tap to expand</div>
+        <div class="cards-grid">
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">HDD (magnetic)</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Overwriting (1–7 pass), degaussing, or physical shredding. Degaussing destroys the servo track, rendering the drive inoperable. NIST 800-88: 1-pass overwrite is sufficient for modern HDDs.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">SSD / flash media</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Overwriting unreliable due to wear levelling — some blocks may not be overwritten. Best methods: cryptographic erasure (if encrypted from start), ATA Secure Erase command, or physical shredding.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Magnetic tapes</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Degaussing or incineration. Degaussing is most practical for large tape libraries. Physical destruction by shredding offers highest assurance.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Optical media (CD/DVD)</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">Degaussing is NOT effective (no magnetic encoding). Physical destruction only: shredding, disintegration, or incineration. Use optical media shredders certified for classified destruction.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">Paper documents</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">All documents must be shredded or incinerated before discarding. Use cross-cut or micro-cut shredders — strip-cut can be reconstructed. Enforce a clear desk policy for sensitive material.</div></div>
+          <div class="card" onclick="toggleCard(this)"><div class="card-head"><span class="card-label">RAM / volatile memory</span><i class="ti ti-chevron-down card-arrow"></i></div><div class="card-body">RAM retains data briefly after power-off (cold boot attack risk). Mitigation: physical security, memory encryption, disable external boot devices. Data is generally cleared by reboot but brief residual traces may exist.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tabs-wrap -->
+
+  <script id="qdata" type="application/json">[{"q": "Who is responsible for CLASSIFYING data in an organisation?", "opts": ["IT Security Manager", "Data Custodian", "Data Owner (Senior Management)", "Chief Privacy Officer"], "answer": "Data Owner (Senior Management)", "exp": "The Data Owner (typically senior management) is responsible for classifying and valuing data. The Data Custodian implements the controls set by the owner. Classification is never solely the IT department decision."}, {"q": "A database VIEW restricting which columns a user sees is an example of:", "opts": ["Polyinstantiation", "Content-dependent access control", "Context-dependent access control", "Aggregation attack defence"], "answer": "Content-dependent access control", "exp": "Content-dependent access control restricts access based on the internal content of fields or records. Database views implement this. Context-dependent control restricts based on circumstances such as time of day or location."}, {"q": "Which sanitisation method is LEAST reliable for SSDs due to wear levelling?", "opts": ["Physical shredding", "Cryptographic erasure", "Overwriting (clearing)", "Incineration"], "answer": "Overwriting (clearing)", "exp": "Wear levelling in SSDs means some blocks may never be overwritten. NIST 800-88 recommends: cryptographic erasure (if encrypted from start), ATA Secure Erase, or physical shredding for SSDs. Overwriting is reliable for magnetic HDDs but NOT SSDs."}, {"q": "Under GDPR, a company that determines HOW personal data is processed is called the:", "opts": ["Data Processor", "Data Subject", "Data Controller", "Data Custodian"], "answer": "Data Controller", "exp": "Data Controller = determines purpose and means of processing. Data Processor = processes on behalf of the Controller. A Data Processing Agreement (DPA) is required between them. The Data Subject is the individual the data is about."}, {"q": "An employee leaves. What is the FIRST action regarding their account?", "opts": ["Delete the account immediately", "Disable the account first", "Change the password and reassign", "Archive files then delete"], "answer": "Disable the account first", "exp": "FIRST disable the account, THEN delete after an appropriate interval. Immediate deletion may destroy audit trail evidence needed for investigations. Disabling preserves logs while preventing access."}, {"q": "Data at rest in a classified environment should be protected using:", "opts": ["Access controls only", "AES-256 encryption", "TLS only", "Physical security alone"], "answer": "AES-256 encryption", "exp": "Exam tip: At rest = AES-256. In motion = TLS. Physical security alone is insufficient. Defence in depth requires encryption even for physically secured data. Access controls are additional layers, not replacements for encryption."}, {"q": "A user has Top Secret clearance but requests unrelated Top Secret nuclear programme data. Should access be granted?", "opts": ["Yes - they have the required clearance", "No - need-to-know must also be established", "Yes - with manager verbal approval", "No - only compartmented access overrides this"], "answer": "No - need-to-know must also be established", "exp": "In MAC environments, clearance is NECESSARY but NOT SUFFICIENT. Need-to-know must ALSO be established - the subject must have a legitimate work-related need for the specific information requested."}, {"q": "Which backup captures ALL changes since the LAST FULL backup and does NOT clear the archive bit?", "opts": ["Full backup", "Incremental backup", "Differential backup", "Synthetic full backup"], "answer": "Differential backup", "exp": "Differential: captures everything since the last FULL backup, does NOT clear archive bit - grows over time. Restore = full + latest differential (2 tapes only). Incremental: clears archive bit each time. Restore = full + ALL incrementals in sequence (risky if any tape is missing)."}, {"q": "NIST SP 800-88 defines three sanitisation levels. Which provides the HIGHEST assurance?", "opts": ["Clear", "Purge", "Destroy", "Overwrite"], "answer": "Destroy", "exp": "NIST 800-88 levels: Clear (logical overwrite, lowest) then Purge (degaussing or cryptographic erasure) then Destroy (shredding, incineration, disintegration - highest). Destroy means media cannot be reused. Required for Top Secret data or defective media."}, {"q": "Which of the following is NOT a valid GDPR lawful basis for processing personal data?", "opts": ["Legitimate interests", "Vital interests of data subject", "Business profit maximisation", "Legal obligation"], "answer": "Business profit maximisation", "exp": "GDPR six lawful bases: Consent, Contract, Legal obligation, Vital interests, Public task, Legitimate interests. Business profit is not recognised. Legitimate interests requires a Legitimate Interests Assessment (LIA) to balance organisational and individual rights."}, {"q": "When litigation is anticipated, what must happen to normal data destruction schedules?", "opts": ["Continue normal schedules", "Delete all records immediately", "Implement a litigation hold", "Transfer records to legal counsel"], "answer": "Implement a litigation hold", "exp": "Litigation hold (EDRM Step 3 - Preservation) suspends normal data destruction when litigation is reasonably foreseeable. Failure to preserve = spoliation, which can result in court sanctions and adverse inferences. One of the most legally critical data management actions."}, {"q": "Key difference between anonymisation and pseudonymisation under GDPR:", "opts": ["Anonymised can be re-identified; pseudonymised cannot", "Pseudonymised can be re-identified; anonymised cannot", "Both can be re-identified with enough effort", "No meaningful difference"], "answer": "Pseudonymised can be re-identified; anonymised cannot", "exp": "Anonymised = cannot be re-identified even with additional information - falls OUTSIDE GDPR scope. Pseudonymised = re-identification IS possible with additional data - still personal data under GDPR. Pseudonymisation reduces risk but does not remove GDPR obligations."}, {"q": "Magnetic tape media is best sanitised using:", "opts": ["ATA Secure Erase", "Multiple-pass overwriting", "Degaussing or incineration", "Cold-boot technique"], "answer": "Degaussing or incineration", "exp": "Magnetic tapes: degaussing (strong magnetic field destroys encoding) or incineration. Degaussing is practical for large tape libraries. ATA Secure Erase is for HDDs. Physical shredding provides highest assurance for any media type."}, {"q": "Data minimisation as a privacy principle means:", "opts": ["Keep all data for at least 2 years", "Never retain sensitive data", "Collect only what is needed for a stated purpose", "Log all data access events"], "answer": "Collect only what is needed for a stated purpose", "exp": "Data minimisation: collect ONLY what is needed for a specific stated purpose. GDPR core principle. Reduces risk - you cannot breach data you do not have. Excess collection creates unnecessary liability and violates GDPR storage limitation principles."}, {"q": "Which role implements security controls on data systems day-to-day?", "opts": ["Data Owner", "Data Subject", "Data Custodian", "Data Controller"], "answer": "Data Custodian", "exp": "Data Custodian = IT/technical staff. Responsibilities: implement controls set by the owner, perform backups and recovery, maintain audit logs, manage day-to-day data security. Does NOT classify data - that is the Data Owner's responsibility."}, {"q": "A payroll company processes employee data on behalf of the employer. Under GDPR the payroll company is:", "opts": ["Data Controller", "Data Subject", "Data Processor", "Joint controller"], "answer": "Data Processor", "exp": "Data Processor = processes data on behalf of the Data Controller. A Data Processing Agreement (DPA) is required. The Processor cannot sub-process without the Controller consent. The employer (Controller) determines the purpose and means of processing."}, {"q": "Data remanence refers to:", "opts": ["Encrypted data stored at rest", "Residual data remaining after deletion attempts", "Data moving across a network", "Backup copies stored offsite"], "answer": "Residual data remaining after deletion attempts", "exp": "Data remanence = residual data remaining on media after deletion or formatting. Deleting a file only removes the directory entry - actual data remains until overwritten. This is why proper sanitisation is mandatory before media disposal or reassignment to another user."}, {"q": "Which privacy law does NOT apply to municipalities, universities, schools, and hospitals?", "opts": ["GDPR", "HIPAA", "PIPEDA", "CCPA"], "answer": "PIPEDA", "exp": "PIPEDA (Canada's Personal Information Protection Electronic Document Act) explicitly excludes non-profits, municipalities, universities, schools, and hospitals. GDPR applies broadly across EU sectors. HIPAA specifically targets healthcare covered entities and business associates."}, {"q": "Security controls must be applied at which stages of the data lifecycle?", "opts": ["Only at creation", "Only at storage and transit", "At EVERY stage of the lifecycle", "Only when sharing externally"], "answer": "At EVERY stage of the lifecycle", "exp": "Security controls must be applied at ALL stages: Create, Store, Use, Share, Archive, Destroy. This is fundamental - data does not become less sensitive as it moves between lifecycle stages. Controls must be consistent and continuous throughout the entire lifecycle."}, {"q": "A centralised repository combining data from multiple databases for analysis is called a:", "opts": ["Data mining result", "Data mart", "Data warehouse", "Database federation"], "answer": "Data warehouse", "exp": "Data warehouse = large repository consolidating historical data from multiple sources for analysis. Data mining = analysis on warehouse data to find patterns. Data mart = more secure container storing metadata from mining. Database federation = virtual integration without physically copying data."}]</script>
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 2 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="page-footer">
+    <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 2 — Asset Security</p>
+    <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All frameworks subject to exam version updates.</p>
+  </div>
+
+</div><!-- /page-wrap -->
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleCard(el) { el.classList.toggle('open'); }
+</script>
+<script>
+var QS = JSON.parse(document.getElementById("qdata").textContent);
+var qst = {i:0, s:0};
+function openQuiz() { document.getElementById("quizOv").style.display = "flex"; qst = {i:0, s:0}; renderQ(); }
+function closeQ() { document.getElementById("quizOv").style.display = "none"; }
+function renderQ() {
+  var t = document.getElementById("qTitle");
+  var b = document.getElementById("qBody");
+  if (qst.i >= QS.length) {
+    var p = Math.round(qst.s / QS.length * 100);
+    t.textContent = "Quiz complete";
+    var msg = p >= 80 ? "Excellent — exam ready!" : p >= 60 ? "Good — review weak areas" : "Needs more review — keep studying";
+    var icon = p >= 80 ? "🏆" : p >= 60 ? "✅" : "📚";
+    b.innerHTML = "<div style='text-align:center;padding:1.5rem 0;'>"
+      + "<div style='font-size:48px;margin-bottom:.5rem;'>" + icon + "</div>"
+      + "<div style='font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;'>" + qst.s + "/" + QS.length + "</div>"
+      + "<div style='font-size:16px;color:#475569;margin-bottom:1.5rem;'>" + msg + "</div>"
+      + "<button onclick='qst={i:0,s:0};renderQ();' style='background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;'>Retry quiz</button>"
+      + "<button onclick='closeQ()' style='background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;'>Close</button>"
+      + "</div>";
+    return;
+  }
+  var q = QS[qst.i];
+  var pct = Math.round(qst.i / QS.length * 100);
+  t.textContent = "Question " + (qst.i + 1) + " of " + QS.length;
+  var h = "<div>";
+  h += "<div style='background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;'>" + q.q + "</div>";
+  h += "<div id='qopts' style='display:flex;flex-direction:column;gap:8px;'>";
+  for (var i = 0; i < q.opts.length; i++) {
+    h += "<button data-idx='" + i + "' onclick='ansQ(" + i + ")' style='text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;'>"
+       + "<span style='color:#94a3b8;font-weight:700;margin-right:8px;'>" + String.fromCharCode(65 + i) + ".</span>"
+       + q.opts[i] + "</button>";
+  }
+  h += "</div><div id='qexp'></div>";
+  h += "<div style='display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;'>";
+  h += "<span style='font-size:12px;color:#94a3b8;'>Score: " + qst.s + "</span>";
+  h += "<div style='flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;'><div style='height:100%;width:" + pct + "%;background:#0f172a;border-radius:4px;'></div></div>";
+  h += "<span style='font-size:12px;color:#94a3b8;'>" + pct + "%</span></div></div>";
+  b.innerHTML = h;
+}
+function ansQ(chosen) {
+  var q = QS[qst.i];
+  var correct = q.opts.indexOf(q.answer);
+  var btns = document.querySelectorAll("#qopts button");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].onclick = null; btns[i].style.cursor = "default";
+    if (i === correct) { btns[i].style.background="#f0fdf4"; btns[i].style.borderColor="#16a34a"; btns[i].style.color="#14532d"; }
+    if (i === chosen && chosen !== correct) { btns[i].style.background="#fef2f2"; btns[i].style.borderColor="#dc2626"; btns[i].style.color="#991b1b"; }
+  }
+  var ok = (chosen === correct);
+  if (ok) qst.s++;
+  var nxt = (qst.i + 1 < QS.length) ? "Next →" : "See results";
+  document.getElementById("qexp").innerHTML =
+    "<div style='margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;"
+    + (ok ? "background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;" : "background:#fef2f2;color:#991b1b;border:1px solid #fecaca;")
+    + "'><span style='font-weight:700;'>" + (ok ? "✓ Correct! " : "✗ Incorrect. ") + "</span>" + q.exp + "</div>"
+    + "<div style='margin-top:10px;display:flex;justify-content:flex-end;'>"
+    + "<button onclick='qst.i++;renderQ();' style='background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;'>" + nxt + "</button></div>";
+}
+</script>
+</body>
+</html>
