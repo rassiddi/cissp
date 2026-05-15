@@ -119,6 +119,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-si
       <span class="hpill">DevSecOps</span>
     </div>
   </div>
+    <button style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;" onclick="openQuiz()"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
+  </div>
 </div>
 
 <!-- TABS -->
@@ -486,6 +488,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-si
   </div>
 </div>
 
+
+<!-- QUIZ OVERLAY -->
+<div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;" id="quizOverlay" onclick="if(event.target===this)closeQuiz()">
+  <div style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);" onclick="event.stopPropagation()">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 8 Practice Quiz</div>
+        <div id="quizTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQuiz()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:#475569;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
+    </div>
+    <div id="quizBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+
 <div class="pf">
   <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 8 — Software Development Security</p>
   <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams &amp; Memory Palace. For educational purposes.</p>
@@ -500,6 +517,59 @@ function sw(id,btn){
   btn.classList.add('active');
 }
 function tg(el){el.classList.toggle('open');}
+
+<script>
+var Q=[
+  {q:"At which stage of the SDLC is it CHEAPEST to find and fix a security flaw?",opts:["Testing phase","Production/operations phase","Requirements and design phase","Acceptance phase"],answer:"Requirements and design phase",exp:"The cost to fix a defect EXPONENTIALLY INCREASES at each SDLC stage. Design/requirements phase = cheapest (~$100). Testing = ~$1,500. Production = ~$10,000+. 'Security should be baked in, not bolted on.' This is why threat modelling during design has the highest security ROI."},
+  {q:"The Agile manifesto values which of the following OVER comprehensive documentation?",opts:["Contract negotiation","Processes and tools","Working software","Following a plan"],answer:"Working software",exp:"Agile Manifesto four values: Individuals and interactions OVER processes and tools. Working SOFTWARE OVER comprehensive documentation. Customer collaboration OVER contract negotiation. Responding to change OVER following a plan. Working software is the PRIMARY measure of success."},
+  {q:"SQL injection is best prevented by:",opts:["Input length validation only","Encrypting the database","Using parameterised queries / prepared statements","Firewall rules"],answer:"Using parameterised queries / prepared statements",exp:"SQL injection prevention: parameterised queries/prepared statements (BEST), bind variables, stored procedures, ORM frameworks, input validation (whitelist approach). Encryption doesn't prevent injection — it still executes. Firewalls can't inspect encrypted database traffic."},
+  {q:"Which OWASP Top 10 category involves users acting outside their intended permissions due to broken server-side enforcement?",opts:["A03 — Injection","A07 — Authentication Failures","A01 — Broken Access Control","A05 — Security Misconfiguration"],answer:"A01 — Broken Access Control",exp:"A01 Broken Access Control (OWASP 2021) = users able to act outside their intended permissions. Includes IDOR (Insecure Direct Object References), privilege escalation, CORS misconfigurations. Prevention: deny by default, server-side enforcement only, log access control failures."},
+  {q:"XSS (Cross-Site Scripting) attacks differ from CSRF attacks in that:",opts:["XSS exploits trust in the user's browser; CSRF exploits trust in a trusted site","XSS exploits trust in a trusted site; CSRF exploits trust in the user's browser","Both exploit the same trust relationship","XSS requires user interaction; CSRF does not"],answer:"XSS exploits trust in a trusted site; CSRF exploits trust in the user's browser",exp:"XSS: exploits the trust that a USER has in a site — injects malicious scripts into trusted content. CSRF: exploits the trust that a SITE has in a user's browser — forces submission of authenticated requests to third-party sites. This distinction is frequently tested. Prevention: CSP for XSS, anti-CSRF tokens for CSRF."},
+  {q:"Which CMM level represents the transition from reactive to PROACTIVE software development processes?",opts:["Level 1 to Level 2","Level 2 to Level 3","Level 3 to Level 4","Level 4 to Level 5"],answer:"Level 2 to Level 3",exp:"CMM levels 1–2 = REACTIVE. Levels 3–5 = PROACTIVE. The biggest maturity jump is Level 2 (Repeatable — basic project management) to Level 3 (Defined — engineering processes, code reuse, QA, configuration management). This represents moving from ad-hoc project success to systematic organisational capability."},
+  {q:"Compiled code poses MORE security risk than interpreted code because:",opts:["It executes faster and is harder to control","Malicious code can be hidden in the binary and is harder to detect","It requires more system resources","It doesn't support error handling"],answer:"Malicious code can be hidden in the binary and is harder to detect",exp:"Compiled code = translated to machine code before execution. Malicious code can be hidden in the binary — much harder to review than source code. Interpreted code (JavaScript, Python) executes line by line — code is more visible and reviewable. This is why SAST includes binary analysis for compiled languages."},
+  {q:"A virus that changes its appearance (garble pattern) each time it spreads to avoid signature detection is called a:",opts:["Logic bomb","Stealth virus","Polymorphic virus","Companion virus"],answer:"Polymorphic virus",exp:"Polymorphic virus = changes its signature/garble pattern each time it spreads — defeating signature-based antivirus. Stealth virus = hides its modifications. Multipart = infects both boot sector and executables. Companion = stores separately. Defence: heuristic/behavioural antivirus can detect polymorphic viruses even without matching signatures."},
+  {q:"Which development methodology explicitly includes risk analysis at the BEGINNING OF EACH ITERATION?",opts:["Waterfall","Agile","Spiral","Cleanroom"],answer:"Spiral",exp:"Spiral model = risk-driven iterative development. Four quadrants per cycle: Planning → Risk analysis → Engineering → Evaluation. Risk assessment occurs at the START of each iteration — making it ideal for large, complex, high-risk projects. Angular axis = progress. Radial axis = cumulative cost."},
+  {q:"A database relationship where two tables are linked through a common attribute is maintained through a:",opts:["Primary key in both tables","Foreign key referencing the primary key of another table","Candidate key","Composite key"],answer:"Foreign key referencing the primary key of another table",exp:"Foreign key = attribute in one table that references the PRIMARY KEY of another table — enforcing referential integrity. A foreign key value must match an existing primary key value or be null. This is fundamental to relational database design and prevents orphaned records."},
+  {q:"Which of the following BEST describes polyinstantiation in database security?",opts:["Storing multiple copies of data at different locations","Providing different versions of data to users based on their classification level","Encrypting database records individually","Partitioning a database by security level"],answer:"Providing different versions of data to users based on their classification level",exp:"Polyinstantiation = countermeasure for inference attacks. Allows the same primary key to have different data values depending on the user's clearance level. A lower-classified user sees different (possibly false) data than a higher-classified user — preventing them from inferring sensitive information."},
+  {q:"Which type of malware does NOT require a HOST APPLICATION to propagate?",opts:["Boot sector virus","Trojan horse","Worm","Macro virus"],answer:"Worm",exp:"Worm = SELF-PROPAGATING — reproduces ON ITS OWN without a host application. Spreads across networks automatically. Virus requires a host application to propagate. Trojan horse disguises itself as legitimate software. Worm capacity to propagate independent of user action makes it uniquely dangerous for network spread."},
+  {q:"Which acronym describes the four ACID properties ensuring database transaction reliability?",opts:["Atomicity, Confidentiality, Integrity, Durability","Atomicity, Consistency, Isolation, Durability","Authentication, Consistency, Integrity, Durability","Atomicity, Confidentiality, Isolation, Disclosure"],answer:"Atomicity, Consistency, Isolation, Durability",exp:"ACID: Atomicity (all-or-nothing), Consistency (valid state only), Isolation (transactions independent), Durability (committed = permanent). These properties ensure database transactions are reliable even in failure scenarios. Essential for financial and critical data systems."},
+  {q:"DevOps as originally defined integrates which three functions?",opts:["Development, Security, and Operations","Development, Quality Assurance, and Operations","Development, Architecture, and Operations","Planning, Development, and Operations"],answer:"Development, Quality Assurance, and Operations",exp:"DevOps = Development + Quality Assurance + IT Operations. IMPORTANT EXAM TRAP: DevOps as originally defined does NOT include Security. DevSecOps explicitly adds security. Security must be 'shifted left' into the development pipeline — not added as a gate at the end."},
+  {q:"The Waterfall model allows a development team to return to which stage if issues are found?",opts:["Any previous stage","Only one step back","The requirements phase only","No return is possible"],answer:"Only one step back",exp:"Waterfall = sequential — each phase must complete before the next begins. Can go back ONLY ONE STEP. Simple but rigid — assumes a phase ends at a specific time. System Requirements → Software Requirements → Analysis → Program Design → Coding → Testing → Operations. Does NOT iterate."},
+  {q:"Which SQL command is used to grant permissions to database users?",opts:["UPDATE","REVOKE","GRANT","INSERT"],answer:"GRANT",exp:"SQL SUDIGR mnemonic: Select, Update, Delete, Insert, Grant, Revoke. GRANT = DCL (Data Control Language) — grants permissions. REVOKE = removes permissions. DML (Data Manipulation Language) = SELECT, INSERT, UPDATE, DELETE. DDL (Data Definition Language) = CREATE, ALTER, DROP."},
+  {q:"ActiveX differs from Java applets in which critical security way?",opts:["ActiveX is sandboxed; Java applets are not","Java applets are sandboxed; ActiveX is NOT sandboxed","Both have identical security models","ActiveX only works in non-Windows environments"],answer:"Java applets are sandboxed; ActiveX is NOT sandboxed",exp:"Java applets: sandboxed — isolated from system resources, no warnings on execution. ActiveX (Microsoft): NOT sandboxed — has full access to Windows environment. Uses Authenticode and digital signatures but those annoying dialogs people click through. This is why ActiveX is significantly more dangerous than Java applets."},
+  {q:"A logic bomb is MOST accurately described as:",opts:["Malware that replicates via email attachments","Code that executes when a specific condition or date/time is met","A virus that modifies its own code","Software that creates covert network channels"],answer:"Code that executes when a specific condition or date/time is met",exp:"Logic bomb = dormant code that executes when a TRIGGER condition is met — a specific date/time, an event (like accessing a bank account), or an employee being fired. Often planted by insiders. Very difficult to detect when dormant. Example: 'Execute and delete all records on April 1, 2025.'"},
+  {q:"Software escrow protects the LICENSEE against:",opts:["Intellectual property theft","Vendor business failure causing loss of source code access","Licence compliance violations","Security vulnerabilities in the software"],answer:"Vendor business failure causing loss of source code access",exp:"Software escrow: source code is held by a neutral third party and released to the licensee if the vendor goes out of business. Protects against vendor failure disrupting critical business operations that depend on proprietary software with no open-source alternative. Trigger conditions defined in the escrow agreement."},
+  {q:"Which testing approach verifies that new changes DO NOT break previously working security controls?",opts:["Unit testing","Integration testing","Regression testing","Fuzz testing"],answer:"Regression testing",exp:"Regression testing = verifies new changes don't break EXISTING functionality or security controls. Uses known inputs and compares against earlier version results. Requires automated processes to be practical at scale. Nonregression testing = verifying code works as planned. Critical in CI/CD pipelines where code changes frequently."}
+];
+var qState={idx:0,score:0};
+function openQuiz(){document.getElementById('quizOverlay').style.display='flex';qState={idx:0,score:0};renderQ();}
+function closeQuiz(){document.getElementById('quizOverlay').style.display='none';}
+function renderQ(){
+  var body=document.getElementById('quizBody');
+  var title=document.getElementById('quizTitle');
+  if(qState.idx>=Q.length){
+    var pct=Math.round(qState.score/Q.length*100);
+    title.textContent='Quiz complete';
+    body.innerHTML='<div style="text-align:center;padding:1.5rem 0;"><div style="font-size:48px;margin-bottom:.5rem;">'+(pct>=80?'🏆':pct>=60?'✅':'📚')+'</div><div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qState.score+'/'+Q.length+'</div><div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(pct>=80?'Excellent — exam ready!':pct>=60?'Good — review weak areas':'Needs more review')+'</div><button onclick="qState={idx:0,score:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button><button onclick="closeQuiz()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button></div>';
+    return;
+  }
+  var q=Q[qState.idx];
+  title.textContent='Question '+(qState.idx+1)+' of '+Q.length;
+  var html='<div><div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div><div style="display:flex;flex-direction:column;gap:8px;" id="qopts">';
+  q.opts.forEach(function(opt,i){html+='<button id="qo'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;"><span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';});
+  html+='</div><div id="qexp"></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;"><span style="font-size:12px;color:#94a3b8;">Score: '+qState.score+'</span><div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.round(qState.idx/Q.length*100)+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div><span style="font-size:12px;color:#94a3b8;">'+Math.round(qState.idx/Q.length*100)+'%</span></div></div>';
+  body.innerHTML=html;
+}
+function ansQ(chosen){
+  var q=Q[qState.idx];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){b.onclick=null;b.style.cursor='default';if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}});
+  var ok=(chosen===correct);
+  if(ok)qState.score++;
+  document.getElementById('qexp').innerHTML='<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'+(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;')+'"><span style="font-weight:700;">'+(ok?'✓ Correct! ':'✗ Incorrect. ')+'</span>'+q.exp+'</div><div style="margin-top:10px;display:flex;justify-content:flex-end;"><button onclick="qState.idx++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'+(qState.idx+1<Q.length?'Next →':'See results')+'</button></div>';
+}
+</script>
 </script>
 </body>
 </html>

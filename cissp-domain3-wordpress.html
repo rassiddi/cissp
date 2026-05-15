@@ -161,6 +161,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <span class="hpill">Physical Security</span>
     </div>
   </div>
+    <button style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;" onclick="openQuiz()"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
+  </div>
 </div>
 
 <!-- TABS -->
@@ -535,6 +537,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 </div><!-- /tabs-wrap -->
 
+
+<!-- QUIZ OVERLAY -->
+<div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;" id="quizOverlay" onclick="if(event.target===this)closeQuiz()">
+  <div style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);" onclick="event.stopPropagation()">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 3 Practice Quiz</div>
+        <div id="quizTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQuiz()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:#475569;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
+    </div>
+    <div id="quizBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+
 <div class="pf">
   <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 3 — Security Architecture &amp; Engineering</p>
   <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All frameworks subject to exam version updates.</p>
@@ -549,6 +566,59 @@ function sw(id,btn){
   btn.classList.add('active');
 }
 function tg(el){el.classList.toggle('open');}
+
+<script>
+var Q=[
+  {q:"Which security model uses the rules 'No Read Up' and 'No Write Down' to protect confidentiality?",opts:["Biba model","Clark-Wilson model","Bell-LaPadula model","Brewer-Nash model"],answer:"Bell-LaPadula model",exp:"Bell-LaPadula protects CONFIDENTIALITY. Simple rule = No Read Up (NRU). Star (*) rule = No Write Down (NWD). This prevents subjects from reading higher-classified data or contaminating lower-classified data. Biba is the inverse for integrity."},
+  {q:"Which security model protects INTEGRITY using rules 'No Read Down' and 'No Write Up'?",opts:["Bell-LaPadula","Clark-Wilson","Biba","Non-interference"],answer:"Biba",exp:"Biba protects INTEGRITY — the inverse of Bell-LaPadula. Simple rule = No Read Down (NRD). Star (*) rule = No Write Up (NWU). Prevents subjects from reading lower-integrity data or writing to higher-integrity objects. Uses lattice-based Information Flow model."},
+  {q:"In AES-256 encryption, how many rounds of processing occur?",opts:["10 rounds","12 rounds","14 rounds","16 rounds"],answer:"14 rounds",exp:"AES key/round mapping: 128-bit key = 10 rounds. 192-bit key = 12 rounds. 256-bit key = 14 rounds. AES block size is always 128 bits regardless of key size. AES is the gold standard for data at rest."},
+  {q:"A digital signature is created using which key?",opts:["Recipient's public key","Sender's public key","Sender's private key","Recipient's private key"],answer:"Sender's private key",exp:"Digital signatures: sign with SENDER'S PRIVATE KEY, verify with sender's public key. This provides authentication, integrity, and non-repudiation. Encryption for confidentiality uses RECIPIENT'S public key. These are distinct operations."},
+  {q:"Which cryptographic attack exploits the probability that two different inputs produce the same hash output?",opts:["Rainbow table attack","Brute force attack","Birthday (collision) attack","Meet-in-the-middle attack"],answer:"Birthday (collision) attack",exp:"Birthday attack exploits the birthday paradox — collisions occur far sooner than expected. Targets hash functions. MD5 and SHA-1 are vulnerable. Defence: use SHA-256 or higher. The attack is named after the probability that in a room of 23 people, two share a birthday (~50%)."},
+  {q:"What is the PRIMARY purpose of a salt in password hashing?",opts:["To speed up the hashing process","To prevent rainbow table attacks","To encrypt the hash itself","To comply with NIST standards"],answer:"To prevent rainbow table attacks",exp:"Salt (NONCE) = random value added to the password BEFORE hashing. Different salts mean identical passwords produce different hashes — defeating pre-computed rainbow table attacks. PBKDF2, bcrypt, and Argon2 all incorporate salting. Without salt, rainbow tables can crack hashed passwords instantly."},
+  {q:"Which TCSEC level first introduces Mandatory Access Control (MAC) with sensitivity labels?",opts:["C1","C2","B1","A1"],answer:"B1",exp:"TCSEC B1 (Labelled Security) introduces MAC — mandatory labelling of all data and subjects. B2 adds structured protection and addresses covert channels. B3 adds security domains. A = Verified Protection (B3 + formal mathematical verification). C2 is Controlled Access Protection (DAC)."},
+  {q:"Protection Ring 0 in a computer system is reserved for:",opts:["User applications","Device drivers","OS kernel / supervisor mode","Network processes"],answer:"OS kernel / supervisor mode",exp:"Ring 0 = kernel/OS core — most privileged mode. Ring 1 = OS components/drivers. Ring 2 = OS services. Ring 3 = User applications — least privileged. Outer rings must make formal System Calls to access inner ring services. Security kernel runs in Ring 0."},
+  {q:"A covert timing channel exploits which resource to communicate secretly?",opts:["Shared storage","CPU timing and resource usage","Network bandwidth","Shared memory"],answer:"CPU timing and resource usage",exp:"Covert Timing Channel: modifies resource timing to communicate — difficult to detect. Covert Storage Channel: writes data to shared storage for another process to read. LOKI = tool creating covert channel using ICMP. Defence: code review and auditing."},
+  {q:"Diffie-Hellman is primarily used for:",opts:["Encrypting bulk data","Digital signatures","Key exchange only","Certificate signing"],answer:"Key exchange only",exp:"Diffie-Hellman is the FIRST asymmetric algorithm — used for key EXCHANGE only, not encryption or signing. It enables two parties to establish a shared secret over an insecure channel. Basis for Elgamal and Oakley. DSA is for signing only. RSA can do both encryption and signing."},
+  {q:"Which component of the PKI validates certificate status in REAL-TIME without the latency of CRL?",opts:["Registration Authority","Certificate Authority","OCSP","CRL"],answer:"OCSP",exp:"OCSP (Online Certificate Status Protocol) provides real-time certificate status: valid/invalid/unknown. CRL (Certificate Revocation List) is a batch process with latency — must be downloaded and checked. OCSP is preferred for time-sensitive applications."},
+  {q:"ECC provides equivalent security to RSA with a SMALLER key size because it is based on:",opts:["Factoring large prime numbers","Discrete logarithms of elliptic curves","The Diffie-Hellman problem","Hash collisions"],answer:"Discrete logarithms of elliptic curves",exp:"ECC (Elliptic Curve Cryptography) uses the mathematics of elliptic curves. A 160-bit ECC key provides equivalent security to a 1024-bit RSA key — much more efficient. Ideal for mobile devices and constrained environments. RSA is based on factoring large primes."},
+  {q:"Which Common Criteria EAL level is most commonly used in commercial products?",opts:["EAL 1","EAL 3","EAL 4","EAL 7"],answer:"EAL 4",exp:"EAL 4 (Methodically Designed, Tested and Reviewed) is the most common commercial assurance level. EAL 1 = lowest (functionally tested). EAL 7 = highest (formally verified, mathematically proven). EAL 4 balances rigour with practicality."},
+  {q:"A system that prevents processes from accessing memory outside their assigned boundaries is implementing:",opts:["Covert channel prevention","Process isolation and bounds","Trusted recovery","Object reuse controls"],answer:"Process isolation and bounds",exp:"Confinement: process can only read/write within certain memory area (sandboxing). Bounds: the memory limits a process cannot exceed. Isolation: when confined through bounds, process runs in isolation. This prevents one process from affecting others' data — fundamental to TCB security."},
+  {q:"What does TEMPEST refer to in the context of physical security?",opts:["Tamper-evident physical seals","Electromagnetic emanation interception","Temperature and environmental controls","Two-person integrity requirements"],answer:"Electromagnetic emanation interception",exp:"TEMPEST refers to electromagnetic radiation emitted by electronic devices that can be intercepted to reconstruct data. Countermeasures: Faraday Cage (blocks EM emissions), White Noise (interference signals), Control Zone (combined). Used in sensitive government/military environments."},
+  {q:"The Clark-Wilson model achieves data integrity primarily through:",opts:["Sensitivity labels on all objects","Separation of duties and well-formed transactions","Non-interference between subjects","No Read Up policy enforcement"],answer:"Separation of duties and well-formed transactions",exp:"Clark-Wilson enforces integrity through: CDI (Constrained Data Items), UDI (Unconstrained Data Items), IVP (Integrity Verification Procedures), and TPs (Transformation Procedures). Only TPs can modify CDIs. Enforces separation of duties and well-formed transactions."},
+  {q:"A Faraday cage primarily protects against which type of attack?",opts:["Covert storage channel","Electromagnetic emanation / TEMPEST","Physical intrusion","Side-channel power analysis"],answer:"Electromagnetic emanation / TEMPEST",exp:"A Faraday cage is a special enclosure that blocks electromagnetic emissions — protecting against TEMPEST attacks where EM radiation from computing equipment could be intercepted to reconstruct data. White Noise adds random signals for additional interference."},
+  {q:"TOC-TOU (Time of Check to Time of Use) is a type of:",opts:["Replay attack","Race condition","Buffer overflow","Covert channel"],answer:"Race condition",exp:"TOC-TOU is a race condition vulnerability. A subject checks an object (TOC), decides to use it, but between check and use the object changes (an attacker modifies it). Prevention: atomic operations, file locking, transactions with proper isolation. Common in file permission checks."},
+  {q:"Which security mode requires ALL users to have clearance for the HIGHEST level of data but allows varying need-to-know?",opts:["Dedicated mode","System High mode","Compartmentalized mode","Multilevel mode"],answer:"System High mode",exp:"Security modes (S.C.A.N.): Dedicated = everyone has clearance/approval/need-to-know for ALL data. System High = all cleared for highest level, but need-to-know varies. Compartmentalized = clearance for highest level but approval varies. Multilevel = users differ in all three."},
+  {q:"Hash functions provide which security property?",opts:["Confidentiality","Integrity","Non-repudiation","Authentication"],answer:"Integrity",exp:"Hash functions provide INTEGRITY — any change in the input produces a different hash output, detecting tampering. Hashing does NOT provide confidentiality (anyone can compute hashes). HMAC adds a symmetric key to provide partial authentication. Digital signatures add non-repudiation."}
+];
+var qState={idx:0,score:0};
+function openQuiz(){document.getElementById('quizOverlay').style.display='flex';qState={idx:0,score:0};renderQ();}
+function closeQuiz(){document.getElementById('quizOverlay').style.display='none';}
+function renderQ(){
+  var body=document.getElementById('quizBody');
+  var title=document.getElementById('quizTitle');
+  if(qState.idx>=Q.length){
+    var pct=Math.round(qState.score/Q.length*100);
+    title.textContent='Quiz complete';
+    body.innerHTML='<div style="text-align:center;padding:1.5rem 0;"><div style="font-size:48px;margin-bottom:.5rem;">'+(pct>=80?'🏆':pct>=60?'✅':'📚')+'</div><div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qState.score+'/'+Q.length+'</div><div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(pct>=80?'Excellent — exam ready!':pct>=60?'Good — review weak areas':'Needs more review')+'</div><button onclick="qState={idx:0,score:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button><button onclick="closeQuiz()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button></div>';
+    return;
+  }
+  var q=Q[qState.idx];
+  title.textContent='Question '+(qState.idx+1)+' of '+Q.length;
+  var html='<div><div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div><div style="display:flex;flex-direction:column;gap:8px;" id="qopts">';
+  q.opts.forEach(function(opt,i){html+='<button id="qo'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;"><span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';});
+  html+='</div><div id="qexp"></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;"><span style="font-size:12px;color:#94a3b8;">Score: '+qState.score+'</span><div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.round(qState.idx/Q.length*100)+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div><span style="font-size:12px;color:#94a3b8;">'+Math.round(qState.idx/Q.length*100)+'%</span></div></div>';
+  body.innerHTML=html;
+}
+function ansQ(chosen){
+  var q=Q[qState.idx];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){b.onclick=null;b.style.cursor='default';if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}});
+  var ok=(chosen===correct);
+  if(ok)qState.score++;
+  document.getElementById('qexp').innerHTML='<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'+(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;')+'"><span style="font-weight:700;">'+(ok?'✓ Correct! ':'✗ Incorrect. ')+'</span>'+q.exp+'</div><div style="margin-top:10px;display:flex;justify-content:flex-end;"><button onclick="qState.idx++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'+(qState.idx+1<Q.length?'Next →':'See results')+'</button></div>';
+}
+</script>
 </script>
 </body>
 </html>
