@@ -131,8 +131,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <span class="hpill">Converged Protocols</span>
     </div>
   </div>
-    <button style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;" onclick="openQuiz()"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
-  </div>
 </div>
 
 <!-- TABS -->
@@ -451,21 +449,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 </div><!-- /tabs -->
 
-
-<!-- QUIZ OVERLAY -->
-<div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;" id="quizOverlay" onclick="if(event.target===this)closeQuiz()">
-  <div style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);" onclick="event.stopPropagation()">
-    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
-      <div>
-        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 4 Practice Quiz</div>
-        <div id="quizTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
-      </div>
-      <button onclick="closeQuiz()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:#475569;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
-    </div>
-    <div id="quizBody" style="padding:1.25rem 1.5rem;"></div>
-  </div>
-</div>
-
 <div class="pf">
   <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 4 — Communication &amp; Network Security</p>
   <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All frameworks subject to exam version updates.</p>
@@ -480,59 +463,6 @@ function sw(id,btn){
   btn.classList.add('active');
 }
 function tg(el){el.classList.toggle('open');}
-
-<script>
-var Q=[
-  {q:"At which OSI layer do routers operate?",opts:["Layer 1 — Physical","Layer 2 — Data Link","Layer 3 — Network","Layer 4 — Transport"],answer:"Layer 3 — Network",exp:"Routers operate at Layer 3 (Network layer) — they route packets using IP addresses. Switches operate at Layer 2 (MAC addresses). Hubs operate at Layer 1 (no addressing). Gateways operate at Layers 4–7 (application layer translation)."},
-  {q:"Which protocol maps an IP address to a MAC address?",opts:["RARP","DNS","ARP","DHCP"],answer:"ARP",exp:"ARP (Address Resolution Protocol) maps IP → MAC address (Layer 2). RARP maps MAC → IP (reverse). ARP poisoning/spoofing inserts false MAC entries to redirect traffic — enables MITM attacks. Defence: monitor ARP cache, dynamic ARP inspection."},
-  {q:"A stateful inspection firewall operates at which OSI layers?",opts:["Layer 7 only","Layers 2–3","Layers 3–4","Layers 5–7"],answer:"Layers 3–4",exp:"Stateful inspection (3rd generation) firewall operates at Layers 3 and 4. It tracks connection state in a state table — can block unsolicited replies. Disadvantage: can DoS itself by filling the state table. Disrupts active sessions on reboot."},
-  {q:"What is the primary difference between IPSec AH and ESP?",opts:["AH provides encryption; ESP provides authentication","AH provides authentication only; ESP provides encryption (and limited auth)","Both AH and ESP provide identical protection","AH works only in tunnel mode; ESP only in transport mode"],answer:"AH provides authentication only; ESP provides encryption (and limited auth)",exp:"AH (Authentication Header): provides authentication, integrity, non-repudiation — NO encryption. ESP (Encapsulating Security Payload): provides confidentiality (encryption) + limited authentication. AH prevents replay attacks. L2TP + IPSec is the most common VPN solution."},
-  {q:"Which wireless encryption standard uses AES with CCMP and is considered the current gold standard?",opts:["WEP","WPA","WPA2","WPA3"],answer:"WPA2",exp:"WPA2 uses AES block cipher with CCMP — not backward compatible with WEP. Two modes: Personal (PSK pre-shared key) and Enterprise (802.1X/EAP individual credentials). WEP uses RC4 with weak 24-bit IV — easily crackable. WPA uses TKIP (RC4 based) — interim fix."},
-  {q:"RADIUS uses which transport protocol and encrypts which portion of the packet?",opts:["TCP; entire packet","UDP; entire packet","TCP; password only","UDP; password only"],answer:"UDP; password only",exp:"RADIUS uses UDP (ports 1812/1813) and encrypts ONLY the password in the access-request packet. TACACS+ uses TCP (port 49) and encrypts the ENTIRE packet — making TACACS+ more secure. RADIUS is commonly used for Wi-Fi authentication; TACACS+ for network device administration."},
-  {q:"Which type of firewall examines application-layer content (Layer 7) and provides the deepest inspection?",opts:["Packet filter firewall","Circuit-level proxy","Application-level (proxy) firewall","Stateful inspection firewall"],answer:"Application-level (proxy) firewall",exp:"Application-level proxy firewalls (2nd generation) operate at Layer 7. Advantages: deep packet inspection, logging, auditing, extra security. Disadvantage: slow — inspects every packet. Circuit-level operates at Layer 5. Packet filter at Layer 3. Stateful at Layers 3–4."},
-  {q:"DNS poisoning (cache poisoning) directs users to malicious sites by corrupting which component?",opts:["SSL certificate","ARP cache","DNS resolver cache","Routing table"],answer:"DNS resolver cache",exp:"DNS poisoning (Pharming) corrupts the DNS cache so a legitimate hostname resolves to an attacker's IP. Countermeasures: DNSSEC (cryptographically signs DNS responses). DNS spoofing = sending false DNS replies in real-time. Both can redirect users without their knowledge."},
-  {q:"A SYN flood attack exploits which protocol mechanism?",opts:["UDP connectionless nature","TCP 3-way handshake","ICMP echo requests","ARP broadcast"],answer:"TCP 3-way handshake",exp:"SYN flood sends many SYN packets without completing the 3-way handshake (SYN→SYN-ACK→ACK), filling the connection state table. Layer 4 attack. Countermeasures: SYN cookies, firewall rate limiting, IPS. The server holds half-open connections until timeout."},
-  {q:"Which VPN tunnelling protocol provides authentication BUT NOT encryption on its own?",opts:["IPSec","SSL/TLS","L2TP","PPTP"],answer:"L2TP",exp:"L2TP provides authentication but NOT encryption on its own — it must be combined with IPSec for encryption. L2TP + IPSec is the most common VPN solution. PPTP provides authentication only, supports IP only. IPSec provides both authentication AND encryption."},
-  {q:"VLAN hopping is an attack that allows an attacker to:",opts:["Intercept VoIP calls","Access traffic on a different VLAN by exploiting switch misconfiguration","Bypass firewall rules","Perform DNS poisoning"],answer:"Access traffic on a different VLAN by exploiting switch misconfiguration",exp:"VLAN hopping exploits misconfigured trunk ports or double-tagging to bypass VLAN isolation. Countermeasures: proper trunk port configuration, disable automatic trunk negotiation, dedicated native VLANs, Layer 3 switch for inter-VLAN routing with proper ACLs."},
-  {q:"Which 802.11 wireless standards operate on the 2.4 GHz frequency? (Select the best answer)",opts:["a, n, ac","a, b, g","b, g, n","g, n, ac"],answer:"b, g, n",exp:"802.11b = 2.4 GHz (11 Mbps). 802.11g = 2.4 GHz (54 Mbps). 802.11n = 2.4 or 5 GHz (200+ Mbps). 802.11a = 5 GHz only. 802.11ac = 5 GHz only. b, g, and n all use 2.4 GHz and are backward compatible. The 2.4 GHz band is more crowded with household devices."},
-  {q:"The Loki attack uses which protocol to create a covert channel?",opts:["TCP","UDP","ICMP","ARP"],answer:"ICMP",exp:"Loki is a covert channel tool that hides data inside ICMP echo (ping) packets. It exploits the fact that many firewalls allow ICMP through. Data is concealed after the ICMP header. Defence: inspect ICMP payload length/content, or block unnecessary ICMP."},
-  {q:"PAT (Port Address Translation) is also known as:",opts:["Static NAT","Dynamic NAT","NAT overloading","Proxy ARP"],answer:"NAT overloading",exp:"PAT (Port Address Translation) = NAT overloading — many internal IPs share ONE public IP, differentiated by port numbers. Static NAT = 1:1 mapping. Dynamic NAT = many:many (pool). PAT disadvantage: single public IP = single point of failure. Hides internal addressing."},
-  {q:"Which authentication protocol transmits credentials in CLEARTEXT?",opts:["CHAP","MS-CHAP","RADIUS","PAP"],answer:"PAP",exp:"PAP (Password Authentication Protocol) transmits user ID and password in cleartext. Exam tip: there are technically no specific attacks against PAP because everything is already in cleartext — there is nothing to decrypt. Replace PAP with CHAP or certificate-based authentication."},
-  {q:"Bluesnarfing is a Bluetooth attack that:",opts:["Sends unsolicited messages to Bluetooth devices","Allows full phone control including making calls","Copies information from a device without consent","Prevents Bluetooth pairing"],answer:"Copies information from a device without consent",exp:"Bluetooth attacks: Bluejacking = sends SPAM/unsolicited messages. Bluesnarfing = copies information from a remote device WITHOUT consent. Bluebugging = most serious — full phone control including making calls. Countermeasures: disable discovery mode, disable automatic pairing."},
-  {q:"S/MIME uses which key to provide NON-REPUDIATION for email?",opts:["Recipient's public key","Recipient's private key","Sender's private key","A symmetric session key"],answer:"Sender's private key",exp:"S/MIME Signed (non-repudiation): sender signs with their PRIVATE key — only they could have produced the signature. S/MIME Enveloped (confidentiality): encrypt with RECIPIENT'S public key. For full P A I N: digitally sign AND encrypt the message."},
-  {q:"A company receives packets to their broadcast address with a spoofed source IP causing all hosts to reply. This is a:",opts:["Teardrop attack","Smurf attack","Fraggle attack","Ping of Death"],answer:"Smurf attack",exp:"Smurf attack uses ICMP echo requests to a broadcast address with a spoofed source IP — all hosts reply to the victim, overwhelming it. Fraggle is identical but uses UDP instead of ICMP. Teardrop sends malformed fragmented packets. Ping of Death sends oversized ICMP packets."},
-  {q:"MPLS (Multi-Protocol Label Switching) is used primarily for:",opts:["Wireless network encryption","High-performance routing using labels instead of IP addresses","VoIP call quality management","Firewall rule processing"],answer:"High-performance routing using labels instead of IP addresses",exp:"MPLS routes data using short path labels instead of long network addresses. Advantages: high performance, high throughput, cost-effective, provides QoS for VoIP, more secure than public internet. Can create VPN connections. Used by ISPs for backbone infrastructure."},
-  {q:"Which EAP variant is considered the STRONGEST for wireless authentication?",opts:["LEAP (Lightweight EAP)","PEAP (Protected EAP)","EAP-TLS","EAP-TTLS"],answer:"EAP-TLS",exp:"EAP-TLS provides the strongest authentication — mutual certificate-based authentication (both server AND client present certificates). PEAP encapsulates EAP in a TLS tunnel (server cert only). LEAP (Cisco proprietary) is broken — vulnerable to ASLEAP attack. EAP-TLS requires PKI infrastructure."}
-];
-var qState={idx:0,score:0};
-function openQuiz(){document.getElementById('quizOverlay').style.display='flex';qState={idx:0,score:0};renderQ();}
-function closeQuiz(){document.getElementById('quizOverlay').style.display='none';}
-function renderQ(){
-  var body=document.getElementById('quizBody');
-  var title=document.getElementById('quizTitle');
-  if(qState.idx>=Q.length){
-    var pct=Math.round(qState.score/Q.length*100);
-    title.textContent='Quiz complete';
-    body.innerHTML='<div style="text-align:center;padding:1.5rem 0;"><div style="font-size:48px;margin-bottom:.5rem;">'+(pct>=80?'🏆':pct>=60?'✅':'📚')+'</div><div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qState.score+'/'+Q.length+'</div><div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(pct>=80?'Excellent — exam ready!':pct>=60?'Good — review weak areas':'Needs more review')+'</div><button onclick="qState={idx:0,score:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button><button onclick="closeQuiz()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button></div>';
-    return;
-  }
-  var q=Q[qState.idx];
-  title.textContent='Question '+(qState.idx+1)+' of '+Q.length;
-  var html='<div><div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div><div style="display:flex;flex-direction:column;gap:8px;" id="qopts">';
-  q.opts.forEach(function(opt,i){html+='<button id="qo'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;"><span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';});
-  html+='</div><div id="qexp"></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;"><span style="font-size:12px;color:#94a3b8;">Score: '+qState.score+'</span><div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.round(qState.idx/Q.length*100)+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div><span style="font-size:12px;color:#94a3b8;">'+Math.round(qState.idx/Q.length*100)+'%</span></div></div>';
-  body.innerHTML=html;
-}
-function ansQ(chosen){
-  var q=Q[qState.idx];
-  var correct=q.opts.indexOf(q.answer);
-  var btns=document.querySelectorAll('#qopts button');
-  btns.forEach(function(b,i){b.onclick=null;b.style.cursor='default';if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}});
-  var ok=(chosen===correct);
-  if(ok)qState.score++;
-  document.getElementById('qexp').innerHTML='<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'+(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;')+'"><span style="font-weight:700;">'+(ok?'✓ Correct! ':'✗ Incorrect. ')+'</span>'+q.exp+'</div><div style="margin-top:10px;display:flex;justify-content:flex-end;"><button onclick="qState.idx++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'+(qState.idx+1<Q.length?'Next →':'See results')+'</button></div>';
-}
-</script>
 </script>
 </body>
 </html>

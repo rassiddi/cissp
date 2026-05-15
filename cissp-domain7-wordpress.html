@@ -126,8 +126,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-si
       <span class="hpill">Change management</span>
     </div>
   </div>
-    <button style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;" onclick="openQuiz()"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
-  </div>
 </div>
 
 <!-- TABS -->
@@ -530,21 +528,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-si
 
 </div><!-- /tabs -->
 
-
-<!-- QUIZ OVERLAY -->
-<div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;" id="quizOverlay" onclick="if(event.target===this)closeQuiz()">
-  <div style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);" onclick="event.stopPropagation()">
-    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
-      <div>
-        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 7 Practice Quiz</div>
-        <div id="quizTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
-      </div>
-      <button onclick="closeQuiz()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:#475569;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
-    </div>
-    <div id="quizBody" style="padding:1.25rem 1.5rem;"></div>
-  </div>
-</div>
-
 <div class="pf">
   <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 7 — Security Operations</p>
   <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams &amp; Memory Palace. For educational purposes.</p>
@@ -561,58 +544,6 @@ function sw(id,btn){
 function tg(el){el.classList.toggle('open');}
 // clean duplicate step
 document.querySelectorAll('.fn').forEach(n=>{if(n.textContent.trim()==='')n.closest('.fs')?.remove();});
-
-<script>
-var Q=[
-  {q:"During an incident response, what is the FIRST priority after detecting a breach?",opts:["Eradication of malware","Evidence collection","Containment to stop ongoing damage","Notifying law enforcement"],answer:"Containment to stop ongoing damage",exp:"The FIRST priority after detection is CONTAINMENT — stop the bleeding. Short-term containment: isolate affected systems. Long-term containment: patch and harden. Evidence must be preserved (forensic copy) BEFORE containment if possible, but stopping active damage takes precedence."},
-  {q:"An investigator is about to examine a compromised server. What must happen BEFORE any analysis begins?",opts:["Notify users","Delete suspicious files","Create a forensic bit-for-bit copy and calculate hash","Reinstall the operating system"],answer:"Create a forensic bit-for-bit copy and calculate hash",exp:"ALWAYS work on COPIES of evidence — never the original. Create a forensic bit-level image using a write blocker. Calculate MD5/SHA hash BEFORE and AFTER imaging to verify integrity. All investigation happens on the copy. Chain of custody must be maintained throughout."},
-  {q:"What legal standard must be met for evidence in a CRIMINAL investigation?",opts:["Preponderance of evidence","Clear and convincing evidence","Beyond a reasonable doubt","Balance of probabilities"],answer:"Beyond a reasonable doubt",exp:"Criminal investigations: 'beyond a reasonable doubt' — highest standard. Civil investigations: 'preponderance of the evidence' (more likely than not, >51%). Administrative investigations: lowest standard — resolving the operational issue is the primary goal."},
-  {q:"The legal hold (litigation hold) in the EDRM corresponds to which step?",opts:["Step 2 — Identification","Step 3 — Preservation","Step 4 — Collection","Step 6 — Review"],answer:"Step 3 — Preservation",exp:"EDRM Step 3 = Preservation = Legal Hold. Suspends normal data destruction schedules when litigation is anticipated. Failure to preserve = spoliation — can result in court sanctions and adverse inferences. This is one of the most legally critical steps."},
-  {q:"An organisation's MTD is 24 hours. The RTO is 8 hours. What is the MAXIMUM acceptable WRT?",opts:["8 hours","16 hours","24 hours","32 hours"],answer:"16 hours",exp:"MTD ≥ RTO + WRT. Therefore WRT ≤ MTD – RTO = 24 – 8 = 16 hours. The Work Recovery Time is the time needed to reconfigure systems and restore operations after technical recovery. MTD is the hard deadline — exceeding it causes irreparable business harm."},
-  {q:"A warm site typically becomes operational within:",opts:["Minutes","1–2 hours","12 hours","1–2 weeks"],answer:"12 hours",exp:"Recovery time by site type: Hot site = hours (fully configured, apps installed). Warm site = ~12 hours (facility ready, external connections present, but workstations may need configuration). Mobile site = 3–5 days. Cold site = 1–2 weeks (only power/HVAC). Redundant site = potential zero downtime."},
-  {q:"Which backup strategy requires the FULL backup plus only the MOST RECENT backup tape to restore?",opts:["Full backup alone","Incremental backup strategy","Differential backup strategy","Grandfather-Father-Son"],answer:"Differential backup strategy",exp:"Differential: restore = full backup + LATEST differential only (2 tapes). Incremental: restore = full backup + ALL incrementals in sequence (many tapes — complex). Differential grows larger each day between full backups but is simpler/faster to restore."},
-  {q:"The primary difference between the recovery team and the salvage team during BCP execution is:",opts:["Recovery team stays at primary site; salvage team goes to alternate","Recovery team moves to alternate site (most critical data first); salvage team returns to primary site (least critical data first)","Both teams work simultaneously at the alternate site","The salvage team handles media; the recovery team handles personnel"],answer:"Recovery team moves to alternate site (most critical data first); salvage team returns to primary site (least critical data first)",exp:"Recovery team: moves to alternate site — most critical data moved FIRST. Salvage team: returns to primary site after disaster — least critical data moved first. Best practice: restore 50% of highest priority systems first, then move to lower priority to achieve minimum operating capacity."},
-  {q:"RAID 5 requires a minimum of how many drives and tolerates how many failures?",opts:["2 drives; 1 failure","3 drives; 1 failure","4 drives; 2 failures","3 drives; 2 failures"],answer:"3 drives; 1 failure",exp:"RAID 5 = block-level striping with DISTRIBUTED parity. Minimum 3 drives. Tolerates 1 drive failure. Most popular RAID for balanced read/write performance. RAID 6 = 4 drives minimum, tolerates 2 failures. RAID 0 = no redundancy. RAID 1 = mirroring (2 drives, 1 failure tolerance)."},
-  {q:"Which type of fire suppression system is MOST suitable for a data centre with human occupants?",opts:["Deluge system","Wet pipe sprinkler","Dry pipe sprinkler","Preaction system"],answer:"Preaction system",exp:"Preaction = combination of dry and wet pipe — MOST suitable for computer rooms with humans. Requires two triggers to release water (prevents accidental discharge). Dry pipe contains compressed air — delays water until sensor confirms fire. Deluge = large volume instantly = NOT suitable for computers."},
-  {q:"An employee modifying small amounts of data across many financial transactions to avoid detection is conducting a:",opts:["Logic bomb attack","Salami attack","Data diddling","Buffer overflow"],answer:"Salami attack",exp:"Salami attack = small amounts stolen repeatedly, assumed to go unnoticed. Common in financial systems (rounding fractional cents to attacker's account). Accumulates into significant theft. Data diddling = small subtle changes to data during input/processing. Both require comprehensive audit trails to detect."},
-  {q:"Which DRP test type is MOST disruptive but MOST realistic?",opts:["Read-through test","Structured walk-through","Parallel test","Full-interruption test"],answer:"Full-interruption test",exp:"Full-interruption test: PRIMARY SITE IS SHUT DOWN, personnel relocate to alternate site. Most disruptive and most realistic. Most expensive. May cause actual business disruption. Parallel test = less risky, both sites run simultaneously. Read-through = least disruptive (just read the plan)."},
-  {q:"The 'prudent man rule' in the context of Federal Sentencing Guidelines requires organisations to demonstrate:",opts:["Due diligence in investigating vulnerabilities","Due care by implementing reasonable controls","Both due care AND due diligence","Zero tolerance for security incidents"],answer:"Both due care AND due diligence",exp:"The 1991 Federal Sentencing Guidelines / Prudent Man Rule: to minimise punishment, organisations must demonstrate BOTH due care (implementing reasonable controls) AND due diligence (investigating vulnerabilities). 3 burdens of proof for negligence: legally recognised obligation, failed to comply with standards, causal relationship between negligence and damage."},
-  {q:"During BCP planning, who is responsible for APPROVING the BCP?",opts:["The BCP Coordinator","The IT Department","Senior Management","The Board of Directors"],answer:"Senior Management",exp:"BCP requires senior management approval — their sign-off is CRITICAL for authority, funding, and organisational commitment. BCP documentation includes: Statement of Importance (signed by senior management). Without management support, the plan lacks authority and resources. Senior management drives the entire BCM programme."},
-  {q:"Computer crime is considered 'white collar' crime. Which type of computer crime category is an attack by a disgruntled employee?",opts:["Military and intelligence attacks","Business attacks","Grudge attacks","Hacktivist attacks"],answer:"Grudge attacks",exp:"Computer crime categories: Military/intelligence (APT), Business attacks (ransomware, IP theft), Financial attacks (banking trojans), Terrorist attacks (critical infrastructure), Grudge attacks (DISGRUNTLED EMPLOYEES — sabotage, insider threats), Thrill attacks (bragging rights), Hacktivist attacks (political/social motivation — LulzSec, Anonymous)."},
-  {q:"A Faraday cage used in a computer forensics lab primarily prevents:",opts:["Physical break-ins","Remote wiping of mobile devices during seizure","Electromagnetic interference from power sources","Condensation damage to hardware"],answer:"Remote wiping of mobile devices during seizure",exp:"Faraday bags/cages block wireless signals — preventing remote wiping of mobile devices seized as evidence. This is critical in forensics — if a device connects to a network, it could be remotely wiped before analysis. Also prevents incoming calls that could alter the evidence state."},
-  {q:"The FIRST task when the disaster recovery team arrives at the alternate site is:",opts:["Begin restoring the most critical systems","Contact vendors for hardware","Assess the situation","Implement the DRP immediately"],answer:"Assess the situation",exp:"The FIRST task when the disaster recovery team reaches the site is to ASSESS THE SITUATION — understand what happened, what is working, what is damaged, what resources are available. Only after assessment can recovery be prioritised effectively. Emergency response guidelines should be simple and actionable."},
-  {q:"Electronic vaulting differs from remote mirroring in that:",opts:["Electronic vaulting is real-time; remote mirroring is batch","Electronic vaulting is a batch process; remote mirroring is real-time","Both are identical processes","Electronic vaulting uses satellites; remote mirroring uses fibre"],answer:"Electronic vaulting is a batch process; remote mirroring is real-time",exp:"Electronic vaulting = BATCH process, data transmitted periodically — RPO measured in hours. Remote journaling = near real-time transaction replication. Remote mirroring (database shadowing) = TRUE real-time — RPO approaches zero, highest cost. Choose based on RTO/RPO requirements and budget."},
-  {q:"Incremental backup clears the archive bit after each backup. What does this mean for restoration?",opts:["Only the last incremental is needed to restore","The full backup plus ALL incrementals in sequence are needed","Only the full backup is needed","The most recent full and last incremental are needed"],answer:"The full backup plus ALL incrementals in sequence are needed",exp:"Incremental: clears archive bit → each incremental captures ONLY what changed since the LAST backup (any type). Restoration requires: full backup + ALL incrementals in order (complex, unreliable if any tape is bad). Differential does NOT clear archive bit → simpler restore (full + latest diff only)."}
-];
-var qState={idx:0,score:0};
-function openQuiz(){document.getElementById('quizOverlay').style.display='flex';qState={idx:0,score:0};renderQ();}
-function closeQuiz(){document.getElementById('quizOverlay').style.display='none';}
-function renderQ(){
-  var body=document.getElementById('quizBody');
-  var title=document.getElementById('quizTitle');
-  if(qState.idx>=Q.length){
-    var pct=Math.round(qState.score/Q.length*100);
-    title.textContent='Quiz complete';
-    body.innerHTML='<div style="text-align:center;padding:1.5rem 0;"><div style="font-size:48px;margin-bottom:.5rem;">'+(pct>=80?'🏆':pct>=60?'✅':'📚')+'</div><div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qState.score+'/'+Q.length+'</div><div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(pct>=80?'Excellent — exam ready!':pct>=60?'Good — review weak areas':'Needs more review')+'</div><button onclick="qState={idx:0,score:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button><button onclick="closeQuiz()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button></div>';
-    return;
-  }
-  var q=Q[qState.idx];
-  title.textContent='Question '+(qState.idx+1)+' of '+Q.length;
-  var html='<div><div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div><div style="display:flex;flex-direction:column;gap:8px;" id="qopts">';
-  q.opts.forEach(function(opt,i){html+='<button id="qo'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;"><span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';});
-  html+='</div><div id="qexp"></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;"><span style="font-size:12px;color:#94a3b8;">Score: '+qState.score+'</span><div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.round(qState.idx/Q.length*100)+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div><span style="font-size:12px;color:#94a3b8;">'+Math.round(qState.idx/Q.length*100)+'%</span></div></div>';
-  body.innerHTML=html;
-}
-function ansQ(chosen){
-  var q=Q[qState.idx];
-  var correct=q.opts.indexOf(q.answer);
-  var btns=document.querySelectorAll('#qopts button');
-  btns.forEach(function(b,i){b.onclick=null;b.style.cursor='default';if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}});
-  var ok=(chosen===correct);
-  if(ok)qState.score++;
-  document.getElementById('qexp').innerHTML='<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'+(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;')+'"><span style="font-weight:700;">'+(ok?'✓ Correct! ':'✗ Incorrect. ')+'</span>'+q.exp+'</div><div style="margin-top:10px;display:flex;justify-content:flex-end;"><button onclick="qState.idx++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'+(qState.idx+1<Q.length?'Next →':'See results')+'</button></div>';
-}
-</script>
 </script>
 </body>
 </html>

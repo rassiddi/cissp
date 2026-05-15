@@ -124,8 +124,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-si
       <span class="hpill">Account lifecycle</span>
     </div>
   </div>
-    <button style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;" onclick="openQuiz()"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
-  </div>
 </div>
 
 <!-- TABS -->
@@ -492,21 +490,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-si
 
 </div><!-- /tabs -->
 
-
-<!-- QUIZ OVERLAY -->
-<div style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;padding:1rem;" id="quizOverlay" onclick="if(event.target===this)closeQuiz()">
-  <div style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);" onclick="event.stopPropagation()">
-    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
-      <div>
-        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 5 Practice Quiz</div>
-        <div id="quizTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
-      </div>
-      <button onclick="closeQuiz()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:#475569;display:flex;align-items:center;justify-content:center;line-height:1;">×</button>
-    </div>
-    <div id="quizBody" style="padding:1.25rem 1.5rem;"></div>
-  </div>
-</div>
-
 <div class="pf">
   <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 5 — Identity &amp; Access Management</p>
   <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams, Memory Palace &amp; CISSP Mindmaps Summary. For educational purposes.</p>
@@ -521,59 +504,6 @@ function sw(id,btn){
   btn.classList.add('active');
 }
 function tg(el){el.classList.toggle('open');}
-
-<script>
-var Q=[
-  {q:"Which IAAA component provides the ability to trace an action back to a specific user?",opts:["Identification","Authentication","Authorisation","Accountability"],answer:"Accountability",exp:"Accountability = tracing an action to a subject. Best provided through logging/audit trails. Requires BOTH identification AND authentication. Authorisation is not required for accountability — you can track what someone tried to do even if denied. Logging is the best way to provide accountability."},
-  {q:"A fingerprint reader has an FAR of 0.001% and an FRR of 3%. Which statement is correct?",opts:["The system accepts too many impostors","The system is calibrated for high security — it frequently rejects legitimate users","The CER is 0.001%","FRR represents the impostor acceptance rate"],answer:"The system is calibrated for high security — it frequently rejects legitimate users",exp:"FAR (False Acceptance Rate) = impostors accepted. FRR (False Rejection Rate) = legitimate users rejected. High FRR means system is set too strictly. Low FAR means few impostors accepted. CER = point where FAR = FRR. A high FRR means legitimate users are often frustrated."},
-  {q:"Kerberos CANNOT address which security property?",opts:["Confidentiality","Integrity","Authentication","Availability"],answer:"Availability",exp:"Kerberos addresses Confidentiality, Integrity, and Authentication — NOT Availability. The KDC (Key Distribution Centre) is a single point of failure. If KDC goes down, authentication fails — this directly impacts availability. Kerberos requires time synchronisation within 5 minutes."},
-  {q:"In Kerberos, what does the client present to the Ticket Granting Server (TGS) to request access to a specific service?",opts:["Username and password","TGT (Ticket Granting Ticket)","Service ticket","Session key"],answer:"TGT (Ticket Granting Ticket)",exp:"Kerberos flow: Client authenticates to AS → receives TGT. To access a service, client presents TGT to TGS → receives Service Ticket. Client presents Service Ticket to target service. Passwords are NEVER exchanged — only hashed values. TGT has an expiry time."},
-  {q:"SAML 2.0 is primarily used for:",opts:["Authorising API access","Federated identity and web-based SSO","Encrypting passwords","Managing RADIUS authentication"],answer:"Federated identity and web-based SSO",exp:"SAML 2.0 (Security Assertion Markup Language) is the enterprise standard for federated identity management and web SSO. XML-based. Three roles: Principal (user), Identity Provider (IdP), Service Provider (SP). OAuth 2.0 is for AUTHORISATION (not authentication) for commercial/consumer apps."},
-  {q:"The difference between OAuth 2.0 and OpenID Connect is:",opts:["OAuth handles authentication; OIDC handles authorisation","OIDC adds authentication on top of OAuth's authorisation framework","They are identical protocols","OAuth is for enterprise; OIDC is for consumers"],answer:"OIDC adds authentication on top of OAuth's authorisation framework",exp:"OAuth 2.0 = AUTHORISATION framework (delegate access without sharing passwords). OpenID Connect (OIDC) = built on top of OAuth 2.0, adds AUTHENTICATION. SAML = enterprise authentication. OAuth = commercial authorisation. OIDC = commercial authentication + authorisation."},
-  {q:"Which access control model is described as 'non-discretionary' and is MOST commonly used in commercial enterprises?",opts:["DAC (Discretionary Access Control)","MAC (Mandatory Access Control)","RBAC (Role-Based Access Control)","ABAC (Attribute-Based Access Control)"],answer:"RBAC (Role-Based Access Control)",exp:"RBAC is the most widely used commercial model. Access is based on job role — administrators assign roles, roles have permissions, users are assigned to roles. Non-discretionary = administrators control access, not individual owners. Changes require updating roles, not individual ACLs."},
-  {q:"In which access control model can the owner of a file grant or revoke access to other users at their discretion?",opts:["MAC","RBAC","DAC","Rule-BAC"],answer:"DAC",exp:"DAC (Discretionary Access Control) = the owner, creator, or data custodian controls access. Implemented using ACLs. Owner can modify permissions at will — decentralised control. Risk: Trojan horse attacks can exploit DAC, running with owner's privileges. Windows NTFS uses DAC."},
-  {q:"Biometric enrolment time exceeding what threshold is considered unacceptable?",opts:["30 seconds","1 minute","2 minutes","5 minutes"],answer:"2 minutes",exp:"Biometric enrolment time over 2 MINUTES is considered unacceptable. Enrolment must occur FIRST before any authentication. Throughput target: 10 people per minute minimum. If enrolment takes too long, users will resist and bypass the system."},
-  {q:"Which biometric is considered the MOST ACCURATE but raises PHI concerns?",opts:["Fingerprint","Iris scan","Retina scan","Facial recognition"],answer:"Retina scan",exp:"Retina scan = most accurate biometric. Scans blood vessel patterns on the back of the eyeball. Reveals health conditions (blood pressure, pregnancy) — contains PHI. Most accepted (second most accurate) = Iris scan. Most widely used = Fingerprint. Retina may not be acceptable in all contexts."},
-  {q:"A Type 2 authentication error (FAR) means:",opts:["A legitimate user was rejected","An impostor was accepted by the system","The system failed to enrol a user","Two users share the same biometric"],answer:"An impostor was accepted by the system",exp:"Type 2 error = FAR (False Acceptance Rate) = impostor accepted. Type 1 error = FRR (False Rejection Rate) = legitimate user rejected. Exam tip: 'Type 2 (FAR) is FAR from Type 1 (FRR).' CER/EER = crossover point where FAR = FRR. Lower CER = more accurate system."},
-  {q:"Which SSO weakness is most significant from a security perspective?",opts:["Users must remember multiple passwords","Single point of compromise — one stolen credential accesses all resources","SSO systems are too complex to implement","SSO requires biometric authentication"],answer:"Single point of compromise — one stolen credential accesses all resources",exp:"SSO's primary risk: single point of compromise. If one set of credentials is stolen, ALL resources become accessible. SSO database compromise exposes all passwords. Benefits: stronger passwords (only one to remember), less admin overhead, reduced password fatigue."},
-  {q:"SCIM (System for Cross-domain Identity Management) is used for:",opts:["Securing SAML assertions","Automating identity provisioning/deprovisioning across cloud services","Providing SSO tokens","Encrypting directory queries"],answer:"Automating identity provisioning/deprovisioning across cloud services",exp:"SCIM is an open standard for automating the exchange of user identity information between identity domains or IT systems. Used to automatically create/delete accounts when users join or leave. Prevents orphaned accounts across cloud services. Works with IDaaS providers."},
-  {q:"Which directory protocol uses port 389 (unencrypted) and port 636 (encrypted)?",opts:["Kerberos","RADIUS","LDAP / LDAPS","TACACS+"],answer:"LDAP / LDAPS",exp:"LDAP (Lightweight Directory Access Protocol): port 389 unencrypted. LDAPS (LDAP over TLS/SSL): port 636 encrypted. Based on X.500 standard. Manages user information and certificates. Microsoft Active Directory uses LDAP and Kerberos. Distinguished Names (DNs) identify objects."},
-  {q:"A company's sales team can access customer data from 9 AM to 5 PM on weekdays only. This is an example of:",opts:["Content-dependent access control","Context-dependent access control","Role-Based access control","Attribute-based access control"],answer:"Context-dependent access control",exp:"Context-dependent access control restricts access based on circumstances (context) — such as time of day, location, or sequence of activities. Content-dependent = based on the data content itself (e.g., a database view showing only certain fields). Both can coexist in the same system."},
-  {q:"Which is the MOST effective countermeasure against privilege creep?",opts:["Stronger password policies","Periodic access reviews and entitlement audits","Installing DLP software","Implementing single sign-on"],answer:"Periodic access reviews and entitlement audits",exp:"Privilege creep = accumulation of excess privileges through role changes without revoking old rights. Prevention: periodic access reviews, quarterly entitlement audits, automated deprovisioning tied to role changes. Management certification of access rights at each role change is best practice."},
-  {q:"In SESAME, what significant improvement does it have over Kerberos?",opts:["Uses UDP instead of TCP","Uses both symmetric AND asymmetric encryption","Provides stronger time synchronisation","Eliminates the need for a KDC"],answer:"Uses both symmetric AND asymmetric encryption",exp:"SESAME (Secure European System for Application in a Multi-vendor Environment) was designed to overcome Kerberos weaknesses. Key improvement: uses BOTH symmetric AND asymmetric encryption. Also provides two tickets — one for authentication (like Kerberos) and one with a Privileged Attribute Certificate (PAC) defining access privileges."},
-  {q:"Implicit deny is best described as:",opts:["Explicitly blocking all traffic","Access is denied UNLESS it has been explicitly granted","Denying access after three failed attempts","Blocking access during off-hours"],answer:"Access is denied UNLESS it has been explicitly granted",exp:"Implicit deny = the default stance. Access to an object is DENIED unless access has been EXPLICITLY granted to a subject. This is the foundational principle of most access control systems — always start with deny all, then add explicit permits. Prevents accidental exposure."},
-  {q:"The 'something you are or do' authentication factor includes:",opts:["Password and PIN only","Smart cards and hardware tokens","Fingerprints and signature dynamics","Location and IP address"],answer:"Fingerprints and signature dynamics",exp:"Type 3 = something you ARE or DO. Physical biometrics (ARE): fingerprint, retina, iris, facial, hand geometry. Behavioural biometrics (DO): signature dynamics, keyboard dynamics. Type 1 = something you KNOW. Type 2 = something you HAVE. Type 4 = somewhere you ARE (location)."},
-  {q:"An asynchronous OTP token generates a one-time password based on:",opts:["The current time","A counter synchronised with the server","A challenge/nonce provided by the server","A pre-shared secret key alone"],answer:"A challenge/nonce provided by the server",exp:"Asynchronous OTP (not time-based) = server sends a challenge/nonce, the token encrypts it and returns an OTP. Synchronous OTP = time or counter based (e.g., SecurID — generates new code every 60 seconds). Adding a PIN to either type creates strong two-factor authentication."}
-];
-var qState={idx:0,score:0};
-function openQuiz(){document.getElementById('quizOverlay').style.display='flex';qState={idx:0,score:0};renderQ();}
-function closeQuiz(){document.getElementById('quizOverlay').style.display='none';}
-function renderQ(){
-  var body=document.getElementById('quizBody');
-  var title=document.getElementById('quizTitle');
-  if(qState.idx>=Q.length){
-    var pct=Math.round(qState.score/Q.length*100);
-    title.textContent='Quiz complete';
-    body.innerHTML='<div style="text-align:center;padding:1.5rem 0;"><div style="font-size:48px;margin-bottom:.5rem;">'+(pct>=80?'🏆':pct>=60?'✅':'📚')+'</div><div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qState.score+'/'+Q.length+'</div><div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(pct>=80?'Excellent — exam ready!':pct>=60?'Good — review weak areas':'Needs more review')+'</div><button onclick="qState={idx:0,score:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button><button onclick="closeQuiz()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button></div>';
-    return;
-  }
-  var q=Q[qState.idx];
-  title.textContent='Question '+(qState.idx+1)+' of '+Q.length;
-  var html='<div><div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div><div style="display:flex;flex-direction:column;gap:8px;" id="qopts">';
-  q.opts.forEach(function(opt,i){html+='<button id="qo'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;"><span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';});
-  html+='</div><div id="qexp"></div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;"><span style="font-size:12px;color:#94a3b8;">Score: '+qState.score+'</span><div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.round(qState.idx/Q.length*100)+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div><span style="font-size:12px;color:#94a3b8;">'+Math.round(qState.idx/Q.length*100)+'%</span></div></div>';
-  body.innerHTML=html;
-}
-function ansQ(chosen){
-  var q=Q[qState.idx];
-  var correct=q.opts.indexOf(q.answer);
-  var btns=document.querySelectorAll('#qopts button');
-  btns.forEach(function(b,i){b.onclick=null;b.style.cursor='default';if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}});
-  var ok=(chosen===correct);
-  if(ok)qState.score++;
-  document.getElementById('qexp').innerHTML='<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'+(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;')+'"><span style="font-weight:700;">'+(ok?'✓ Correct! ':'✗ Incorrect. ')+'</span>'+q.exp+'</div><div style="margin-top:10px;display:flex;justify-content:flex-end;"><button onclick="qState.idx++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'+(qState.idx+1<Q.length?'Next →':'See results')+'</button></div>';
-}
-</script>
 </script>
 </body>
 </html>
