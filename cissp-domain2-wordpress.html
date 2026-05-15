@@ -140,6 +140,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
         <span class="hero-pill">NIST SP 800-88</span>
         <span class="hero-pill">Data Remanence</span>
       </div>
+      <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;"><i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz</button>
     </div>
   </div>
 
@@ -381,7 +382,20 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 
   </div><!-- /tabs-wrap -->
 
-  <div class="page-footer">
+  <script id="qdata" type="application/json">[{"q": "Who is responsible for CLASSIFYING data in an organisation?", "opts": ["IT Security Manager", "Data Custodian", "Data Owner (Senior Management)", "Chief Privacy Officer"], "answer": "Data Owner (Senior Management)", "exp": "The Data Owner (typically senior management) is responsible for classifying and valuing data. The Data Custodian implements the controls set by the owner. Classification is never solely the IT department decision."}, {"q": "A database VIEW restricting which columns a user sees is an example of:", "opts": ["Polyinstantiation", "Content-dependent access control", "Context-dependent access control", "Aggregation attack defence"], "answer": "Content-dependent access control", "exp": "Content-dependent access control restricts access based on the internal content of fields or records. Database views implement this. Context-dependent control restricts based on circumstances such as time of day or location."}, {"q": "Which sanitisation method is LEAST reliable for SSDs due to wear levelling?", "opts": ["Physical shredding", "Cryptographic erasure", "Overwriting (clearing)", "Incineration"], "answer": "Overwriting (clearing)", "exp": "Wear levelling in SSDs means some blocks may never be overwritten. NIST 800-88 recommends: cryptographic erasure (if encrypted from start), ATA Secure Erase, or physical shredding for SSDs. Overwriting is reliable for magnetic HDDs but NOT SSDs."}, {"q": "Under GDPR, a company that determines HOW personal data is processed is called the:", "opts": ["Data Processor", "Data Subject", "Data Controller", "Data Custodian"], "answer": "Data Controller", "exp": "Data Controller = determines purpose and means of processing. Data Processor = processes on behalf of the Controller. A Data Processing Agreement (DPA) is required between them. The Data Subject is the individual the data is about."}, {"q": "An employee leaves. What is the FIRST action regarding their account?", "opts": ["Delete the account immediately", "Disable the account first", "Change the password and reassign", "Archive files then delete"], "answer": "Disable the account first", "exp": "FIRST disable the account, THEN delete after an appropriate interval. Immediate deletion may destroy audit trail evidence needed for investigations. Disabling preserves logs while preventing access."}, {"q": "Data at rest in a classified environment should be protected using:", "opts": ["Access controls only", "AES-256 encryption", "TLS only", "Physical security alone"], "answer": "AES-256 encryption", "exp": "Exam tip: At rest = AES-256. In motion = TLS. Physical security alone is insufficient. Defence in depth requires encryption even for physically secured data. Access controls are additional layers, not replacements for encryption."}, {"q": "A user has Top Secret clearance but requests unrelated Top Secret nuclear programme data. Should access be granted?", "opts": ["Yes - they have the required clearance", "No - need-to-know must also be established", "Yes - with manager verbal approval", "No - only compartmented access overrides this"], "answer": "No - need-to-know must also be established", "exp": "In MAC environments, clearance is NECESSARY but NOT SUFFICIENT. Need-to-know must ALSO be established - the subject must have a legitimate work-related need for the specific information requested."}, {"q": "Which backup captures ALL changes since the LAST FULL backup and does NOT clear the archive bit?", "opts": ["Full backup", "Incremental backup", "Differential backup", "Synthetic full backup"], "answer": "Differential backup", "exp": "Differential: captures everything since the last FULL backup, does NOT clear archive bit - grows over time. Restore = full + latest differential (2 tapes only). Incremental: clears archive bit each time. Restore = full + ALL incrementals in sequence (risky if any tape is missing)."}, {"q": "NIST SP 800-88 defines three sanitisation levels. Which provides the HIGHEST assurance?", "opts": ["Clear", "Purge", "Destroy", "Overwrite"], "answer": "Destroy", "exp": "NIST 800-88 levels: Clear (logical overwrite, lowest) then Purge (degaussing or cryptographic erasure) then Destroy (shredding, incineration, disintegration - highest). Destroy means media cannot be reused. Required for Top Secret data or defective media."}, {"q": "Which of the following is NOT a valid GDPR lawful basis for processing personal data?", "opts": ["Legitimate interests", "Vital interests of data subject", "Business profit maximisation", "Legal obligation"], "answer": "Business profit maximisation", "exp": "GDPR six lawful bases: Consent, Contract, Legal obligation, Vital interests, Public task, Legitimate interests. Business profit is not recognised. Legitimate interests requires a Legitimate Interests Assessment (LIA) to balance organisational and individual rights."}, {"q": "When litigation is anticipated, what must happen to normal data destruction schedules?", "opts": ["Continue normal schedules", "Delete all records immediately", "Implement a litigation hold", "Transfer records to legal counsel"], "answer": "Implement a litigation hold", "exp": "Litigation hold (EDRM Step 3 - Preservation) suspends normal data destruction when litigation is reasonably foreseeable. Failure to preserve = spoliation, which can result in court sanctions and adverse inferences. One of the most legally critical data management actions."}, {"q": "Key difference between anonymisation and pseudonymisation under GDPR:", "opts": ["Anonymised can be re-identified; pseudonymised cannot", "Pseudonymised can be re-identified; anonymised cannot", "Both can be re-identified with enough effort", "No meaningful difference"], "answer": "Pseudonymised can be re-identified; anonymised cannot", "exp": "Anonymised = cannot be re-identified even with additional information - falls OUTSIDE GDPR scope. Pseudonymised = re-identification IS possible with additional data - still personal data under GDPR. Pseudonymisation reduces risk but does not remove GDPR obligations."}, {"q": "Magnetic tape media is best sanitised using:", "opts": ["ATA Secure Erase", "Multiple-pass overwriting", "Degaussing or incineration", "Cold-boot technique"], "answer": "Degaussing or incineration", "exp": "Magnetic tapes: degaussing (strong magnetic field destroys encoding) or incineration. Degaussing is practical for large tape libraries. ATA Secure Erase is for HDDs. Physical shredding provides highest assurance for any media type."}, {"q": "Data minimisation as a privacy principle means:", "opts": ["Keep all data for at least 2 years", "Never retain sensitive data", "Collect only what is needed for a stated purpose", "Log all data access events"], "answer": "Collect only what is needed for a stated purpose", "exp": "Data minimisation: collect ONLY what is needed for a specific stated purpose. GDPR core principle. Reduces risk - you cannot breach data you do not have. Excess collection creates unnecessary liability and violates GDPR storage limitation principles."}, {"q": "Which role implements security controls on data systems day-to-day?", "opts": ["Data Owner", "Data Subject", "Data Custodian", "Data Controller"], "answer": "Data Custodian", "exp": "Data Custodian = IT/technical staff. Responsibilities: implement controls set by the owner, perform backups and recovery, maintain audit logs, manage day-to-day data security. Does NOT classify data - that is the Data Owner's responsibility."}, {"q": "A payroll company processes employee data on behalf of the employer. Under GDPR the payroll company is:", "opts": ["Data Controller", "Data Subject", "Data Processor", "Joint controller"], "answer": "Data Processor", "exp": "Data Processor = processes data on behalf of the Data Controller. A Data Processing Agreement (DPA) is required. The Processor cannot sub-process without the Controller consent. The employer (Controller) determines the purpose and means of processing."}, {"q": "Data remanence refers to:", "opts": ["Encrypted data stored at rest", "Residual data remaining after deletion attempts", "Data moving across a network", "Backup copies stored offsite"], "answer": "Residual data remaining after deletion attempts", "exp": "Data remanence = residual data remaining on media after deletion or formatting. Deleting a file only removes the directory entry - actual data remains until overwritten. This is why proper sanitisation is mandatory before media disposal or reassignment to another user."}, {"q": "Which privacy law does NOT apply to municipalities, universities, schools, and hospitals?", "opts": ["GDPR", "HIPAA", "PIPEDA", "CCPA"], "answer": "PIPEDA", "exp": "PIPEDA (Canada's Personal Information Protection Electronic Document Act) explicitly excludes non-profits, municipalities, universities, schools, and hospitals. GDPR applies broadly across EU sectors. HIPAA specifically targets healthcare covered entities and business associates."}, {"q": "Security controls must be applied at which stages of the data lifecycle?", "opts": ["Only at creation", "Only at storage and transit", "At EVERY stage of the lifecycle", "Only when sharing externally"], "answer": "At EVERY stage of the lifecycle", "exp": "Security controls must be applied at ALL stages: Create, Store, Use, Share, Archive, Destroy. This is fundamental - data does not become less sensitive as it moves between lifecycle stages. Controls must be consistent and continuous throughout the entire lifecycle."}, {"q": "A centralised repository combining data from multiple databases for analysis is called a:", "opts": ["Data mining result", "Data mart", "Data warehouse", "Database federation"], "answer": "Data warehouse", "exp": "Data warehouse = large repository consolidating historical data from multiple sources for analysis. Data mining = analysis on warehouse data to find patterns. Data mart = more secure container storing metadata from mining. Database federation = virtual integration without physically copying data."}]</script>
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 2 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="page-footer">
     <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 2 — Asset Security</p>
     <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All frameworks subject to exam version updates.</p>
   </div>
@@ -395,6 +409,66 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 function toggleCard(el) { el.classList.toggle('open'); }
+</script>
+<script>
+var QS = JSON.parse(document.getElementById("qdata").textContent);
+var qst = {i:0, s:0};
+function openQuiz() { document.getElementById("quizOv").style.display = "flex"; qst = {i:0, s:0}; renderQ(); }
+function closeQ() { document.getElementById("quizOv").style.display = "none"; }
+function renderQ() {
+  var t = document.getElementById("qTitle");
+  var b = document.getElementById("qBody");
+  if (qst.i >= QS.length) {
+    var p = Math.round(qst.s / QS.length * 100);
+    t.textContent = "Quiz complete";
+    var msg = p >= 80 ? "Excellent — exam ready!" : p >= 60 ? "Good — review weak areas" : "Needs more review — keep studying";
+    var icon = p >= 80 ? "🏆" : p >= 60 ? "✅" : "📚";
+    b.innerHTML = "<div style='text-align:center;padding:1.5rem 0;'>"
+      + "<div style='font-size:48px;margin-bottom:.5rem;'>" + icon + "</div>"
+      + "<div style='font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;'>" + qst.s + "/" + QS.length + "</div>"
+      + "<div style='font-size:16px;color:#475569;margin-bottom:1.5rem;'>" + msg + "</div>"
+      + "<button onclick='qst={i:0,s:0};renderQ();' style='background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;'>Retry quiz</button>"
+      + "<button onclick='closeQ()' style='background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;'>Close</button>"
+      + "</div>";
+    return;
+  }
+  var q = QS[qst.i];
+  var pct = Math.round(qst.i / QS.length * 100);
+  t.textContent = "Question " + (qst.i + 1) + " of " + QS.length;
+  var h = "<div>";
+  h += "<div style='background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;'>" + q.q + "</div>";
+  h += "<div id='qopts' style='display:flex;flex-direction:column;gap:8px;'>";
+  for (var i = 0; i < q.opts.length; i++) {
+    h += "<button data-idx='" + i + "' onclick='ansQ(" + i + ")' style='text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;'>"
+       + "<span style='color:#94a3b8;font-weight:700;margin-right:8px;'>" + String.fromCharCode(65 + i) + ".</span>"
+       + q.opts[i] + "</button>";
+  }
+  h += "</div><div id='qexp'></div>";
+  h += "<div style='display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;'>";
+  h += "<span style='font-size:12px;color:#94a3b8;'>Score: " + qst.s + "</span>";
+  h += "<div style='flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;'><div style='height:100%;width:" + pct + "%;background:#0f172a;border-radius:4px;'></div></div>";
+  h += "<span style='font-size:12px;color:#94a3b8;'>" + pct + "%</span></div></div>";
+  b.innerHTML = h;
+}
+function ansQ(chosen) {
+  var q = QS[qst.i];
+  var correct = q.opts.indexOf(q.answer);
+  var btns = document.querySelectorAll("#qopts button");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].onclick = null; btns[i].style.cursor = "default";
+    if (i === correct) { btns[i].style.background="#f0fdf4"; btns[i].style.borderColor="#16a34a"; btns[i].style.color="#14532d"; }
+    if (i === chosen && chosen !== correct) { btns[i].style.background="#fef2f2"; btns[i].style.borderColor="#dc2626"; btns[i].style.color="#991b1b"; }
+  }
+  var ok = (chosen === correct);
+  if (ok) qst.s++;
+  var nxt = (qst.i + 1 < QS.length) ? "Next →" : "See results";
+  document.getElementById("qexp").innerHTML =
+    "<div style='margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;"
+    + (ok ? "background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;" : "background:#fef2f2;color:#991b1b;border:1px solid #fecaca;")
+    + "'><span style='font-weight:700;'>" + (ok ? "✓ Correct! " : "✗ Incorrect. ") + "</span>" + q.exp + "</div>"
+    + "<div style='margin-top:10px;display:flex;justify-content:flex-end;'>"
+    + "<button onclick='qst.i++;renderQ();' style='background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;'>" + nxt + "</button></div>";
+}
 </script>
 </body>
 </html>
