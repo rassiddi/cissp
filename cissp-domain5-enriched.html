@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 5 – Identity & Access Management | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#f8fafc;--surface:#fff;--s2:#f1f5f9;
+  --bd:#e2e8f0;--bd2:#cbd5e1;
+  --tx:#0f172a;--tx2:#475569;--tx3:#94a3b8;
+  --bl:#3b82f6;--bl-bg:#eff6ff;--bl-bd:#bfdbfe;
+  --tl:#0d9488;--tl-bg:#f0fdfa;--tl-bd:#99f6e4;
+  --am:#d97706;--am-bg:#fffbeb;--am-bd:#fde68a;
+  --rd:#dc2626;--rd-bg:#fef2f2;--rd-bd:#fecaca;
+  --pu:#7c3aed;--pu-bg:#f5f3ff;--pu-bd:#ddd6fe;
+  --gn:#16a34a;--gn-bg:#f0fdf4;--gn-bd:#bbf7d0;
+  --r:10px;--rs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.06);--shm:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.6;}
+.pw{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.hero{background:linear-gradient(135deg,#0f2f1a 0%,#134e1f 55%,#0b3316 100%);border-radius:16px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(16,185,129,.18);}
+.hero::after{content:'';position:absolute;bottom:-40px;left:30%;width:160px;height:160px;border-radius:50%;background:rgba(124,58,237,.12);}
+.hi{position:relative;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.25);color:#6ee7b7;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(16,185,129,.35);}
+.hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;color:#f8fafc;margin-bottom:6px;}
+.hero p{color:#94a3b8;font-size:14px;margin-bottom:16px;}
+.hpills{display:flex;flex-wrap:wrap;gap:8px;}
+.hpill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:11px;padding:3px 10px;border-radius:20px;}
+.tw{background:var(--surface);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh);}
+.tn{display:flex;overflow-x:auto;border-bottom:1px solid var(--bd);background:var(--s2);scrollbar-width:none;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;background:none;border:none;padding:12px 16px;font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.tb:hover{color:var(--tx);background:rgba(0,0,0,.03);}
+.tb.active{color:var(--tl);border-bottom-color:var(--tl);background:var(--surface);}
+.tb i{font-size:15px;}
+.tp{display:none;padding:1.5rem;}
+.tp.active{display:block;}
+.sec{margin-bottom:1.75rem;}
+.sh{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sh::after{content:'';flex:1;height:1px;background:var(--bd);}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;}
+.card:hover{border-color:var(--bd2);box-shadow:var(--shm);}
+.card.open{border-color:var(--tl-bd);background:var(--tl-bg);}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.cl{font-size:13px;font-weight:600;color:var(--tx);}
+.card.open .cl{color:var(--tl);}
+.ca{color:var(--tx3);font-size:16px;transition:transform .2s;flex-shrink:0;}
+.card.open .ca{transform:rotate(180deg);color:var(--tl);}
+.cb{display:none;font-size:13px;color:var(--tx2);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
+.card.open .cb{display:block;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.tbl th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--tx2);border-bottom:2px solid var(--bd);background:var(--s2);}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top;line-height:1.55;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--s2);}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:14px;}
+.kv{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;}
+.kv-k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--tx3);margin-bottom:4px;}
+.kv-v{font-size:13px;color:var(--tx);font-weight:500;}
+.kv-n{font-size:11px;color:var(--tx2);margin-top:3px;line-height:1.4;}
+.ibox{background:var(--bl-bg);border:1px solid var(--bl-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#1e40af;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.wbox{background:var(--am-bg);border:1px solid var(--am-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.tbox{background:var(--gn-bg);border:1px solid var(--gn-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#14532d;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.bi{font-size:16px;flex-shrink:0;margin-top:1px;}
+.iaaa-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:14px;}
+.iaaa-card{border-radius:var(--r);padding:14px;border:1px solid;text-align:center;}
+.iaaa-icon{font-size:24px;margin-bottom:6px;}
+.iaaa-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.iaaa-desc{font-size:11px;line-height:1.5;}
+.factor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:14px;}
+.factor-card{border-radius:var(--r);padding:14px;border:1px solid;}
+.factor-num{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.factor-title{font-size:13px;font-weight:700;margin-bottom:6px;}
+.factor-list{font-size:11px;line-height:1.8;list-style:none;}
+.factor-list li::before{content:'› ';color:var(--tx3);}
+.bio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:14px;}
+.bio-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px;}
+.bio-name{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:4px;}
+.bio-desc{font-size:11px;color:var(--tx2);line-height:1.5;}
+.bio-tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:10px;margin-top:4px;font-weight:600;}
+.kerberos-flow{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.kf-step{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;}
+.kf-num{font-size:11px;font-weight:700;color:var(--tl);min-width:18px;flex-shrink:0;margin-top:1px;}
+.kf-text{font-size:12.5px;color:var(--tx);line-height:1.55;}
+.kf-text strong{font-weight:600;color:var(--tx);}
+.ac-compare{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.ac-compare th{padding:8px 10px;font-size:11px;font-weight:600;color:var(--tx2);border:1px solid var(--bd);background:var(--s2);text-align:center;}
+.ac-compare th:first-child{text-align:left;}
+.ac-compare td{padding:8px 10px;border:1px solid var(--bd);text-align:center;font-size:12px;color:var(--tx2);}
+.ac-compare td:first-child{text-align:left;font-weight:600;color:var(--tx);}
+.ac-compare tr:nth-child(even) td{background:var(--s2);}
+.pf{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--bd);font-size:12px;color:var(--tx3);}
+.pf a{color:var(--tl);text-decoration:none;}
+.pf a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="pw">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hi">
+    <div class="hbadge"><i class="ti ti-fingerprint"></i> CISSP · Domain 5 · 13% of exam</div>
+    <h1>Identity &amp; Access Management (IAM)</h1>
+    <p>IAAA · Authentication factors · Biometrics · Kerberos · SSO · Federation · Access control models · Provisioning</p>
+    <div class="hpills">
+      <span class="hpill">IAAA Principles</span>
+      <span class="hpill">Type 1 / 2 / 3 Factors</span>
+      <span class="hpill">Biometrics &amp; CER</span>
+      <span class="hpill">Kerberos</span>
+      <span class="hpill">SAML / OAuth / OIDC</span>
+      <span class="hpill">DAC / MAC / RBAC</span>
+      <span class="hpill">IDaaS / SCIM</span>
+      <span class="hpill">Account lifecycle</span>
+    </div>
+  </div>
+
+    <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;">
+      <i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz
+    </button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tw">
+  <div class="tn">
+    <button class="tb active" onclick="sw('iaaa',this)"><i class="ti ti-id"></i> IAAA</button>
+    <button class="tb" onclick="sw('factors',this)"><i class="ti ti-key"></i> Auth factors</button>
+    <button class="tb" onclick="sw('biometrics',this)"><i class="ti ti-fingerprint"></i> Biometrics</button>
+    <button class="tb" onclick="sw('sso',this)"><i class="ti ti-arrows-exchange"></i> SSO &amp; Kerberos</button>
+    <button class="tb" onclick="sw('federation',this)"><i class="ti ti-world"></i> Federation &amp; IDaaS</button>
+    <button class="tb" onclick="sw('access',this)"><i class="ti ti-shield-lock"></i> Access control models</button>
+    <button class="tb" onclick="sw('lifecycle',this)"><i class="ti ti-user-cog"></i> Account lifecycle</button>
+  </div>
+
+  <!-- IAAA -->
+  <div id="tab-iaaa" class="tp active">
+    <div class="sec">
+      <div class="sh">The four pillars of IAM — I A A A</div>
+      <div class="tbox"><i class="ti ti-bulb bi"></i>Identification provides uniqueness · Authentication provides validity · Authorisation provides control · Accountability provides traceability. Identity AND Authentication are both required for Accountability — but NOT necessarily for Authorisation.</div>
+      <div class="iaaa-row">
+        <div class="iaaa-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+          <div class="iaaa-icon" style="color:var(--bl)"><i class="ti ti-user" aria-hidden="true"></i></div>
+          <div class="iaaa-title" style="color:var(--bl)">Identification</div>
+          <div class="iaaa-desc" style="color:#1e40af">User claims an identity. Unique username, account number, keycard issuance. Binds user to appropriate controls based on unique user instance.</div>
+        </div>
+        <div class="iaaa-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+          <div class="iaaa-icon" style="color:var(--tl)"><i class="ti ti-lock" aria-hidden="true"></i></div>
+          <div class="iaaa-title" style="color:var(--tl)">Authentication</div>
+          <div class="iaaa-desc" style="color:#0f766e">Verifying the claimed identity. User provides private data. Establishes trust between user and system for privilege allocation.</div>
+        </div>
+        <div class="iaaa-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+          <div class="iaaa-icon" style="color:var(--pu)"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+          <div class="iaaa-title" style="color:var(--pu)">Authorisation</div>
+          <div class="iaaa-desc" style="color:#5b21b6">Resources the user is allowed to access — defined and monitored. First piece of credentials provides authorisation. DAC / MAC / RBAC / Rule-BAC models.</div>
+        </div>
+        <div class="iaaa-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+          <div class="iaaa-icon" style="color:var(--am)"><i class="ti ti-clipboard-list" aria-hidden="true"></i></div>
+          <div class="iaaa-title" style="color:var(--am)">Accountability</div>
+          <div class="iaaa-desc" style="color:#92400e">Tracing an action to a subject. Logging is the best way to provide accountability. Includes change log for approved changes and change management processes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Core concepts — tap to expand</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Principle of least privilege</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Every subject is granted only the minimum access rights required to perform its function. Applies to users, processes, services, and applications. Includes both permissions (access to objects) and rights (ability to take actions). Regular review and audit of access rights is required.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Need-to-know</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Subjects are granted access only to what they need for their work tasks. A subject may have clearance to access data but is not granted authorisation unless they actually need it. Distinct from least privilege — need-to-know addresses information access while least privilege also covers system rights.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Separation of duties</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Ensures sensitive functions are split into tasks performed by two or more employees. Creates a system of checks and balances. Prevents fraud, errors, and collusion. No single person should control a complete sensitive process end-to-end. Two-man control requires two people to review and approve. Dual control requires two people to complete a task.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Implicit deny</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">The basic principle that most authorisation mechanisms use. Access to an object is denied unless access has been explicitly granted to a subject. Default stance is always DENY — access must be affirmatively granted.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Access control matrix</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Table that includes subjects, objects, and assigned privileges. When a subject attempts an action, the system checks the matrix. Columns = ACLs (object-focused). Rows = Capability Tables (subject-focused). ACL: which subjects can access this object. Capability table: which objects can this subject access.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Permissions, rights &amp; privileges</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Permissions: access granted for an object — what you can do with it (read, write, delete). Rights: ability to take an action on an object (modify system time, restore backup data). Privileges: combination of rights and permissions — full administrator privileges = full rights + full permissions.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Constrained interface</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Applications restrict what users can do or see based on privileges. Methods: hide the capability if user lacks permission, show as greyed-out/disabled, or restrict menus entirely. Implements least privilege at the application layer.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Content vs context-dependent controls</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Content-dependent: restrict access based on internal data content of each field (e.g. a database view). Context-dependent: require specific activity before granting access (e.g. work-hours restrictions — cannot access system outside business hours).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH FACTORS -->
+  <div id="tab-factors" class="tp">
+    <div class="sec">
+      <div class="sh">Authentication factor types</div>
+      <div class="factor-grid">
+        <div class="factor-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+          <div class="factor-num" style="color:var(--bl)">Type 1</div>
+          <div class="factor-title" style="color:var(--bl)">Something you know</div>
+          <ul class="factor-list"><li>Password</li><li>PIN</li><li>Passphrase</li><li>Cognitive password (mother's maiden name)</li><li>One-time password (OTP)</li></ul>
+        </div>
+        <div class="factor-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+          <div class="factor-num" style="color:var(--tl)">Type 2</div>
+          <div class="factor-title" style="color:var(--tl)">Something you have</div>
+          <ul class="factor-list"><li>Smart card (CAC)</li><li>Hardware token</li><li>Memory card</li><li>USB drive / key</li><li>OTP token (synchronous / asynchronous)</li></ul>
+        </div>
+        <div class="factor-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+          <div class="factor-num" style="color:var(--pu)">Type 3</div>
+          <div class="factor-title" style="color:var(--pu)">Something you are / do</div>
+          <ul class="factor-list"><li>Fingerprint / finger scan</li><li>Retina scan</li><li>Iris scan</li><li>Facial geometry</li><li>Hand geometry</li><li>Voice print</li><li>Signature dynamics (what you do)</li><li>Keyboard dynamics (what you do)</li></ul>
+        </div>
+        <div class="factor-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+          <div class="factor-num" style="color:var(--am)">Type 4</div>
+          <div class="factor-title" style="color:var(--am)">Somewhere you are</div>
+          <ul class="factor-list"><li>Location-based (GPS)</li><li>IP geolocation</li><li>Network location</li><li>Cell tower location</li></ul>
+        </div>
+      </div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i><b>MFA (Multi-Factor Authentication)</b> requires two or more factor TYPES. Using two passwords = still single factor (both Type 1). Strong authentication = Type 1 + Type 2 + Type 3 combined. Exam tip: Type 2 error (FAR) is FAR from Type 1 error (FRR).</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Passwords (Type 1) — key concepts</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Password storage</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Passwords are NEVER stored in cleartext in well-designed systems. Salted hashes are stored and compared. Salt (NONCE) = random value added before hashing to prevent rainbow table attacks. On Windows: LM hash and NT Hash. SYSKEY utility encrypts the hashed passwords in their store. PBKDF2 (Password-Based Key Derivation Function 2) is commonly used.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Password attacks</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Brute force (exhaustive): tries all possible character combinations. Dictionary attack: tries common words and variations. Rainbow table: pre-computed hash lookup tables — defeated by salting. Social engineering: most effective method. Shoulder surfing. Keystroke logging. Phishing for credentials.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">OTP — One-Time Password</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Synchronous (time-based): time or counter synchronised between token and server. SecurID is an example. Asynchronous (not time-based): server sends a challenge/nonce, token encrypts it, returns OTP. Challenge/response token: generates response to a system-provided challenge. With added PIN = strong two-factor authentication.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Static token (Type 2)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Owner authenticates to the token, then the token authenticates to the system. Examples: smart cards, proximity cards, USB tokens. Static password token: same password used repeatedly from the token device.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Smart cards</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Have an embedded chip to process information. Used for multi-factor authentication. Contains a microprocessor — can perform cryptographic operations. Different from memory cards (which only store, not process). Common Access Card (CAC) = DoD smart card. Side-channel attacks can extract keys from smart cards.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Clipping levels</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Predefined thresholds for the number of errors allowed before activity is considered suspicious. Example: 3 failed login attempts before lockout. Clipping level helps distinguish genuine mistakes from an attack. Part of a security monitoring and auditing strategy.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIOMETRICS -->
+  <div id="tab-biometrics" class="tp">
+    <div class="sec">
+      <div class="sh">Biometric error rates — the most critical concept</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Type 1 Error — FRR</div><div class="kv-v">False Rejection Rate</div><div class="kv-n">Legitimate user rejected — system too strict. Frustrating for users. Increases with higher security settings.</div></div>
+        <div class="kv"><div class="kv-k">Type 2 Error — FAR</div><div class="kv-v">False Acceptance Rate</div><div class="kv-n">Impostor accepted — system too lenient. Security risk. Decreases with higher security settings. Exam tip: Type 2 (FAR) is FAR from Type 1 (FRR).</div></div>
+        <div class="kv"><div class="kv-k">CER / EER</div><div class="kv-v">Crossover Error Rate</div><div class="kv-n">Point where FRR = FAR. Lower CER = more accurate system. Used to compare biometric systems. The gold standard metric.</div></div>
+        <div class="kv"><div class="kv-k">Enrolment time</div><div class="kv-v">Max 2 minutes</div><div class="kv-n">Enrolment time over 2 minutes is unacceptable. Must occur FIRST before any biometric authentication. Captures the biometric template.</div></div>
+        <div class="kv"><div class="kv-k">Throughput time</div><div class="kv-v">10 people/min</div><div class="kv-n">Amount of time taken for a biometric device to scan the subject. Target: 10 people per minute minimum.</div></div>
+      </div>
+      <div class="wbox"><i class="ti ti-alert-triangle bi"></i>Most expensive and most accurate biometric = Retina scan. Most widely used = Fingerprint/finger scan. Most accepted (2nd most accurate) = Iris scan. Retina reveals health conditions (blood pressure, pregnancy) — contains PHI — may not be acceptable in all contexts.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Biometric types — characteristics &amp; accuracy</div>
+      <div class="bio-grid">
+        <div class="bio-card">
+          <div class="bio-name">Retina scan</div>
+          <div class="bio-desc">Scans blood vessel pattern on the back of the eyeball. Most accurate biometric. Reveals health conditions — contains PHI. Requires close proximity.</div>
+          <span class="bio-tag" style="background:var(--rd-bg);color:var(--rd);border:1px solid var(--rd-bd)">Most accurate · PHI risk</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Iris scan</div>
+          <div class="bio-desc">Scans the coloured portion of the eye surrounding the pupil. Iris is stable throughout life. No sunlight in iris scanner. Most accepted form — second most accurate.</div>
+          <span class="bio-tag" style="background:var(--tl-bg);color:var(--tl);border:1px solid var(--tl-bd)">Most accepted · Stable</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Fingerprint / finger scan</div>
+          <div class="bio-desc">Fingerprint = stores full print (one-to-many identification). Finger scan = stores only features/minutiae (one-to-one). Most widely used biometric today. Relatively low cost.</div>
+          <span class="bio-tag" style="background:var(--bl-bg);color:var(--bl);border:1px solid var(--bl-bd)">Most widely used</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Facial scan</div>
+          <div class="bio-desc">Analyses bone structures, nose ridges, eye widths, forehead sizes and chin shapes. Non-intrusive. Can be fooled by photographs. Lower accuracy than iris/retina.</div>
+          <span class="bio-tag" style="background:var(--s2);color:var(--tx2);border:1px solid var(--bd)">Non-intrusive</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Hand geometry</div>
+          <div class="bio-desc">Measures shape, length and width of the hand and fingers. Simple and low-cost. Less accurate than fingerprint. Zephyr chart = iris scan reference.</div>
+          <span class="bio-tag" style="background:var(--s2);color:var(--tx2);border:1px solid var(--bd)">Low cost</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Palm scan</div>
+          <div class="bio-desc">The palm has creases, ridges and grooves unique to a specific person. Appropriate by itself as a Type 3 authenticator. More surface area than fingerprint.</div>
+          <span class="bio-tag" style="background:var(--pu-bg);color:var(--pu);border:1px solid var(--pu-bd)">Standalone Type 3</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Voice print</div>
+          <div class="bio-desc">Distinguishes differences in speech sounds and patterns. Affected by illness, background noise, aging. Used in phone-based authentication systems.</div>
+          <span class="bio-tag" style="background:var(--s2);color:var(--tx2);border:1px solid var(--bd)">Behavioural</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Signature dynamics</div>
+          <div class="bio-desc">Captures electrical signals of speed, pressure, and time when a person writes a signature. Behavioural biometric — "something you do" (Type 3).</div>
+          <span class="bio-tag" style="background:var(--am-bg);color:var(--am);border:1px solid var(--am-bd)">Something you do</span>
+        </div>
+        <div class="bio-card">
+          <div class="bio-name">Keyboard dynamics</div>
+          <div class="bio-desc">Captures electrical signals when a person types a certain phrase — rhythm, speed, inter-key timing. Behavioural biometric. Can be used as continuous authentication.</div>
+          <span class="bio-tag" style="background:var(--am-bg);color:var(--am);border:1px solid var(--am-bd)">Something you do</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SSO & KERBEROS -->
+  <div id="tab-sso" class="tp">
+    <div class="sec">
+      <div class="sh">SSO — Single Sign-On</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SSO benefits</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Ability to use stronger passwords (only one to remember). Easier administration. Less time to access resources. Reduced password fatigue. Centrally managed credentials.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SSO risks</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Single point of compromise — if one credential is stolen, ALL resources can be accessed. If the SSO database is compromised, all passwords are exposed. Requires high availability of the SSO system — it becomes a single point of failure.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Scripted access</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Establishes communication links by providing an automated process to transmit logon credentials at the start of a logon session. Basic SSO mechanism — credentials automated via scripts. Less secure than token-based SSO.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SESAME</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Secure European System for Application in a Multi-vendor Environment. Implemented to overcome weaknesses of Kerberos. Uses both symmetric AND asymmetric encryption (improvement over Kerberos). Two tickets: one for authentication (like Kerberos), one that defines access privileges (PAC — Privileged Attribute Certificate).</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Kerberos — the dominant SSO protocol</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Kerberos uses SYMMETRIC key cryptography (AES). Addresses Confidentiality, Integrity, and Authentication — NOT Availability. Based on MIT Project Athena. Now built into Windows (replaced NTLM). 5-minute time synchronisation tolerance — time skew = authentication failure. KDC = single point of failure.</div>
+      <div class="kv-grid" style="margin-bottom:14px">
+        <div class="kv"><div class="kv-k">KDC</div><div class="kv-v">Key Distribution Centre</div><div class="kv-n">Trusted 3rd party. Knows ALL secret keys. Contains Authentication Server (AS) and Ticket Granting Server (TGS). Single point of failure.</div></div>
+        <div class="kv"><div class="kv-k">AS</div><div class="kv-v">Authentication Server</div><div class="kv-n">Verifies the authenticity and timeliness of TGTs. Issues the initial TGT after verifying credentials.</div></div>
+        <div class="kv"><div class="kv-k">TGS</div><div class="kv-v">Ticket Granting Server</div><div class="kv-n">Issues service tickets when presented with a valid TGT. Subject presents TGT to access each service.</div></div>
+        <div class="kv"><div class="kv-k">TGT</div><div class="kv-v">Ticket Granting Ticket</div><div class="kv-n">Proof of KDC authentication. Encrypted, includes symmetric key, expiration time, and user's IP address. Installed by client at login.</div></div>
+        <div class="kv"><div class="kv-k">Ticket</div><div class="kv-v">Service Ticket</div><div class="kv-n">Encrypted message proving a subject is authorised to access a specific object/service. Obtained from TGS.</div></div>
+        <div class="kv"><div class="kv-k">Realm</div><div class="kv-v">Auth domain boundary</div><div class="kv-n">Authentication administrative domain. Defines the boundaries within which an AS has authority to authenticate users, hosts or services.</div></div>
+      </div>
+      <div class="sh">Kerberos authentication flow</div>
+      <div class="kerberos-flow">
+        <div class="kf-step"><span class="kf-num">1</span><span class="kf-text"><strong>User enters credentials</strong> — username and password on the client. Client encrypts the username with AES for transmission to the KDC.</span></div>
+        <div class="kf-step"><span class="kf-num">2</span><span class="kf-text"><strong>KDC verifies username</strong> — checks against credentials database. Generates a symmetric session key encrypted with a hash of the user's password, PLUS an encrypted time-stamped TGT.</span></div>
+        <div class="kf-step"><span class="kf-num">3</span><span class="kf-text"><strong>Client receives TGT</strong> — installs the TGT for use until it expires. Decrypts the symmetric session key using a hash of the user's password. Passwords are NEVER exchanged — only hashes.</span></div>
+        <div class="kf-step"><span class="kf-num">4</span><span class="kf-text"><strong>Client requests service access</strong> — presents TGT to the Ticket Granting Server (TGS) to request a service ticket for a specific resource.</span></div>
+        <div class="kf-step"><span class="kf-num">5</span><span class="kf-text"><strong>TGS issues service ticket</strong> — validates the TGT and issues an encrypted service ticket for the specific resource.</span></div>
+        <div class="kf-step"><span class="kf-num">6</span><span class="kf-text"><strong>Client accesses resource</strong> — presents service ticket to the target application/server. Access is granted without re-entering credentials.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Directory services</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">LDAP — Lightweight Directory Access Protocol</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Client/server-based directory query protocol loosely based on X.500. Port 389 (unencrypted). LDAPS = Port 636 (over TLS). Manages user information and certificates. X.500 is the hierarchical naming standard. Distinguished Names (DNs) identify objects. Example: cn=rashid+ou=security+dc=cisspmadeeasy+dc=com.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Active Directory</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Microsoft's implementation of directory services using LDAP and Kerberos. Group Policy Objects (GPOs) enforce security settings. Sophisticated security resources: group policy, user rights, accounts, DNS services. Domain controllers replicate the directory database. Replaced NTLM with Kerberos authentication.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Meta directory vs virtual directory</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Meta directory: gathers information from multiple sources and stores it in ONE central directory — synchronises all sources. Virtual directory: only points to where data resides in multiple sources — does not store a copy, queries original sources in real time.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEDERATION & IDaaS -->
+  <div id="tab-federation" class="tp">
+    <div class="sec">
+      <div class="sh">Federated identity management</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Federation = sharing identity and authentication behind the scenes across business boundaries. Example: booking a flight then being offered hotel booking without re-authenticating — both sites are in the same federated domain. SAML is the enterprise standard. OAuth is the commercial/consumer standard.</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SAML 2.0</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Security Assertion Markup Language. XML-based standard for exchanging authentication and authorisation data between security domains. Best choice for federated identity management. SAML 2.0 enables web-based SSO. Three roles: Principal (user), Identity Provider (IdP), Service Provider (SP). Relies on TLS and digital signatures for security — does NOT have a built-in security mode. If home organisation is offline, implement cloud-based IdP. SAML attack: attacker falsifies SAML communications or steals an access token to bypass authentication.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">OAuth 2.0</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Open standard for AUTHORISATION (not authentication). Allows a user to grant third-party applications access to their data without sharing passwords. "Delegate access" framework. Exam tip: SAML = enterprise/authentication. OAuth = commercial/authorisation. Windows uses Kerberos for authentication, OAuth for web applications, TACACS+ for network devices, RADIUS for wireless/network access.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">OpenID Connect (OIDC)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Built on top of OAuth 2.0 — adds authentication. RESTful, JSON-based protocol. Provides identity verification and basic profile information. OpenID = used for authentication. OAuth = used for authorisation. Together they provide full identity federation for consumer applications. Phishing attack possible by sending fake authentication data.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SPML</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Service Provisioning Markup Language. XML-based framework designed for exchanging user information for federated identity single sign-on purposes. Based on Directory Service Markup Language (DSML). Allows platforms to generate and respond to provisioning requests. Used to provision identities across federated domains.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">XACML</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Extensible Access Control Markup Language. Used to define access control policies within an XML format. Commonly implements RBAC. SAML is for exchanging auth data. XACML is for defining access control policies. SOAP = messaging protocol used to transport XML — NOT a markup language itself.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Shibboleth</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Open-source federated identity solution based on SAML 2.0. Widely used in higher education and research organisations. Allows sharing of web resources across organisational boundaries. Implements the InCommon federation for US universities and research institutions.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">IDaaS — Identity as a Service</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">What is IDaaS?</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Third-party service providing identity and access management. Effectively provides SSO for cloud environments. Especially useful when internal clients access cloud SaaS applications. Examples: Okta, Azure AD, Ping Identity. Google: login once, access multiple Google products = IDaaS model.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">IDaaS capabilities</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Provision identities to target applications. User authentication and SSO. Authorisation enforcement. Log events and auditing. Federation — sharing identity across business boundaries. Access Management enforces RULES. Directory synchronisation with on-premises systems.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Cloud identity models</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Cloud Identity: users created and managed in the cloud (e.g. Office 365). Directory Synchronisation: users managed on-premises, synced to cloud identity provider. Federated Identity: on-premises IdP handles login requests — used to implement SSO across cloud and on-premises. MS Active Directory + ADFS (Active Directory Federation Services).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SCIM</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">System for Cross-domain Identity Management. Open standard for automating the exchange of user identity information between identity domains or IT systems. Used to automate provisioning/deprovisioning across cloud services. Enables automatic account creation/deletion when users join or leave.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">AAA protocols</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Protocol</th><th>Port</th><th>Transport</th><th>Encryption</th><th>Primary use</th></tr></thead>
+          <tbody>
+            <tr><td><strong>RADIUS</strong></td><td class="mono">1812/1813</td><td>UDP (default)</td><td>Password only</td><td>Wi-Fi, dial-up, network access. RFC 2865. NOT used for router-to-router auth (no 2-way).</td></tr>
+            <tr><td><strong>TACACS+</strong></td><td class="mono">49</td><td>TCP</td><td>Entire packet</td><td>Network device administration. Cisco-introduced, open public. Separates AAA functions. Stronger than RADIUS.</td></tr>
+            <tr><td><strong>Diameter</strong></td><td class="mono">3868</td><td>TCP/SCTP</td><td>TLS/IPSec</td><td>Remote connectivity via phone/wireless. More secure than RADIUS. Mobile networks (LTE/4G).</td></tr>
+            <tr><td><strong>Kerberos</strong></td><td class="mono">88</td><td>UDP/TCP</td><td>Symmetric (AES)</td><td>Enterprise SSO, Windows networks, Active Directory.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESS CONTROL MODELS -->
+  <div id="tab-access" class="tp">
+    <div class="sec">
+      <div class="sh">Access control models comparison</div>
+      <div style="overflow-x:auto">
+        <table class="ac-compare">
+          <thead>
+            <tr><th>Model</th><th>Who controls access</th><th>Based on</th><th>Primary use</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DAC — Discretionary</td>
+              <td>Data owner / creator</td>
+              <td>Identity of the subject</td>
+              <td>Commercial, flexible</td>
+              <td>Windows NTFS permissions — owner grants/revokes</td>
+            </tr>
+            <tr>
+              <td>MAC — Mandatory</td>
+              <td>Central authority / OS</td>
+              <td>Security labels &amp; clearances</td>
+              <td>Government / military</td>
+              <td>Bell-LaPadula model — Top Secret, Secret, Confidential labels</td>
+            </tr>
+            <tr>
+              <td>RBAC — Role-Based</td>
+              <td>Administrator</td>
+              <td>Job role / function</td>
+              <td>Enterprise, business roles</td>
+              <td>Active Directory groups — Finance group has access to finance systems</td>
+            </tr>
+            <tr>
+              <td>Rule-BAC — Rule-Based</td>
+              <td>Administrator (global rules)</td>
+              <td>Rules in ACL</td>
+              <td>Network devices, firewalls</td>
+              <td>Firewall ACL — all traffic on port 80 is allowed</td>
+            </tr>
+            <tr>
+              <td>ABAC — Attribute-Based</td>
+              <td>Policy engine</td>
+              <td>Multiple attributes (role + time + location)</td>
+              <td>Fine-grained, dynamic</td>
+              <td>Access only during business hours from corporate IP</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">DAC — Discretionary Access Control</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">How DAC works</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">The owner, creator, or data custodian controls and defines access to an object. All objects have owners — access control is based on the owner's discretion. Implemented using ACLs (Access Control Lists) on objects. Each ACL defines types of access granted or denied to subjects. Owner can modify permissions at will — decentralised control.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Identity-based access control</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">A subset of DAC — systems identify users based on their identity and assign resource ownership to identities. Access control matrix: rows = subjects, columns = objects. Capability tables: subject-focused (what objects can this subject access). ACLs: object-focused (what subjects can access this object).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">DAC limitations</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">No centrally controlled management — owners can alter ACLs at will. Difficult to form a system-wide view of all user access. May result in inconsistent procedures. Easy for access creep to occur if reviews aren't conducted regularly. Trojan horse attacks can exploit DAC — malicious code runs with the owner's privileges.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">MAC — Mandatory Access Control</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">How MAC works</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">A central authority determines access based on security labels. ALL subjects and objects are labelled. User clearance must be ≥ object classification to access. Government #1 model. Lattice-based. Enforces Bell-LaPadula (confidentiality) or Biba (integrity) models. Non-discretionary — users CANNOT change access controls.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Labels and clearances</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Government labels: Top Secret → Grave damage. Secret → Critical damage. Confidential → Serious damage. Unclassified → No damage. Commercial labels: Confidential, Private, Sensitive, Public. "Dominate" in MAC means access to higher or equal access class.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Need-to-know in MAC</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Even with MAC clearance, need-to-know still applies. Having Top Secret clearance does NOT automatically grant access to all Top Secret data — the subject must also have a legitimate need to access the specific information. Restriction on top of the label system.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">RBAC — Role-Based Access Control</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">How RBAC works</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Access is based on job role or assigned tasks. Often implemented using groups. Form of non-discretionary access control. Most widely used model in commercial environments — #1 used. Administrator assigns roles; roles have permissions; users are assigned to roles. Changes require updating the role, not individual ACLs. Supports separation of duties naturally.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Hybrid RBAC / Limited RBAC</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Hybrid RBAC: combines role-based with other access control methods. Limited RBAC: can model all groups within the organisation. RBAC can model: simple (flat), hierarchical (roles inheriting permissions), constrained (separation of duty enforcement), and symmetric RBAC.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Rule-BAC vs RBAC</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Rule-BAC: based on rules within an ACL — global rules applied to ALL subjects equally (e.g. firewalls, routers). RBAC: based on job roles — different users have different roles with different access. Key distinction: Rule-BAC has GLOBAL rules affecting everyone. RBAC has role-specific permissions. Both are forms of non-discretionary access control.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT LIFECYCLE -->
+  <div id="tab-lifecycle" class="tp">
+    <div class="sec">
+      <div class="sh">Account provisioning &amp; lifecycle management</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Provisioning (hire)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Create JD/PD → Job classification → Candidate screening and background check → Standardised interview → Onboarding. Grant IAM account based on Principle of Least Privilege. Employment agreements, NDA, Acceptable Use Policy (AUP). Regular review and audit of Job Description required to ensure access rights remain appropriate.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Entitlement</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Amount of privileges granted to users, typically at first account provisioning. Entitlement should be based on job function and least privilege. User entitlement audit can detect when employees have excessive privileges. Privilege creep = aggregation of excess privileges accumulated over time through role changes.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Aggregation (privilege creep)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Users accumulate privileges over time as they move between roles without old privileges being revoked. Prevention: periodic access reviews, quarterly entitlement audits, automated deprovisioning tied to role changes. Separation of duties helps prevent privilege aggregation from creating single points of compromise.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Account review</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Periodic review of all user accounts and their access rights. Should include: active accounts with no recent login, accounts with excessive privileges, service accounts, shared accounts. Part of ongoing security monitoring. Regular recertification ensures least privilege is maintained over time.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Deprovisioning (offboarding)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">FIRST: disable the account. THEN: delete it after an appropriate interval (for audit trail preservation). Conduct exit interview. Collect all company assets — laptop, keys, access cards, tokens. Remind departing employee of NDA obligations. Never delete immediately — may need forensic access later.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Transfers &amp; role changes</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">When an employee changes roles, old access rights should be revoked promptly and new rights assigned. Failure to revoke old access = privilege creep. Should trigger a formal re-provisioning process. Manager certification of access rights at each role change is best practice.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Special account types — risks &amp; controls</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Privileged accounts</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Administrator, root, and other high-privilege accounts. Highest risk accounts — must be tightly controlled. Controls: separate privileged account from daily-use account, use PAM (Privileged Access Management) tools, log all privileged actions, enforce MFA, time-limited privilege escalation, just-in-time access.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Service accounts</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Accounts used by applications and services — not human users. Often have excessive privileges and never expire. Controls: assign minimum necessary privileges, use managed service accounts, rotate passwords regularly, log all activity, never use domain admin for service accounts.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Shared accounts</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Multiple users sharing a single account — destroys accountability. Cannot trace actions to a specific individual. Should be avoided whenever possible. If unavoidable: strict logging, physical controls, periodic password rotation with documented access requests. Most legacy systems require this — migration plan needed.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Guest / anonymous accounts</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Default accounts with minimal privileges for unauthenticated access. Should be disabled if not actively needed. When required: strict network segmentation, minimal permissions, extensive logging. Common attack vector — default guest accounts often have weak/no passwords.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Centralised vs decentralised IAM</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Centralised</div><div class="kv-v">Single control point</div><div class="kv-n">Very strict control. Only modified through central administration. Examples: Kerberos, RADIUS, TACACS+, SSO. Consistent policies. Single point of failure risk.</div></div>
+        <div class="kv"><div class="kv-k">Decentralised</div><div class="kv-v">Owners control access</div><div class="kv-n">Access controlled by owners/creators of information. May lack consistency. Difficult to form system-wide view. Scales better for large organisations with varied needs.</div></div>
+        <div class="kv"><div class="kv-k">Hybrid</div><div class="kv-v">Mixed approach</div><div class="kv-n">Centralised for critical/sensitive systems, decentralised for others. Most enterprise environments use this approach. Balances control with flexibility.</div></div>
+        <div class="kv"><div class="kv-k">Callback</div><div class="kv-v">Remote access control</div><div class="kv-n">System calls back to a predetermined number after initial dial-in. Authenticates the location, not just the user. Less useful for travelling workers.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tabs -->
+
+<script id="qdata" type="application/json">[{"q": "Which IAAA component traces an action back to a specific user?", "opts": ["Identification", "Authentication", "Authorisation", "Accountability"], "answer": "Accountability", "exp": "Accountability = tracing an action to a subject. Best provided through logging/audit trails. Requires BOTH identification AND authentication. Accountability does NOT require authorisation - you can track what someone tried to do even if access was denied. Logging is the best way to provide accountability."}, {"q": "A biometric system has FAR of 0.001% and FRR of 3%. What does this mean?", "opts": ["System accepts too many impostors", "System is strict - frequently rejects legitimate users", "The CER is 0.001%", "FRR represents impostor acceptance rate"], "answer": "System is strict - frequently rejects legitimate users", "exp": "FAR (False Acceptance Rate) = impostors accepted (security risk). FRR (False Rejection Rate) = legitimate users rejected (usability problem). High FRR = system is too strict. High FAR = system is too lenient. CER = crossover where FAR = FRR. Lower CER = more accurate overall."}, {"q": "Kerberos CANNOT address which CIA property?", "opts": ["Confidentiality", "Integrity", "Authentication", "Availability"], "answer": "Availability", "exp": "Kerberos addresses Confidentiality, Integrity, and Authentication - NOT Availability. The KDC is a single point of failure. If the KDC goes down, authentication fails. Requires time synchronisation within 5 minutes (time skew = authentication failure)."}, {"q": "In Kerberos, what does the client present to the TGS to request a service ticket?", "opts": ["Username and password", "TGT (Ticket Granting Ticket)", "Service ticket", "Session key"], "answer": "TGT (Ticket Granting Ticket)", "exp": "Kerberos flow: 1. Client authenticates to AS, receives TGT. 2. Client presents TGT to TGS, receives Service Ticket. 3. Client presents Service Ticket to target service. Passwords are NEVER exchanged - only hashed values. TGT has an expiry time (typically 8 hours)."}, {"q": "SAML 2.0 is the enterprise standard for:", "opts": ["Authorising API access", "Federated identity and web-based SSO", "Encrypting passwords", "Managing RADIUS authentication"], "answer": "Federated identity and web-based SSO", "exp": "SAML 2.0 = XML-based standard for federated identity and web SSO. Three roles: Principal (user), Identity Provider (IdP), Service Provider (SP). OAuth 2.0 = AUTHORISATION (not authentication) for commercial apps. OpenID Connect = built on OAuth, adds authentication."}, {"q": "OAuth 2.0 is used for AUTHORISATION. OpenID Connect adds what?", "opts": ["Encryption", "Authentication on top of OAuth", "Stronger hashing", "LDAP integration"], "answer": "Authentication on top of OAuth", "exp": "OAuth 2.0 = authorisation framework (delegate access without sharing passwords). OpenID Connect (OIDC) = builds on OAuth 2.0, adds identity AUTHENTICATION. Together they provide full identity federation. SAML = enterprise. OAuth+OIDC = consumer/commercial applications."}, {"q": "Which access control model is most widely used in commercial enterprises?", "opts": ["DAC", "MAC", "RBAC", "ABAC"], "answer": "RBAC", "exp": "RBAC (Role-Based Access Control) = most widely used commercial model. Non-discretionary - administrators control access based on job roles. Changes require updating roles, not individual ACLs. Naturally supports separation of duties. Active Directory groups implement RBAC."}, {"q": "In DAC (Discretionary Access Control), who controls access to objects?", "opts": ["Central security authority", "System automatically", "Object owner/creator", "Role definitions"], "answer": "Object owner/creator", "exp": "DAC = the owner, creator, or data custodian controls access at their DISCRETION. Implemented using ACLs. Owner can modify permissions at will - decentralised control. Risk: Trojan horse attacks can exploit DAC (code runs with owner's privileges). Windows NTFS uses DAC."}, {"q": "Biometric enrolment time exceeding what threshold is unacceptable?", "opts": ["30 seconds", "1 minute", "2 minutes", "5 minutes"], "answer": "2 minutes", "exp": "Biometric enrolment time over 2 MINUTES is unacceptable - users will resist the system. Enrolment must happen FIRST before any authentication. Throughput target: 10 people per minute minimum for practical deployment."}, {"q": "Which biometric is MOST ACCURATE but raises Protected Health Information concerns?", "opts": ["Fingerprint", "Iris scan", "Retina scan", "Facial recognition"], "answer": "Retina scan", "exp": "Retina scan = MOST ACCURATE biometric. Scans blood vessel patterns on back of eyeball. Reveals health conditions (blood pressure, pregnancy) = contains PHI. Most widely accepted (second most accurate) = Iris scan. Most widely used = Fingerprint. Retina may be unacceptable in many contexts."}, {"q": "Type 2 biometric error (FAR) means:", "opts": ["Legitimate user rejected", "Impostor accepted by the system", "Enrolment failure", "Duplicate biometric"], "answer": "Impostor accepted by the system", "exp": "Type 2 error = FAR (False Acceptance Rate) = impostor ACCEPTED. Type 1 error = FRR (False Rejection Rate) = legitimate user REJECTED. Exam tip: Type 2 (FAR) is FAR from Type 1 (FRR). CER/EER = crossover point where FAR equals FRR. Lower CER = more accurate and balanced system."}, {"q": "The PRIMARY security risk of SSO is:", "opts": ["Users must remember multiple passwords", "Single point of compromise - one credential accesses all resources", "SSO systems are complex", "SSO requires biometrics"], "answer": "Single point of compromise - one credential accesses all resources", "exp": "SSO primary risk = single point of compromise. Stolen credentials grant access to ALL resources. SSO database compromise exposes all passwords. Benefits: stronger passwords (only one to remember), less admin overhead, reduced password fatigue, faster access."}, {"q": "SCIM is used for:", "opts": ["Securing SAML assertions", "Automating identity provisioning/deprovisioning across cloud services", "Providing SSO tokens", "Encrypting directory queries"], "answer": "Automating identity provisioning/deprovisioning across cloud services", "exp": "SCIM (System for Cross-domain Identity Management) automates exchange of user identity information between identity domains. Enables automatic account creation/deletion when users join or leave. Prevents orphaned accounts across cloud services. Works with IDaaS providers like Okta and Azure AD."}, {"q": "LDAP uses which port for encrypted communications?", "opts": ["Port 389", "Port 443", "Port 636", "Port 1812"], "answer": "Port 636", "exp": "LDAP = port 389 (unencrypted). LDAPS (LDAP over TLS/SSL) = port 636 (encrypted). Based on X.500 standard. Used for directory services. Active Directory uses LDAP and Kerberos. Port 389 should not be used for sensitive queries."}, {"q": "A sales team can only access systems between 9 AM-5 PM on weekdays. This is:", "opts": ["Content-dependent access control", "Context-dependent access control", "Role-based access control", "Attribute-based access control"], "answer": "Context-dependent access control", "exp": "Context-dependent = restricts access based on CIRCUMSTANCES (time, location, device). Content-dependent = based on data content itself (e.g. a database view showing only certain fields). ABAC can implement both. The time restriction is a classic context-dependent control."}, {"q": "The BEST countermeasure against privilege creep is:", "opts": ["Stronger password policies", "Periodic access reviews and entitlement audits", "Installing DLP software", "Implementing SSO"], "answer": "Periodic access reviews and entitlement audits", "exp": "Privilege creep = accumulation of excess privileges through role changes without revoking old rights. Prevention: periodic access reviews, quarterly entitlement audits, automated deprovisioning, manager certification of access rights at each role change."}, {"q": "Which authentication protocol uses CHALLENGE/RESPONSE over PPP and periodically reauthenticates?", "opts": ["PAP", "CHAP", "EAP", "RADIUS"], "answer": "CHAP", "exp": "CHAP (Challenge Handshake Authentication Protocol) = uses challenge/response over PPP. Encrypts user ID and password. Reauthenticates periodically - protects against replay attacks. More secure than PAP. MS-CHAPv2 is the Microsoft implementation used with PPTP."}, {"q": "The implicit deny principle states:", "opts": ["Block all traffic by default", "Access denied UNLESS explicitly granted", "Deny after 3 failed attempts", "Block off-hours access"], "answer": "Access denied UNLESS explicitly granted", "exp": "Implicit deny = the default stance for access control systems. Access is DENIED unless it has been EXPLICITLY granted to a subject. This principle ensures accidental exposure cannot occur - you must affirmatively grant access. Firewalls implement this with 'deny all, permit some.'"}, {"q": "SESAME improves on Kerberos by using:", "opts": ["UDP instead of TCP", "Both symmetric AND asymmetric encryption", "Stronger time synchronisation", "No KDC requirement"], "answer": "Both symmetric AND asymmetric encryption", "exp": "SESAME (Secure European System for Application in Multi-vendor Environment) overcomes Kerberos weaknesses. Key improvement: uses BOTH symmetric AND asymmetric encryption. Provides two tickets: one for authentication (like Kerberos) and one Privileged Attribute Certificate (PAC) defining access rights."}, {"q": "An asynchronous OTP token generates a password based on:", "opts": ["Current time", "Counter synchronised with server", "A challenge/nonce provided by the server", "Pre-shared secret alone"], "answer": "A challenge/nonce provided by the server", "exp": "Asynchronous OTP = server sends a CHALLENGE/NONCE, token encrypts it and returns OTP. Synchronous OTP = time or counter based (e.g. SecurID - new code every 60 seconds). Adding a PIN to either type creates strong two-factor (Type 1 + Type 2) authentication."}]</script>
+
+<!-- QUIZ -->
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 5 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="pf">
+  <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 5 — Identity &amp; Access Management</p>
+  <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams, Memory Palace &amp; CISSP Mindmaps Summary. For educational purposes.</p>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function tg(el){el.classList.toggle('open');}
+</script>
+
+<script>
+var QS = JSON.parse(document.getElementById('qdata').textContent);
+var qst = {i:0, s:0};
+function openQuiz(){document.getElementById('quizOv').style.display='flex';qst={i:0,s:0};renderQ();}
+function closeQ(){document.getElementById('quizOv').style.display='none';}
+function renderQ(){
+  var t=document.getElementById('qTitle'), b=document.getElementById('qBody');
+  if(qst.i>=QS.length){
+    var p=Math.round(qst.s/QS.length*100);
+    t.textContent='Quiz complete';
+    b.innerHTML='<div style="text-align:center;padding:1.5rem 0;">'
+      +'<div style="font-size:48px;margin-bottom:.5rem;">'+(p>=80?'&#127942;':p>=60?'&#9989;':'&#128218;')+'</div>'
+      +'<div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qst.s+'/'+QS.length+'</div>'
+      +'<div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(p>=80?'Excellent &#8212; exam ready!':p>=60?'Good &#8212; review weak areas':'Needs more review &#8212; keep studying')+'</div>'
+      +'<button onclick="qst={i:0,s:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button>'
+      +'<button onclick="closeQ()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button>'
+      +'</div>';
+    return;
+  }
+  var q=QS[qst.i];
+  t.textContent='Question '+(qst.i+1)+' of '+QS.length;
+  var pct=Math.round(qst.i/QS.length*100);
+  var h='<div>';
+  h+='<div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div>';
+  h+='<div id="qopts" style="display:flex;flex-direction:column;gap:8px;">';
+  q.opts.forEach(function(opt,i){
+    h+='<button data-i="'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;transition:all .15s;">'
+      +'<span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';
+  });
+  h+='</div><div id="qexp"></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;">';
+  h+='<span style="font-size:12px;color:#94a3b8;">Score: '+qst.s+'</span>';
+  h+='<div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div>';
+  h+='<span style="font-size:12px;color:#94a3b8;">'+pct+'%</span></div></div>';
+  b.innerHTML=h;
+}
+function ansQ(chosen){
+  var q=QS[qst.i];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){
+    b.onclick=null; b.style.cursor='default';
+    if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}
+    if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}
+  });
+  var ok=(chosen===correct);
+  if(ok) qst.s++;
+  var next=qst.i+1;
+  document.getElementById('qexp').innerHTML=
+    '<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'
+    +(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecada;')
+    +'"><span style="font-weight:700;">'+(ok?'&#10003; Correct! ':'&#10007; Incorrect. ')+'</span>'+q.exp+'</div>'
+    +'<div style="margin-top:10px;display:flex;justify-content:flex-end;">'
+    +'<button onclick="qst.i++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'
+    +(next<QS.length?'Next &#8594;':'See results')+'</button></div>';
+}
+</script>
+</body>
+</html>

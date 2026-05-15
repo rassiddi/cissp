@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 3 – Security Architecture & Engineering | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg:#f8fafc; --surface:#ffffff; --surface2:#f1f5f9;
+  --border:#e2e8f0; --border2:#cbd5e1;
+  --text:#0f172a; --text2:#475569; --text3:#94a3b8;
+  --blue:#3b82f6; --blue-bg:#eff6ff; --blue-bd:#bfdbfe;
+  --teal:#0d9488; --teal-bg:#f0fdfa; --teal-bd:#99f6e4;
+  --amber:#d97706; --amber-bg:#fffbeb; --amber-bd:#fde68a;
+  --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
+  --purple:#7c3aed; --purple-bg:#f5f3ff; --purple-bd:#ddd6fe;
+  --green:#16a34a; --green-bg:#f0fdf4; --green-bd:#bbf7d0;
+  --rose:#e11d48; --rose-bg:#fff1f2; --rose-bd:#fecdd3;
+  --r:10px; --rs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.06); --shm:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+.pw{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a0533 0%,#2d1065 55%,#1a0f3d 100%);border-radius:16px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;border-radius:50%;background:rgba(124,58,237,.18);}
+.hero::after{content:'';position:absolute;bottom:-40px;left:35%;width:170px;height:170px;border-radius:50%;background:rgba(13,148,136,.12);}
+.hero-inner{position:relative;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.25);color:#c4b5fd;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(124,58,237,.35);}
+.hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;color:#f8fafc;margin-bottom:6px;}
+.hero p{color:#94a3b8;font-size:14px;margin-bottom:16px;}
+.hpills{display:flex;flex-wrap:wrap;gap:8px;}
+.hpill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:11px;padding:3px 10px;border-radius:20px;}
+
+/* TABS */
+.tw{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh);}
+.tn{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface2);scrollbar-width:none;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;background:none;border:none;padding:12px 16px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;letter-spacing:.3px;}
+.tb:hover{color:var(--text);background:rgba(0,0,0,.03);}
+.tb.active{color:var(--purple);border-bottom-color:var(--purple);background:var(--surface);}
+.tb i{font-size:15px;}
+.tp{display:none;padding:1.5rem;}
+.tp.active{display:block;}
+
+/* LAYOUT */
+.sec{margin-bottom:1.75rem;}
+.sec-hd{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sec-hd::after{content:'';flex:1;height:1px;background:var(--border);}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;}
+.card:hover{border-color:var(--border2);box-shadow:var(--shm);}
+.card.open{border-color:var(--purple-bd);background:var(--purple-bg);}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.cl{font-size:13px;font-weight:600;color:var(--text);}
+.card.open .cl{color:var(--purple);}
+.ca{color:var(--text3);font-size:16px;transition:transform .2s;flex-shrink:0;}
+.card.open .ca{transform:rotate(180deg);color:var(--purple);}
+.cb{display:none;font-size:13px;color:var(--text2);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.card.open .cb{display:block;}
+
+/* MODELS TABLE */
+.mtable{width:100%;border-collapse:collapse;font-size:12.5px;}
+.mtable th{text-align:left;padding:8px 12px;font-size:11px;font-weight:600;color:var(--text2);border-bottom:2px solid var(--border);background:var(--surface2);}
+.mtable td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;}
+.mtable tr:last-child td{border-bottom:none;}
+.mtable tr:hover td{background:var(--surface2);}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;}
+
+/* CRYPTO KEY/VAL */
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:14px;}
+.kv{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+.kv-key{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px;}
+.kv-val{font-size:13px;color:var(--text);font-weight:500;}
+.kv-note{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4;}
+
+/* COMPARE TABLE */
+.cmp{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.cmp th{padding:8px 10px;font-size:11px;font-weight:600;color:var(--text2);border:1px solid var(--border);background:var(--surface2);text-align:center;}
+.cmp th:first-child{text-align:left;}
+.cmp td{padding:9px 10px;border:1px solid var(--border);text-align:center;color:var(--text2);line-height:1.5;}
+.cmp td:first-child{text-align:left;font-weight:600;color:var(--text);}
+.cmp tr:nth-child(even) td{background:var(--surface2);}
+
+/* RING DIAGRAM */
+.ring-wrap{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.ring-row{display:flex;gap:6px;align-items:center;}
+.ring-num{font-size:11px;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;}
+.ring-bar{flex:1;padding:8px 14px;border-radius:var(--r);border:1px solid;}
+.ring-name{font-size:12px;font-weight:600;margin-bottom:2px;}
+.ring-desc{font-size:11px;color:var(--text2);}
+
+/* BELL BIBA CLARK */
+.models-trio{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:14px;}
+.model-card{border-radius:var(--r);padding:14px;border:1px solid;}
+.mc-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.mc-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;display:inline-block;margin-bottom:8px;}
+.mc-rule{font-size:12px;padding:5px 10px;border-radius:var(--rs);margin-bottom:4px;font-family:'JetBrains Mono',monospace;}
+.mc-note{font-size:11px;color:var(--text2);margin-top:6px;line-height:1.5;}
+
+/* CRYPTO ALGOS */
+.algo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;}
+.algo-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px;}
+.algo-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.algo-spec{font-size:11px;color:var(--text2);line-height:1.7;}
+.algo-spec span{display:block;}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
+
+/* PKI FLOW */
+.pki-flow{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.pki-step{display:flex;align-items:flex-start;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;}
+.pki-num{font-size:11px;font-weight:700;color:var(--purple);min-width:18px;flex-shrink:0;margin-top:1px;}
+.pki-text{font-size:12.5px;color:var(--text);line-height:1.55;}
+.pki-text strong{font-weight:600;}
+
+/* TCSEC */
+.tcsec-table{width:100%;border-collapse:collapse;font-size:12px;}
+.tcsec-table th{padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text2);border-bottom:2px solid var(--border);background:var(--surface2);}
+.tcsec-table td{padding:8px 10px;border-bottom:1px solid var(--border);line-height:1.5;}
+.tcsec-table tr:last-child td{border-bottom:none;}
+
+/* PHYS SECURITY */
+.phys-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.phys-card{border-radius:var(--r);padding:12px 14px;border:1px solid;}
+.phys-title{font-size:12px;font-weight:700;margin-bottom:6px;}
+.phys-list{font-size:11px;color:var(--text2);line-height:1.8;list-style:none;}
+.phys-list li::before{content:'› ';color:var(--text3);}
+
+/* BOXES */
+.info-box{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#1e40af;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.warn-box{background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.tip-box{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#14532d;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.box-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+
+/* FOOTER */
+.pf{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--text3);}
+.pf a{color:var(--purple);text-decoration:none;}
+.pf a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="pw">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hbadge"><i class="ti ti-cpu"></i> CISSP · Domain 3 · 13% of exam</div>
+    <h1>Security Architecture &amp; Engineering</h1>
+    <p>Cryptography · Security models · Evaluation criteria · Secure design · Physical security · Architecture flaws</p>
+    <div class="hpills">
+      <span class="hpill">Bell-LaPadula / Biba / Clark-Wilson</span>
+      <span class="hpill">Symmetric &amp; Asymmetric</span>
+      <span class="hpill">PKI &amp; Digital Signatures</span>
+      <span class="hpill">TCSEC / Common Criteria</span>
+      <span class="hpill">Protection Rings</span>
+      <span class="hpill">Physical Security</span>
+    </div>
+  </div>
+
+    <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;">
+      <i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz
+    </button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tw">
+  <div class="tn">
+    <button class="tb active" onclick="sw('crypto',this)"><i class="ti ti-lock"></i> Cryptography</button>
+    <button class="tb" onclick="sw('models',this)"><i class="ti ti-sitemap"></i> Security models</button>
+    <button class="tb" onclick="sw('eval',this)"><i class="ti ti-certificate"></i> Evaluation criteria</button>
+    <button class="tb" onclick="sw('arch',this)"><i class="ti ti-building-arch"></i> Secure design</button>
+    <button class="tb" onclick="sw('flaws',this)"><i class="ti ti-bug"></i> Architecture flaws</button>
+    <button class="tb" onclick="sw('phys',this)"><i class="ti ti-shield"></i> Physical security</button>
+  </div>
+
+  <!-- ═══ CRYPTOGRAPHY ═══ -->
+  <div id="tab-crypto" class="tp active">
+
+    <div class="sec">
+      <div class="sec-hd">Cryptography foundations</div>
+      <div class="tip-box"><i class="ti ti-bulb box-icon"></i><span><strong>Goals of Cryptography — P A I N:</strong> Privacy (Confidentiality) · Authentication · Integrity · Non-Repudiation. Kerckhoff's Principle: the algorithm must be made public for examination and testing — only the key is kept secret.</span></div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Key concepts</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Key Space = 2ⁿ where n is the bit size. AES-256 key space = 2²⁵⁶. Work Function = time and effort required to break a cryptosystem — indicates its strength. Nonce = unique random number used once (Initialization Vector / IV). Zero Knowledge Proof = sharing proof without sharing actual knowledge.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Cipher types</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Substitution Cipher: replaces characters (e.g. Caesar cipher ROT3). Transposition Cipher: rearranges letters. Block Cipher: encrypts in fixed blocks — slow but secure. Stream Cipher: encrypts bit by bit — fast but less secure. One-Time Pad (Vernam Cipher): unbreakable when used correctly — key must be random, same length as message, used only once.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Confusion vs diffusion</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Confusion: complication introduced by substitution — makes relationship between key and ciphertext complex. Diffusion: one change in plaintext changes ciphertext in multiple positions — spreading influence of a single character.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Hashing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Provides INTEGRITY (not confidentiality). One-way mathematical function. File changes → hash changes. Requirements: any input length, fixed output length, easy to compute, one-way (pre-image resistant), collision-free. MD5 = 128-bit. SHA-1 = 160-bit. HMAC = Hashing + Symmetric Key — provides partial digital signature (integrity but not non-repudiation).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Split knowledge &amp; M of N</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Split Knowledge: separation of duties applied to cryptographic keys. M of N Control: M = minimum number of people required, N = total participants. Key Escrow: secret key divided and held by trusted third parties — government can combine to reconstruct under legal authority (fair cryptosystem).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Cryptographic lifecycle</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">All cryptographic systems have a defined lifespan — except the One-Time Pad. Keys must be changed periodically. Keys and encrypted data should be stored on separate systems. For sensitive keys, use split knowledge. Cryptographic lifecycle = algorithm selection → key generation → distribution → storage → retirement.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Symmetric vs asymmetric — comparison</div>
+      <div style="overflow-x:auto;margin-bottom:14px;">
+        <table class="cmp">
+          <thead><tr><th>Property</th><th>Symmetric (Secret Key)</th><th>Asymmetric (Public Key)</th></tr></thead>
+          <tbody>
+            <tr><td>Keys used</td><td>Single shared key</td><td>Key pair — public + private</td></tr>
+            <tr><td>Key exchange</td><td>Out-of-band (challenge)</td><td>In-band — public key distributed freely</td></tr>
+            <tr><td>Keys required (n users)</td><td class="mono">n(n–1) / 2</td><td class="mono">2n</td></tr>
+            <tr><td>Scalability</td><td>Not scalable</td><td>Highly scalable</td></tr>
+            <tr><td>Speed</td><td>Fast — bulk encryption</td><td>Slow — small blocks, signatures</td></tr>
+            <tr><td>Use cases</td><td>Data at rest, bulk data</td><td>Key exchange, digital signatures, certificates</td></tr>
+            <tr><td>Goals</td><td>P A I N (Privacy · Auth · Integrity · Non-Rep)</td><td>P A I N</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box"><i class="ti ti-info-circle box-icon"></i>Real-world SSL/TLS uses Hybrid Cryptography: the session data is encrypted with a symmetric key, and that symmetric key is protected using asymmetric encryption.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Symmetric key algorithms</div>
+      <div class="algo-grid">
+        <div class="algo-card"><div class="algo-name">DES</div><div class="algo-spec"><span>Block: 64-bit</span><span>Key: 56-bit</span><span>Rounds: 16</span><span>Modes: ECB (least secure), CBC, CFB, OFB, CTR</span></div></div>
+        <div class="algo-card"><div class="algo-name">3DES (Triple DES)</div><div class="algo-spec"><span>EEE3: 3 keys = 168-bit</span><span>EDE3: 3 keys = 168-bit</span><span>EEE2/EDE2: 2 keys = 112-bit</span></div></div>
+        <div class="algo-card"><div class="algo-name">AES ⭐</div><div class="algo-spec"><span>Block: 128-bit</span><span>128-bit key → 10 rounds</span><span>192-bit key → 12 rounds</span><span>256-bit key → 14 rounds</span><span style="color:var(--green);font-weight:600;">Best for data at rest</span></div></div>
+        <div class="algo-card"><div class="algo-name">IDEA</div><div class="algo-spec"><span>Block: 64-bit</span><span>Key: 128-bit</span><span>Used in PGP</span><span class="mono">PGP is a good IDEA</span></div></div>
+        <div class="algo-card"><div class="algo-name">Blowfish</div><div class="algo-spec"><span>Block: 64-bit</span><span>Key: 32–448-bit</span><span>Faster than IDEA &amp; DES</span></div></div>
+        <div class="algo-card"><div class="algo-name">RC5</div><div class="algo-spec"><span>Block: 32/64/128-bit</span><span>Key: 0–2040-bit</span></div></div>
+        <div class="algo-card"><div class="algo-name">Twofish</div><div class="algo-spec"><span>Block: 128-bit</span><span>Key: up to 256-bit</span><span>AES finalist</span></div></div>
+        <div class="algo-card"><div class="algo-name">Skipjack</div><div class="algo-spec"><span>Block: 64-bit</span><span>Key: 80-bit</span><span>Supports key escrow</span><span>Retained by NIST &amp; Treasury</span></div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Asymmetric key algorithms</div>
+      <div class="algo-grid">
+        <div class="algo-card"><div class="algo-name">RSA ⭐</div><div class="algo-spec"><span>Based on factoring large primes</span><span>N = P × Q</span><span>Key: 1024–4096-bit</span><span>Worldwide standard</span></div></div>
+        <div class="algo-card"><div class="algo-name">DSA</div><div class="algo-spec"><span>Digital Signature Algorithm</span><span>FIPS 186 standard</span><span>Signing only, not encryption</span></div></div>
+        <div class="algo-card"><div class="algo-name">ECC</div><div class="algo-spec"><span>Elliptic Curve Cryptography</span><span>Key: 160-bit</span><span>More efficient than RSA</span><span>Same security, smaller key</span></div></div>
+        <div class="algo-card"><div class="algo-name">Diffie-Hellman</div><div class="algo-spec"><span>First asymmetric algorithm</span><span>Used for key exchange only</span><span>Basis for Elgamal &amp; Oakley</span></div></div>
+        <div class="algo-card"><div class="algo-name">Elgamal</div><div class="algo-spec"><span>Based on Diffie-Hellman</span><span>Ciphertext = 2× plaintext</span><span>Not ideal for long messages</span></div></div>
+      </div>
+      <div class="sec-hd" style="margin-top:16px;">Public key operations — quick reference</div>
+      <div style="overflow-x:auto">
+        <table class="cmp">
+          <thead><tr><th>Purpose</th><th>Key to use</th></tr></thead>
+          <tbody>
+            <tr><td>Encrypt a message for someone</td><td>Receiver's <strong>public</strong> key</td></tr>
+            <tr><td>Decrypt a received message</td><td>Your own <strong>private</strong> key</td></tr>
+            <tr><td>Digitally sign a message</td><td>Your own <strong>private</strong> key</td></tr>
+            <tr><td>Verify a digital signature</td><td>Sender's <strong>public</strong> key</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">PKI — Public Key Infrastructure</div>
+      <div class="tip-box"><i class="ti ti-bulb box-icon"></i>PKI = Symmetric + Asymmetric + Hashing + Digital Certificate. Standard: X.509. Provides P A I N for parties previously unknown to each other.</div>
+      <div class="pki-flow">
+        <div class="pki-step"><span class="pki-num">1</span><span class="pki-text"><strong>Certificate Authority (CA)</strong> — issues and signs certificates. Verifies identities.</span></div>
+        <div class="pki-step"><span class="pki-num">2</span><span class="pki-text"><strong>Registration Authority (RA)</strong> — assists CA in identity verification. Offloads CA workload.</span></div>
+        <div class="pki-step"><span class="pki-num">3</span><span class="pki-text"><strong>Certificate</strong> — binds a public key to an identity. Signed by CA using CA's private key. Standard: X.509.</span></div>
+        <div class="pki-step"><span class="pki-num">4</span><span class="pki-text"><strong>CRL — Certificate Revocation List</strong> — list of revoked certificates. Checked before trusting a cert. Causes latency.</span></div>
+        <div class="pki-step"><span class="pki-num">5</span><span class="pki-text"><strong>OCSP — Online Certificate Status Protocol</strong> — real-time cert status query. Returns: valid / invalid / unknown. No latency vs CRL.</span></div>
+        <div class="pki-step"><span class="pki-num">6</span><span class="pki-text"><strong>Certificate lifecycle</strong> — Enrollment → Verification → Revocation. Change requires recertification.</span></div>
+      </div>
+      <div class="sec-hd">Cryptographic attacks</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Brute Force</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Trying all possible keys until the correct one is found. Effectiveness depends on key length — longer keys exponentially increase effort. Work function determines feasibility.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Frequency Analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Exploits letter frequency in natural language. Effective against simple substitution ciphers (e.g. ROT3/Caesar cipher). Modern algorithms are designed to resist this.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Known Plaintext</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attacker has both ciphertext and corresponding plaintext. Uses the pair to deduce the key. Weaker algorithms are vulnerable.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Chosen Plaintext</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attacker can choose arbitrary plaintext and obtain the corresponding ciphertext. Allows targeted analysis of the encryption algorithm.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Meet-in-the-Middle</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attacker has known plaintext. Attacks double encryption by encrypting from one end and decrypting from the other simultaneously. Weakness of 2DES — reason 3DES uses 3 keys.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Birthday (Collision) Attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Exploits probability that two different inputs produce the same hash value. Targets hash functions. Based on birthday paradox — collisions occur far sooner than expected. MD5 and SHA-1 vulnerable.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Replay Attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Intercepts valid transmission and retransmits it later to gain unauthorized access. Countered by: timestamps, nonces, sequence numbers, and one-time tokens.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Man-in-the-Middle (MitM)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attacker secretly intercepts and potentially alters communication between two parties. Countered by: mutual authentication, PKI, digital certificates, and out-of-band verification.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ SECURITY MODELS ═══ -->
+  <div id="tab-models" class="tp">
+
+    <div class="sec">
+      <div class="sec-hd">The three foundational access control models</div>
+      <div class="models-trio">
+        <div class="model-card" style="background:var(--blue-bg);border-color:var(--blue-bd)">
+          <div class="mc-title" style="color:var(--blue)">Bell-LaPadula</div>
+          <div class="mc-badge" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)">Confidentiality</div>
+          <div class="mc-rule" style="background:rgba(59,130,246,.12);color:#1e40af">Simple Rule: No Read Up (NRU)</div>
+          <div class="mc-rule" style="background:rgba(59,130,246,.12);color:#1e40af">Star (*) Rule: No Write Down (NWD)</div>
+          <div class="mc-note">State Machine + Information Flow model. A subject cannot read data at a higher classification. A subject cannot write data to a lower classification. Covert channels are NOT addressed.</div>
+        </div>
+        <div class="model-card" style="background:var(--teal-bg);border-color:var(--teal-bd)">
+          <div class="mc-title" style="color:var(--teal)">Biba Model</div>
+          <div class="mc-badge" style="background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)">Integrity</div>
+          <div class="mc-rule" style="background:rgba(13,148,136,.12);color:#0f766e">Simple Rule: No Read Down (NRD)</div>
+          <div class="mc-rule" style="background:rgba(13,148,136,.12);color:#0f766e">Star (*) Rule: No Write Up (NWU)</div>
+          <div class="mc-note">Information Flow model. Inverse of Bell-LaPadula. Maintains internal and external object consistency. Covert channels are NOT addressed. Simple → Read; Star → Write.</div>
+        </div>
+        <div class="model-card" style="background:var(--purple-bg);border-color:var(--purple-bd)">
+          <div class="mc-title" style="color:var(--purple)">Clark-Wilson</div>
+          <div class="mc-badge" style="background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)">Integrity</div>
+          <div class="mc-rule" style="background:rgba(124,58,237,.12);color:#5b21b6">CDI — Constrained Data Item (protected)</div>
+          <div class="mc-rule" style="background:rgba(124,58,237,.12);color:#5b21b6">UDI — Unconstrained Data Item</div>
+          <div class="mc-rule" style="background:rgba(124,58,237,.12);color:#5b21b6">IVP — Integrity Verification Procedure</div>
+          <div class="mc-rule" style="background:rgba(124,58,237,.12);color:#5b21b6">TP — Transformation Procedure</div>
+          <div class="mc-note">Enforces Segregation of Duties. Uses a constrained interface. TP is the only procedure allowed to modify CDI. Enforces well-formed transactions.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Other security models</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Brewer-Nash (Chinese Wall)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Protects against conflicts of interest. A subject who accesses one object cannot access objects in conflict with it. Used in financial and legal industries to prevent insider trading.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">State Machine Model</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">System is always in a secure state regardless of its current state. Every possible state transition must preserve security. All inputs must be evaluated against security policy before execution.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Information Flow Model</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Prevents unauthorised flow of information between different security levels. Both Bell-LaPadula and Biba are based on this model. Controls direction of data movement between classification levels.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Non-Interference Model</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Actions taken by subject A must not affect or be noticed by subject B. Goguen-Meseguer Model is a non-interference model. Sutherland Model extends this to prevent covert channels.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Take-Grant Model</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Dictates how rights can be passed between subjects and objects. Four rules: Take (take rights over an object), Grant (grant rights to an object), Create (create new rights), Remove (remove rights). Access Control Matrix shows subject-object permissions.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Graham-Denning Model</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Focuses on secure creation and deletion of both objects and subjects. Defines eight protection rules for managing access rights during creation/deletion lifecycle.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">TCB — Trusted Computing Base</div>
+      <div class="info-box"><i class="ti ti-info-circle box-icon"></i>TCB = Hardware + Software + Firmware. All protection mechanisms that work together to process sensitive data. It defines the total combination of protection mechanisms within a computer system.</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Security Perimeter</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Imaginary boundary separating the TCB from the rest of the system. Any communication crossing the perimeter must be mediated by the Reference Monitor.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Reference Monitor</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Mediates access between all subjects and objects. Enforces access control policy. Must be: always invoked, tamper-proof, and small enough to be verified. The Security Kernel implements the Reference Monitor concept.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Confinement, Bounds &amp; Isolation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Confinement: process can only read/write from a certain memory area (e.g. sandboxing). Bounds: the memory limits a process cannot exceed. Isolation: when a process is confined through bounds, it runs in isolation from other processes.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Security modes (S.C.A.N.)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Four system modes by clearance level: Dedicated (all users have clearance/approval/need-to-know for all data), System High (all users cleared for highest level but need-to-know varies), Compartmentalized (clearance for highest but formal approval varies), Multilevel (users may differ in clearance, approval and need-to-know).</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Protection rings</div>
+      <div class="ring-wrap">
+        <div class="ring-row"><div class="ring-num" style="background:#991b1b">0</div><div class="ring-bar" style="background:var(--red-bg);border-color:var(--red-bd)"><div class="ring-name" style="color:var(--red)">Kernel (OS Core)</div><div class="ring-desc">Most privileged — Supervisor/Privileged mode. Direct hardware access. Security kernel runs here.</div></div></div>
+        <div class="ring-row"><div class="ring-num" style="background:#b45309">1</div><div class="ring-bar" style="background:var(--amber-bg);border-color:var(--amber-bd)"><div class="ring-name" style="color:var(--amber)">OS Components</div><div class="ring-desc">Device drivers, OS utilities. Still privileged but less than Ring 0.</div></div></div>
+        <div class="ring-row"><div class="ring-num" style="background:#1d4ed8">2</div><div class="ring-bar" style="background:var(--blue-bg);border-color:var(--blue-bd)"><div class="ring-name" style="color:var(--blue)">OS Services / Drivers</div><div class="ring-desc">I/O drivers, middleware. Intermediate privilege level.</div></div></div>
+        <div class="ring-row"><div class="ring-num" style="background:#15803d">3</div><div class="ring-bar" style="background:var(--green-bg);border-color:var(--green-bd)"><div class="ring-name" style="color:var(--green)">User Applications</div><div class="ring-desc">Least privileged — User/Problem state. Must make System Calls to request inner ring services.</div></div></div>
+      </div>
+      <div class="warn-box"><i class="ti ti-alert-triangle box-icon"></i>If an outer ring needs to communicate with an inner ring, it must make a formal System Call request. This is the boundary enforcement mechanism of the ring model.</div>
+    </div>
+
+  </div>
+
+  <!-- ═══ EVALUATION CRITERIA ═══ -->
+  <div id="tab-eval" class="tp">
+
+    <div class="sec">
+      <div class="sec-hd">TCSEC — Trusted Computer System Evaluation Criteria (Orange Book)</div>
+      <div class="info-box"><i class="ti ti-info-circle box-icon"></i>Created by DoD (Department of Defence). Part of the Rainbow Series. Protects Confidentiality only. Orange Book = standalone systems. Red Book = network security. Green Book = password management.</div>
+      <div style="overflow-x:auto;">
+        <table class="tcsec-table">
+          <thead><tr><th>Level</th><th>Name</th><th>Key requirement</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border)">D</span></td><td>Minimum Protection</td><td>Failed to meet higher levels. No security.</td></tr>
+            <tr><td><span class="pill" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)">C1</span></td><td>Discretionary Protection</td><td>DAC — user controls access to own data.</td></tr>
+            <tr><td><span class="pill" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)">C2</span></td><td>Controlled Access Protection</td><td>Media cleansing required for reusability. Audit trails.</td></tr>
+            <tr><td><span class="pill" style="background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)">B1</span></td><td>Labelled Security</td><td>MAC — mandatory labelling of all data and subjects.</td></tr>
+            <tr><td><span class="pill" style="background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)">B2</span></td><td>Structured Protection</td><td>Addresses covert channels. Formal security model required.</td></tr>
+            <tr><td><span class="pill" style="background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)">B3</span></td><td>Security Domain</td><td>Isolation. Security kernel must be small and verifiable.</td></tr>
+            <tr><td><span class="pill" style="background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)">A</span></td><td>Verified Protection</td><td>B3 + formal mathematical verification of the entire development cycle.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Common Criteria — ISO 15408 (EAL levels)</div>
+      <div class="tip-box"><i class="ti ti-bulb box-icon"></i>Globally accepted evaluation criteria. Tests a Target of Evaluation (TOE) against a Protection Profile (customer needs) and Security Target (vendor's security claims). Certification = internal technical evaluation. Accreditation = formal management acceptance by a third party.</div>
+      <div style="overflow-x:auto;">
+        <table class="tcsec-table">
+          <thead><tr><th>EAL</th><th>Assurance Level</th><th>Key characteristic</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill" style="background:var(--surface2);color:var(--text2);border:1px solid var(--border)">EAL 1</span></td><td>Functionally Tested</td><td>Basic testing — lowest assurance level.</td></tr>
+            <tr><td><span class="pill" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)">EAL 2</span></td><td>Structurally Tested</td><td>Developer testing and vulnerability analysis.</td></tr>
+            <tr><td><span class="pill" style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)">EAL 3</span></td><td>Methodically Tested &amp; Checked</td><td>Developer testing with some degree of independence.</td></tr>
+            <tr><td><span class="pill" style="background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)">EAL 4</span></td><td>Methodically Designed, Tested &amp; Reviewed</td><td>Most common commercial assurance level.</td></tr>
+            <tr><td><span class="pill" style="background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd)">EAL 5</span></td><td>Semiformally Designed &amp; Tested</td><td>Used for high-risk, specialised TOEs.</td></tr>
+            <tr><td><span class="pill" style="background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)">EAL 6</span></td><td>Semiformally Verified &amp; Tested</td><td>High assurance for high-risk environments.</td></tr>
+            <tr><td><span class="pill" style="background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)">EAL 7</span></td><td>Formally Designed, Verified &amp; Tested</td><td>Highest assurance — formal mathematical proof required.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">ITSEC — IT Security Evaluation Criteria (Europe)</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">What is ITSEC?</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">European alternative to TCSEC. Developed as a joint standard by France, Germany, Netherlands, and UK. Unlike TCSEC, it evaluates CIA (Confidentiality, Integrity, Availability) — not just confidentiality. Uses a separate functionality class (C1-A equivalent) plus assurance level (E0-E6).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">TPM &amp; HSM</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">TPM (Trusted Platform Module): crypto processor chip embedded in hardware — stores and processes cryptographic keys for hardware-supported hard drive encryption. HSM (Hardware Security Module): dedicated crypto processor used to manage/store digital encryption keys, accelerate digital signatures, and improve authentication. More powerful than TPM.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ SECURE DESIGN ═══ -->
+  <div id="tab-arch" class="tp">
+
+    <div class="sec">
+      <div class="sec-hd">Secure design principles</div>
+      <div class="tip-box"><i class="ti ti-bulb box-icon"></i>Security should be "baked in" rather than "bolted on." Every design decision must consider security from the outset — not retrofitted after deployment.</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Defence in depth</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Layered security controls — if one fails, others remain. Applied in series (sequential) and parallel (redundant). No single point of failure for security. Multiple overlapping controls are required for robust protection.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Least privilege</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Every subject (user/process) is granted only the minimum access rights required to perform its function. Reduces the attack surface significantly. Applies to users, processes, services, and applications.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Separation of privilege</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Requires multiple conditions or approvals to grant access. No single individual or process should have unchecked authority. Enforced through multi-person integrity rules (M of N control).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Abstraction</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Hides implementation details — users interact with a simplified interface. Used for classifying data and assigning roles. Prevents direct manipulation of underlying data structures. Enables security without exposing internals.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Data hiding</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Restricts access to data structures — only specific processes/objects can access certain data. Cell suppression is a data hiding technique. Prevents inference attacks on databases.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layering</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Implementation of multiple rings of protection (Ring Model: Ring 0 = kernel/most privileged, Ring 3 = user/least privileged). Each layer provides security independently. Applications must use system calls to access lower privilege layers.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Open design</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Security should not depend on the secrecy of the design — only on the secrecy of the key (Kerckhoff's Principle). Open systems allow independent verification. Security through obscurity alone is not sufficient.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Trusted recovery</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">If a system fails, it must recover to a secure state where all security controls remain intact. System should not expose vulnerabilities during or after a crash. Recovery procedures must be planned and tested.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Cloud computing &amp; virtualisation</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SaaS</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Software as a Service — fully functional applications accessed via browser (Gmail, Office 365). Maximum responsibility with Cloud Service Provider (CSP). Least control for the customer.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PaaS</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Platform as a Service — CSP provides OS and hardware platform. Customer builds and deploys applications. CSP responsible for underlying infrastructure maintenance.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">IaaS</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Infrastructure as a Service — provides basic virtualised computing resources. All maintenance performed by the consumer. Full control over virtualised hardware, memory and storage.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Virtualisation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Guest OS instances running on a single physical host via a Hypervisor. Advantages: scalability, quick recovery, efficient resource use. Threats: malicious code compromising the hypervisor or guest OS. Virtual machine escape is a key concern.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">TPM vs HSM</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">TPM: embedded chip providing hardware-based cryptographic functions for a single device. HSM: dedicated external device managing keys for enterprise environments — supports faster signing and bulk operations. Both provide tamper-evident key storage.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">IoT / Embedded security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Methods: network segmentation, logical and physical isolation, application firewalls, manual firmware updates, firmware version control, wrappers (encapsulation), redundancy and diversity. SCADA/ICS systems (DCS, PLC) require special security attention. Stuxnet targeted SCADA/PLC systems.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Memory types — reference</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-key">ROM</div><div class="kv-val">Read Only Memory</div><div class="kv-note">No writing allowed</div></div>
+        <div class="kv"><div class="kv-key">PROM</div><div class="kv-val">Programmable ROM</div><div class="kv-note">Written once — used in hardware applications</div></div>
+        <div class="kv"><div class="kv-key">EPROM</div><div class="kv-val">Erasable PROM</div><div class="kv-note">Erased with UV light</div></div>
+        <div class="kv"><div class="kv-key">EEPROM</div><div class="kv-val">Electrically Erasable PROM</div><div class="kv-note">Erased with electric voltage — used in BIOS</div></div>
+        <div class="kv"><div class="kv-key">Flash</div><div class="kv-val">Flash Memory</div><div class="kv-note">Like EEPROM, deleted in blocks</div></div>
+        <div class="kv"><div class="kv-key">RAM</div><div class="kv-val">Random Access Memory</div><div class="kv-note">Readable and writable — volatile</div></div>
+        <div class="kv"><div class="kv-key">DRAM</div><div class="kv-val">Dynamic RAM</div><div class="kv-note">Uses capacitors — slower</div></div>
+        <div class="kv"><div class="kv-key">SRAM</div><div class="kv-val">Static RAM</div><div class="kv-note">Uses flip-flops — faster</div></div>
+        <div class="kv"><div class="kv-key">Cache</div><div class="kv-val">Cache Memory</div><div class="kv-note">Fastest RAM — CPU-adjacent</div></div>
+        <div class="kv"><div class="kv-key">Virtual</div><div class="kv-val">Virtual Memory</div><div class="kv-note">Secondary memory managed to look like real memory — less expensive but slow</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ ARCHITECTURE FLAWS ═══ -->
+  <div id="tab-flaws" class="tp">
+
+    <div class="sec">
+      <div class="sec-hd">Common architecture flaws &amp; vulnerabilities</div>
+      <div class="warn-box"><i class="ti ti-alert-triangle box-icon"></i>No software should be trusted by default. The primary focus of an OS is to keep the computing environment stable and keep processes isolated from each other.</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Covert Channels</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Communication over an unauthorised channel not designed for communication. Opposite = Overt Channel (authorised). Two types: Covert Timing Channel (modifying resource timing — difficult to detect) and Covert Storage Channel (writing data to shared storage for another process to read). Defence: code review and auditing.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Backdoors &amp; Trapdoors</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Backdoor: deliberate entry point bypassing normal authentication. Maintenance Hook (Trapdoor): backdoor left by developers to fix production issues — must be removed before release. Both represent serious vulnerabilities if left in production code.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Buffer Overflow</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Writing more data to a buffer than it can hold — overwrites adjacent memory. Can allow arbitrary code execution. Defence: input validation, bounds checking, stack canaries, ASLR (Address Space Layout Randomisation), DEP (Data Execution Prevention).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">TOC-TOU (Race Condition)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Time of Check – Time of Use. A subject checks an object (TOC), decides to use it, but between TOC and TOU the object changes. The attacker exploits this time window. Affects file permissions, database transactions, and authentication checks.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Salami Attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Small amounts are stolen repeatedly on the assumption they will go unnoticed. Common in financial systems — rounding fractional cents to attacker's account. Accumulates into significant theft over time.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Data Diddling</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Small changes made to data during input/processing/storage or output transactions. Modifications are subtle enough to go unnoticed. Difficult to detect without comprehensive audit trails and input/output validation.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Database: Aggregation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Combining multiple pieces of non-sensitive information to create sensitive information. Example: individual salary ranges + job titles + department headcount = specific salary inference. Defence: data classification and access controls on combined queries.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Database: Inference</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Deducing sensitive information from non-sensitive responses. Attacker gains access to higher classification data through logical deduction. Countermeasure: polyinstantiation — providing different data to users of different clearance levels.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Transitive Trust</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">If A trusts B, and B trusts C, then A transitively trusts C. Risk: trust propagates through chains — a compromise anywhere in the chain affects all parties. Proxy systems are based on transitive trust. Defence: explicit trust policies and zero-trust architecture.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">TEMPEST / Emanation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Electronic devices emit electromagnetic radiation that can be intercepted to reconstruct data. Countermeasures: Faraday Cage (special enclosure that blocks electromagnetic emissions), White Noise (random signals cause interference), Control Zone (Faraday Cage + White Noise combined). Used in sensitive government/military environments.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Database security concepts</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Data Warehousing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Collection of data consolidated from multiple source databases for the purpose of analysis and reporting. Centralised repository of historical data. Security concern: aggregated data may reveal sensitive patterns not visible in individual databases.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Data Mining</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Analysis performed on data obtained from data warehousing. Discovers patterns, correlations, and anomalies. Activity of data mining produces metadata. Metadata is stored in a more secure container called a Data Mart.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">BYOD concerns</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Key issues: data ownership and isolation, patch management, antivirus management, forensics, privacy, on/off-boarding process, adherence to corporate policy, legal concerns. BYOD policy must be signed before device use. Data isolation is critical — device owner should maintain separate personal/corporate data.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ PHYSICAL SECURITY ═══ -->
+  <div id="tab-phys" class="tp">
+
+    <div class="sec">
+      <div class="sec-hd">Physical security — layered defence</div>
+      <div class="tip-box"><i class="ti ti-bulb box-icon"></i>Physical security is the FIRST line of defence. People are the LAST. Human life is always the #1 priority — all physical security decisions must account for safe egress. Single entrance = better security. Multiple entrances = better evacuation.</div>
+      <div class="phys-grid">
+        <div class="phys-card" style="background:var(--red-bg);border-color:var(--red-bd)">
+          <div class="phys-title" style="color:var(--red)"><i class="ti ti-eye"></i> Deter</div>
+          <ul class="phys-list"><li>Fences (3–4ft casual, 6–7ft most, 8ft+ determined)</li><li>CCTV cameras</li><li>Warning signs</li><li>Security lighting (2 candle-feet = standard)</li></ul>
+        </div>
+        <div class="phys-card" style="background:var(--amber-bg);border-color:var(--amber-bd)">
+          <div class="phys-title" style="color:var(--amber)"><i class="ti ti-hand-stop"></i> Deny</div>
+          <ul class="phys-list"><li>Locks (preset, programmable, electronic)</li><li>Turnstiles — prevent tailgating</li><li>Mantraps — prevent piggybacking</li><li>Badge access systems</li></ul>
+        </div>
+        <div class="phys-card" style="background:var(--blue-bg);border-color:var(--blue-bd)">
+          <div class="phys-title" style="color:var(--blue)"><i class="ti ti-radar"></i> Detect</div>
+          <ul class="phys-list"><li>Motion detectors (IR, heat, wave, capacitance)</li><li>IDS / alarm systems</li><li>Local alarm (400ft audible)</li><li>Central station (silent + offsite monitoring)</li><li>Auxiliary station (emergency services)</li></ul>
+        </div>
+        <div class="phys-card" style="background:var(--teal-bg);border-color:var(--teal-bd)">
+          <div class="phys-title" style="color:var(--teal)"><i class="ti ti-clock-pause"></i> Delay</div>
+          <ul class="phys-list"><li>Cable locks</li><li>Multi-factor physical access</li><li>Airlock / vestibule</li><li>Layered access zones</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Fire suppression</div>
+      <div class="info-box"><i class="ti ti-info-circle box-icon"></i>Remember <strong>C L E M</strong> for fire extinguisher classes. Four stages of fire: 1. Incipient (air ionisation, no smoke), 2. Smoke, 3. Flame, 4. Heat. Preaction water system = most suitable for computer rooms with humans present.</div>
+      <div style="overflow-x:auto;margin-bottom:14px;">
+        <table class="cmp">
+          <thead><tr><th>Class</th><th>Fire type</th><th>Suppression material</th></tr></thead>
+          <tbody>
+            <tr><td>Class A</td><td>Common combustibles (wood, paper)</td><td>Water, soda acid</td></tr>
+            <tr><td>Class B</td><td>Liquid fires (fuel, oil)</td><td>CO₂, Halon, soda acid</td></tr>
+            <tr><td>Class C</td><td>Electrical fires</td><td>CO₂, Halon (FM-200) — never water</td></tr>
+            <tr><td>Class D</td><td>Metal fires</td><td>Dry powder</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Water suppression systems</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Wet Pipe: always filled with water. Dry Pipe: contains compressed air — water flows only when activated. Deluge: large pipes delivering huge water volume — NOT suitable for computer rooms. Preaction: combination of dry and wet pipe — most suitable for computer rooms with occupants.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Halon &amp; FM-200</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Halon suppresses fire by interrupting the chemical chain reaction. Banned by Montreal Protocol — depletes the ozone layer. FM-200 (HFC-227ea) is the modern replacement — safe for humans and electronics. CO₂ suppresses by removing oxygen — dangerous for occupied spaces.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Temperature &amp; fire damage</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">100°F / 38°C: magnetic storage tapes damaged. 175°F / 79°C: hardware (RAM, CPU) damaged. 350°F / 177°C: paper products ignite. Computer room target: 15°C–23°C temperature, 40–60% humidity. Static voltage: 40V destroys circuits, 17,000V permanent circuit damage.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Power &amp; environment</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-key">Fault</div><div class="kv-val">Momentary power loss</div><div class="kv-note">Brief interruption</div></div>
+        <div class="kv"><div class="kv-key">Blackout</div><div class="kv-val">Complete power loss</div><div class="kv-note">Total failure</div></div>
+        <div class="kv"><div class="kv-key">Sag</div><div class="kv-val">Momentary low voltage</div><div class="kv-note">Brief undervoltage</div></div>
+        <div class="kv"><div class="kv-key">Brownout</div><div class="kv-val">Prolonged low voltage</div><div class="kv-note">8% drop from source / 3.5% from meter</div></div>
+        <div class="kv"><div class="kv-key">Spike</div><div class="kv-val">Momentary high voltage</div><div class="kv-note">Brief overvoltage</div></div>
+        <div class="kv"><div class="kv-key">Surge</div><div class="kv-val">Prolonged high voltage</div><div class="kv-note">In-rush current on startup</div></div>
+        <div class="kv"><div class="kv-key">Noise</div><div class="kv-val">Steady fluctuation</div><div class="kv-note">EMI: common-mode (hot-ground) or traverse-mode (hot-neutral)</div></div>
+        <div class="kv"><div class="kv-key">UPS</div><div class="kv-val">Uninterruptible Power Supply</div><div class="kv-note">Protects against all above; enables graceful shutdown</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /tabs-wrap -->
+
+<script id="qdata" type="application/json">[{"q": "Bell-LaPadula protects CONFIDENTIALITY. The Simple Security Rule states:", "opts": ["No Write Down", "No Read Up", "No Write Up", "No Read Down"], "answer": "No Read Up", "exp": "Bell-LaPadula: Simple rule = No Read Up (NRU). Star rule = No Write Down (NWD). Protects CONFIDENTIALITY. Biba is the inverse: Simple = No Read Down, Star = No Write Up - protects INTEGRITY."}, {"q": "AES with a 256-bit key performs how many rounds?", "opts": ["10 rounds", "12 rounds", "14 rounds", "16 rounds"], "answer": "14 rounds", "exp": "AES: 128-bit key = 10 rounds. 192-bit key = 12 rounds. 256-bit key = 14 rounds. Block size is always 128 bits regardless of key size. AES is the gold standard for data at rest (exam tip: at rest = AES-256)."}, {"q": "A digital signature is created using which key?", "opts": ["Recipient's public key", "Sender's public key", "Sender's private key", "Recipient's private key"], "answer": "Sender's private key", "exp": "Sign with SENDER'S PRIVATE KEY, verify with sender's public key. Provides authentication, integrity, non-repudiation. For confidentiality: encrypt with RECIPIENT'S public key. These are distinct operations - do not confuse them."}, {"q": "Which attack exploits the probability that two inputs produce the same hash value?", "opts": ["Rainbow table attack", "Brute force", "Birthday (collision) attack", "Meet-in-the-middle"], "answer": "Birthday (collision) attack", "exp": "Birthday attack exploits the birthday paradox - hash collisions occur far sooner than expected. Targets hash functions. MD5 and SHA-1 are vulnerable. Defence: use SHA-256 or higher. Named after the probability that 23 people in a room have a ~50% chance of sharing a birthday."}, {"q": "What is the PRIMARY purpose of adding a SALT to a password before hashing?", "opts": ["Speed up hashing", "Prevent rainbow table attacks", "Encrypt the hash itself", "Comply with NIST"], "answer": "Prevent rainbow table attacks", "exp": "Salt = random value added BEFORE hashing. Identical passwords produce different hashes with different salts - defeating pre-computed rainbow table attacks. PBKDF2, bcrypt, and Argon2 all incorporate salting. Without salt, rainbow tables crack hashed passwords instantly."}, {"q": "Which TCSEC level FIRST introduces Mandatory Access Control with sensitivity labels?", "opts": ["C1", "C2", "B1", "A1"], "answer": "B1", "exp": "TCSEC B1 (Labelled Security) = first MAC level - mandatory labelling of all subjects and objects. B2 = structured protection, addresses covert channels. B3 = security domains, isolation. A = B3 + formal mathematical verification. C2 = Controlled Access Protection (DAC with audit trails)."}, {"q": "Ring 0 in the protection ring model is reserved for:", "opts": ["User applications", "Device drivers", "OS kernel / supervisor mode", "Network processes"], "answer": "OS kernel / supervisor mode", "exp": "Ring 0 = kernel/OS core - most privileged. Ring 1 = OS components. Ring 2 = OS services. Ring 3 = user applications - least privileged. Outer rings must make formal System Calls to access inner ring services. Security kernel runs in Ring 0."}, {"q": "Diffie-Hellman is used primarily for:", "opts": ["Bulk data encryption", "Digital signatures only", "Key exchange only", "Certificate signing"], "answer": "Key exchange only", "exp": "Diffie-Hellman = FIRST asymmetric algorithm. Used for KEY EXCHANGE ONLY - not encryption or signing. Enables two parties to establish a shared secret over an insecure channel. Basis for Elgamal and Oakley. DSA = signing only. RSA = encryption and signing."}, {"q": "OCSP provides what advantage over CRL for certificate validation?", "opts": ["Better encryption", "Real-time status without CRL download latency", "Lower bandwidth usage", "No CA involvement needed"], "answer": "Real-time status without CRL download latency", "exp": "OCSP (Online Certificate Status Protocol) provides REAL-TIME certificate status: valid/invalid/unknown. CRL = batch process requiring download and cache - has latency. OCSP is preferred for time-sensitive applications. Both are used to check if a certificate has been revoked."}, {"q": "ECC provides equivalent security to RSA with a smaller key because it uses:", "opts": ["Factoring large primes", "Discrete logarithms of elliptic curves", "The Diffie-Hellman problem", "Hash collisions"], "answer": "Discrete logarithms of elliptic curves", "exp": "ECC uses elliptic curve mathematics. A 160-bit ECC key provides equivalent security to a 1024-bit RSA key - much more efficient. Ideal for mobile/constrained environments. RSA is based on the difficulty of factoring large prime numbers."}, {"q": "Which Common Criteria EAL is MOST commonly used in commercial products?", "opts": ["EAL 1", "EAL 3", "EAL 4", "EAL 7"], "answer": "EAL 4", "exp": "EAL 4 (Methodically Designed, Tested and Reviewed) = most common commercial assurance level. EAL 1 = lowest (functionally tested). EAL 7 = highest (formally verified, mathematical proof). EAL 4 balances assurance rigour with practical commercial development."}, {"q": "Clark-Wilson enforces data integrity primarily through:", "opts": ["Sensitivity labels on objects", "Separation of duties and well-formed transactions", "Non-interference between subjects", "No Read Up policy"], "answer": "Separation of duties and well-formed transactions", "exp": "Clark-Wilson: CDI (Constrained Data Items), UDI (Unconstrained Data Items), IVP (Integrity Verification Procedures), TP (Transformation Procedures). Only TPs can modify CDIs. Enforces separation of duties and well-formed transactions. Protects INTEGRITY."}, {"q": "TEMPEST refers to:", "opts": ["Tamper-evident physical seals", "Electromagnetic emanation interception", "Temperature controls for hardware", "Two-person integrity requirements"], "answer": "Electromagnetic emanation interception", "exp": "TEMPEST = electromagnetic radiation emitted by devices that can be intercepted to reconstruct data. Countermeasures: Faraday Cage (blocks EM), White Noise (interference signals), Control Zone (combined). Used in government/military environments for sensitive systems."}, {"q": "TOC-TOU (Time of Check to Time of Use) is a type of:", "opts": ["Replay attack", "Race condition", "Buffer overflow", "Covert channel"], "answer": "Race condition", "exp": "TOC-TOU = race condition vulnerability. Attacker changes object state between when it is checked (TOC) and when it is used (TOU). Prevention: atomic operations, file locking, transactions with proper isolation. Common in file permission checks and authentication flows."}, {"q": "Which security mode requires ALL users to have clearance for the highest level but allows varying need-to-know?", "opts": ["Dedicated mode", "System High mode", "Compartmentalized mode", "Multilevel mode"], "answer": "System High mode", "exp": "SCAN modes: Dedicated = everyone has clearance/approval/need-to-know for ALL data. System High = all cleared for highest but need-to-know VARIES. Compartmentalized = clearance for highest but formal approval varies. Multilevel = users differ in clearance, approval AND need-to-know."}, {"q": "A Faraday bag is used in forensics primarily to:", "opts": ["Waterproof the device", "Prevent remote wiping of mobile devices during seizure", "Shield the device from physical damage", "Power down the device safely"], "answer": "Prevent remote wiping of mobile devices during seizure", "exp": "Faraday bags block wireless signals - preventing remote wiping of seized mobile devices before analysis. Also prevents incoming calls that could alter evidence state. Critical in digital forensics where remote management could destroy evidence before investigators examine it."}, {"q": "Skipjack is unique among symmetric algorithms because it:", "opts": ["Uses the most rounds of any cipher", "Was developed by IBM", "Supports key escrow retained by government", "Is the strongest DES replacement"], "answer": "Supports key escrow retained by government", "exp": "Skipjack (80-bit key, 64-bit block) is notable for supporting KEY ESCROW - keys retained by NIST and the Treasury Department, allowing government access under legal authority. This was controversial (Clipper Chip controversy). Part of the concept of Fair Cryptosystem."}, {"q": "The principle that security algorithm strength must rely on key secrecy (not algorithm secrecy) is:", "opts": ["Shannon's Principle", "Kerckhoff's Principle", "The Open Design Principle", "Security through obscurity"], "answer": "Kerckhoff's Principle", "exp": "Kerckhoff's Principle: the algorithm must be made PUBLIC for examination and testing - only the KEY is kept secret. Security through obscurity (hiding the algorithm) is NOT sufficient. AES, RSA, and other strong algorithms are all public knowledge - their security comes from the key."}, {"q": "HMAC (Hash-based Message Authentication Code) combines hashing with what?", "opts": ["Asymmetric encryption", "A symmetric key", "A digital certificate", "A random nonce"], "answer": "A symmetric key", "exp": "HMAC = Hashing + Symmetric Key. Provides a partial digital signature - gives integrity AND authentication but NOT non-repudiation (because the symmetric key is shared). Full non-repudiation requires asymmetric digital signatures where only the sender has the private key."}, {"q": "Which component of the TCB (Trusted Computing Base) mediates ALL access between subjects and objects?", "opts": ["Security kernel", "Reference Monitor", "Trusted path", "Security perimeter"], "answer": "Reference Monitor", "exp": "Reference Monitor = concept that mediates all access between subjects and objects. Must be: always invoked, tamper-proof, and small enough to be verified. The Security KERNEL IMPLEMENTS the Reference Monitor concept. The Security PERIMETER separates TCB from the rest of the system."}]</script>
+
+<!-- QUIZ -->
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 3 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="pf">
+  <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 3 — Security Architecture &amp; Engineering</p>
+  <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All frameworks subject to exam version updates.</p>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function tg(el){el.classList.toggle('open');}
+</script>
+
+<script>
+var QS = JSON.parse(document.getElementById('qdata').textContent);
+var qst = {i:0, s:0};
+function openQuiz(){document.getElementById('quizOv').style.display='flex';qst={i:0,s:0};renderQ();}
+function closeQ(){document.getElementById('quizOv').style.display='none';}
+function renderQ(){
+  var t=document.getElementById('qTitle'), b=document.getElementById('qBody');
+  if(qst.i>=QS.length){
+    var p=Math.round(qst.s/QS.length*100);
+    t.textContent='Quiz complete';
+    b.innerHTML='<div style="text-align:center;padding:1.5rem 0;">'
+      +'<div style="font-size:48px;margin-bottom:.5rem;">'+(p>=80?'&#127942;':p>=60?'&#9989;':'&#128218;')+'</div>'
+      +'<div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qst.s+'/'+QS.length+'</div>'
+      +'<div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(p>=80?'Excellent &#8212; exam ready!':p>=60?'Good &#8212; review weak areas':'Needs more review &#8212; keep studying')+'</div>'
+      +'<button onclick="qst={i:0,s:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button>'
+      +'<button onclick="closeQ()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button>'
+      +'</div>';
+    return;
+  }
+  var q=QS[qst.i];
+  t.textContent='Question '+(qst.i+1)+' of '+QS.length;
+  var pct=Math.round(qst.i/QS.length*100);
+  var h='<div>';
+  h+='<div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div>';
+  h+='<div id="qopts" style="display:flex;flex-direction:column;gap:8px;">';
+  q.opts.forEach(function(opt,i){
+    h+='<button data-i="'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;transition:all .15s;">'
+      +'<span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';
+  });
+  h+='</div><div id="qexp"></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;">';
+  h+='<span style="font-size:12px;color:#94a3b8;">Score: '+qst.s+'</span>';
+  h+='<div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div>';
+  h+='<span style="font-size:12px;color:#94a3b8;">'+pct+'%</span></div></div>';
+  b.innerHTML=h;
+}
+function ansQ(chosen){
+  var q=QS[qst.i];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){
+    b.onclick=null; b.style.cursor='default';
+    if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}
+    if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}
+  });
+  var ok=(chosen===correct);
+  if(ok) qst.s++;
+  var next=qst.i+1;
+  document.getElementById('qexp').innerHTML=
+    '<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'
+    +(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecada;')
+    +'"><span style="font-weight:700;">'+(ok?'&#10003; Correct! ':'&#10007; Incorrect. ')+'</span>'+q.exp+'</div>'
+    +'<div style="margin-top:10px;display:flex;justify-content:flex-end;">'
+    +'<button onclick="qst.i++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'
+    +(next<QS.length?'Next &#8594;':'See results')+'</button></div>';
+}
+</script>
+</body>
+</html>

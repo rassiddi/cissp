@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 8 – Software Development Security | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#f8fafc;--sf:#fff;--s2:#f1f5f9;
+  --bd:#e2e8f0;--bd2:#cbd5e1;
+  --tx:#0f172a;--t2:#475569;--t3:#94a3b8;
+  --pk:#be185d;--pk-bg:#fdf2f8;--pk-bd:#fbcfe8;
+  --bl:#3b82f6;--bl-bg:#eff6ff;--bl-bd:#bfdbfe;
+  --tl:#0d9488;--tl-bg:#f0fdfa;--tl-bd:#99f6e4;
+  --am:#d97706;--am-bg:#fffbeb;--am-bd:#fde68a;
+  --rd:#dc2626;--rd-bg:#fef2f2;--rd-bd:#fecaca;
+  --pu:#7c3aed;--pu-bg:#f5f3ff;--pu-bd:#ddd6fe;
+  --gn:#16a34a;--gn-bg:#f0fdf4;--gn-bd:#bbf7d0;
+  --r:10px;--rs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.06);--shm:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.6;}
+.pw{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.hero{background:linear-gradient(135deg,#3b0764 0%,#6b21a8 55%,#2e1065 100%);border-radius:16px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-40px;width:210px;height:210px;border-radius:50%;background:rgba(167,139,250,.18);}
+.hero::after{content:'';position:absolute;bottom:-40px;left:30%;width:170px;height:170px;border-radius:50%;background:rgba(236,72,153,.1);}
+.hi{position:relative;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(167,139,250,.25);color:#c4b5fd;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(167,139,250,.35);}
+.hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;color:#f8fafc;margin-bottom:6px;}
+.hero p{color:#94a3b8;font-size:14px;margin-bottom:16px;}
+.hpills{display:flex;flex-wrap:wrap;gap:8px;}
+.hpill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:11px;padding:3px 10px;border-radius:20px;}
+.tw{background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh);}
+.tn{display:flex;overflow-x:auto;border-bottom:1px solid var(--bd);background:var(--s2);scrollbar-width:none;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;background:none;border:none;padding:12px 16px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.tb:hover{color:var(--tx);background:rgba(0,0,0,.03);}
+.tb.active{color:var(--pu);border-bottom-color:var(--pu);background:var(--sf);}
+.tb i{font-size:15px;}
+.tp{display:none;padding:1.5rem;}
+.tp.active{display:block;}
+.sec{margin-bottom:1.75rem;}
+.sh{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sh::after{content:'';flex:1;height:1px;background:var(--bd);}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;}
+.card:hover{border-color:var(--bd2);box-shadow:var(--shm);}
+.card.open{border-color:var(--pu-bd);background:var(--pu-bg);}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.cl{font-size:13px;font-weight:600;color:var(--tx);}
+.card.open .cl{color:var(--pu);}
+.ca{color:var(--t3);font-size:16px;transition:transform .2s;flex-shrink:0;}
+.card.open .ca{transform:rotate(180deg);color:var(--pu);}
+.cb{display:none;font-size:13px;color:var(--t2);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
+.card.open .cb{display:block;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.tbl th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--t2);border-bottom:2px solid var(--bd);background:var(--s2);}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top;line-height:1.55;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--s2);}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;}
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:14px;}
+.kv{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;}
+.kv-k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:4px;}
+.kv-v{font-size:13px;color:var(--tx);font-weight:500;}
+.kv-n{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.4;}
+.ibox{background:var(--bl-bg);border:1px solid var(--bl-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#1e40af;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.wbox{background:var(--am-bg);border:1px solid var(--am-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.tbox{background:var(--gn-bg);border:1px solid var(--gn-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#14532d;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.rbox{background:var(--rd-bg);border:1px solid var(--rd-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#991b1b;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.bi{font-size:16px;flex-shrink:0;margin-top:1px;}
+.flow{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.fs{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;}
+.fn{font-size:11px;font-weight:700;color:var(--pu);min-width:22px;flex-shrink:0;margin-top:1px;}
+.ft{font-size:12.5px;color:var(--tx);line-height:1.55;}
+.ft strong{font-weight:600;}
+.sdlc-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:14px;}
+.sdlc-card{border-radius:var(--r);padding:12px 14px;border:1px solid;text-align:center;}
+.sdlc-num{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.sdlc-name{font-size:13px;font-weight:700;margin-bottom:4px;}
+.sdlc-desc{font-size:11px;line-height:1.5;}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.model-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px;}
+.model-name{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:4px;}
+.model-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-bottom:8px;display:inline-block;}
+.model-desc{font-size:12px;color:var(--t2);line-height:1.6;}
+.owasp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:14px;}
+.owasp-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:12px;}
+.owasp-rank{font-size:10px;font-weight:700;color:var(--rd);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;}
+.owasp-name{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:4px;}
+.owasp-desc{font-size:11px;color:var(--t2);line-height:1.5;}
+.pf{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--bd);font-size:12px;color:var(--t3);}
+.pf a{color:var(--pu);text-decoration:none;}
+.pf a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="pw">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hi">
+    <div class="hbadge"><i class="ti ti-code"></i> CISSP · Domain 8 · 10% of exam · Final domain</div>
+    <h1>Software Development Security</h1>
+    <p>SDLC · Secure coding · Software models · Database security · DevSecOps · OWASP · Malware types · OOP</p>
+    <div class="hpills">
+      <span class="hpill">SDLC phases</span>
+      <span class="hpill">Waterfall / Agile / Spiral</span>
+      <span class="hpill">Security in SDLC</span>
+      <span class="hpill">OWASP Top 10</span>
+      <span class="hpill">Injection &amp; XSS</span>
+      <span class="hpill">Database security</span>
+      <span class="hpill">Malware types</span>
+      <span class="hpill">DevSecOps</span>
+    </div>
+  </div>
+
+    <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;">
+      <i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz
+    </button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tw">
+  <div class="tn">
+    <button class="tb active" onclick="sw('sdlc',this)"><i class="ti ti-git-branch"></i> SDLC</button>
+    <button class="tb" onclick="sw('models',this)"><i class="ti ti-layout-grid"></i> Dev models</button>
+    <button class="tb" onclick="sw('secure',this)"><i class="ti ti-shield-code"></i> Secure coding</button>
+    <button class="tb" onclick="sw('db',this)"><i class="ti ti-database"></i> Database security</button>
+    <button class="tb" onclick="sw('malware',this)"><i class="ti ti-virus"></i> Malware</button>
+    <button class="tb" onclick="sw('devops',this)"><i class="ti ti-git-merge"></i> DevSecOps &amp; OOP</button>
+  </div>
+
+  <!-- SDLC -->
+  <div id="tab-sdlc" class="tp active">
+    <div class="sec">
+      <div class="sh">System Development Life Cycle (SDLC)</div>
+      <div class="tbox"><i class="ti ti-bulb bi"></i>Security should be "baked in, not bolted on." The cost to fix a defect EXPONENTIALLY INCREASES at each stage of the SDLC. A flaw caught in design costs ~10× less than one caught in production. Security must be integrated at EVERY phase — not added at the end.</div>
+      <div class="sdlc-row">
+        <div class="sdlc-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+          <div class="sdlc-num" style="color:var(--bl)">Phase 1</div>
+          <div class="sdlc-name" style="color:var(--bl)">Project initiation</div>
+          <div class="sdlc-desc" style="color:#1e40af">Feasibility, cost, risk analysis. Management approval. Define basic security objectives. Conceptual definition.</div>
+        </div>
+        <div class="sdlc-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+          <div class="sdlc-num" style="color:var(--tl)">Phase 2</div>
+          <div class="sdlc-name" style="color:var(--tl)">Functional analysis</div>
+          <div class="sdlc-desc" style="color:#0f766e">Define needs and requirements. Review proposed security controls. Functional requirements definition.</div>
+        </div>
+        <div class="sdlc-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+          <div class="sdlc-num" style="color:var(--pu)">Phase 3</div>
+          <div class="sdlc-name" style="color:var(--pu)">System design</div>
+          <div class="sdlc-desc" style="color:#5b21b6">Develop detailed design specs. Examine security controls. Control specifications development and design review.</div>
+        </div>
+        <div class="sdlc-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+          <div class="sdlc-num" style="color:var(--am)">Phase 4</div>
+          <div class="sdlc-name" style="color:var(--am)">Development</div>
+          <div class="sdlc-desc" style="color:#92400e">Programmers write code. Unit testing, prototyping, verification, validation. Code review and security testing.</div>
+        </div>
+        <div class="sdlc-card" style="background:var(--rd-bg);border-color:var(--rd-bd)">
+          <div class="sdlc-num" style="color:var(--rd)">Phase 5</div>
+          <div class="sdlc-name" style="color:var(--rd)">Acceptance &amp; implementation</div>
+          <div class="sdlc-desc" style="color:#991b1b">Separation of duties, security testing, data validation, bounds checking, certification, accreditation. Release control.</div>
+        </div>
+        <div class="sdlc-card" style="background:var(--gn-bg);border-color:var(--gn-bd)">
+          <div class="sdlc-num" style="color:var(--gn)">Phase 6</div>
+          <div class="sdlc-name" style="color:var(--gn)">Operations &amp; maintenance</div>
+          <div class="sdlc-desc" style="color:#14532d">Production release, cert/accreditation. Ongoing patching, monitoring, change management.</div>
+        </div>
+        <div class="sdlc-card" style="background:var(--s2);border-color:var(--bd)">
+          <div class="sdlc-num" style="color:var(--t3)">Phase 7</div>
+          <div class="sdlc-name" style="color:var(--tx)">Revisions / disposal</div>
+          <div class="sdlc-desc" style="color:var(--t2)">Remove from service. Sanitisation and destruction of unneeded data. Data migration to new system.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Software CMM — Capability Maturity Model</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Quality of software is a DIRECT function of the quality of the development and maintenance process. Defined by Carnegie Mellon University SEI. Levels 1–2 = REACTIVE. Levels 3–5 = PROACTIVE. Biggest jump in maturity = Level 2 → 3 (reactive to proactive).</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Level</th><th>Name</th><th>Key characteristic</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill" style="background:var(--rd-bg);color:var(--rd);">1 — Reactive</span></td><td>Initial / Ad-hoc</td><td>Competent people, informal processes. Absence of formal process. Success depends on individual effort.</td></tr>
+            <tr><td><span class="pill" style="background:var(--am-bg);color:var(--am);">2 — Reactive</span></td><td>Repeatable</td><td>Project management processes established. Basic lifecycle management. Can repeat previous successes.</td></tr>
+            <tr><td><span class="pill" style="background:var(--bl-bg);color:var(--bl);">3 — Proactive</span></td><td>Defined</td><td>Engineering processes, basic lifecycle management, code reuse, requirements management, QA, configuration management.</td></tr>
+            <tr><td><span class="pill" style="background:var(--tl-bg);color:var(--tl);">4 — Proactive</span></td><td>Managed</td><td>Product and process improvement. Quantitatively controlled — metrics-driven decisions.</td></tr>
+            <tr><td><span class="pill" style="background:var(--gn-bg);color:var(--gn);">5 — Proactive</span></td><td>Optimising</td><td>Continuous process improvement. Organisation learns from data and continuously improves.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">SDLC security activities by phase — tap to expand</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Requirements phase security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Define security requirements: CIA requirements, regulatory compliance, data classification. Identify threat model. Define security architecture. Misuse case analysis — what could go wrong? Define authentication, authorisation, audit requirements. Security requirements must be MEASURABLE.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Design phase security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Threat modelling (STRIDE/DREAD). Secure design principles: least privilege, defence in depth, fail-safe. Architecture review. Choose appropriate security frameworks. Design peer review — structured walk-through. Design review is most cost-effective point to find security flaws.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Development phase security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Secure coding standards and guidelines. Code review (peer review / Fagan inspection). SAST — static application security testing. Input validation implemented. Avoid dangerous functions (strcpy, gets). Secrets management — no hardcoded credentials. Unit testing with security test cases.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Testing phase security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">DAST — dynamic application security testing. Penetration testing. Vulnerability scanning. Regression testing — new code doesn't break old security controls. User acceptance testing (UAT). Certification — technical evaluation of security features. OWASP ZAP, Burp Suite for web apps.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Deployment phase security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Accreditation — formal management acceptance. Change control process. Production deployment checklist. Security configuration baseline applied. Separation of duties in production release. Developer should NOT deploy to production (conflict of interest). Rollback plan in place.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Maintenance phase security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Patch management — timely application of security patches. Continuous monitoring. Log review for anomalies. Configuration management — track all changes. Periodic security reassessment. Whenever a change happens, recertification is required.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVELOPMENT MODELS -->
+  <div id="tab-models" class="tp">
+    <div class="sec">
+      <div class="sh">Software development methodologies</div>
+      <div class="model-grid">
+        <div class="model-card">
+          <div class="model-name">Waterfall</div>
+          <div class="model-tag" style="background:var(--bl-bg);color:var(--bl);border:1px solid var(--bl-bd);">Sequential</div>
+          <div class="model-desc">Each phase completed before next begins. Can go back only ONE step. Simple but assumes a phase ends at a specific time — rigid. System Requirements → Software Requirements → Analysis → Program Design → Coding → Testing → Operations. Includes V&V (Verification = doing it right, Validation = doing the right thing).</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Spiral</div>
+          <div class="model-tag" style="background:var(--tl-bg);color:var(--tl);border:1px solid var(--tl-bd);">Risk-driven iterative</div>
+          <div class="model-desc">Angular axis = progress made. Radial axis = cost. Iterative cycles through: planning → risk analysis → engineering → evaluation. Each cycle produces a prototype. Risk assessment at each iteration. Best for large, complex, high-risk projects. Combines waterfall discipline with iterative flexibility.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Agile</div>
+          <div class="model-tag" style="background:var(--gn-bg);color:var(--gn);border:1px solid var(--gn-bd);">Iterative · customer-focused</div>
+          <div class="model-desc">Individuals and interactions over processes and tools. Working software over comprehensive documentation. Customer collaboration over contract negotiation. Responding to change over following a plan. Working software is PRIMARY measure of success. Short sprints (1–4 weeks). Continuous customer feedback.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Cleanroom</div>
+          <div class="model-tag" style="background:var(--pu-bg);color:var(--pu);border:1px solid var(--pu-bd);">Quality-first</div>
+          <div class="model-desc">Write code correctly the FIRST TIME — quality through design. Prove original design before coding. Formal mathematical verification of design. Statistical testing rather than debugging. Zero-defect mindset. Used for safety-critical systems.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Prototype</div>
+          <div class="model-tag" style="background:var(--am-bg);color:var(--am);border:1px solid var(--am-bd);">Customer view</div>
+          <div class="model-desc">Customer view taken into account from the start. Working prototype built rapidly to validate requirements. PROTOTYPING = customer view. Helps discover requirements that weren't explicit. Risk: prototype becomes production code without proper security review.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">RAD — Rapid Application Development</div>
+          <div class="model-tag" style="background:var(--s2);color:var(--t2);border:1px solid var(--bd);">Speed-focused</div>
+          <div class="model-desc">Heavy use of tools and reuse. Less emphasis on planning. Faster delivery. Risk: security may be deprioritised for speed. Requires highly skilled development team. Iterative with continuous user involvement.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Programming language generations</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Generation</th><th>Name</th><th>Examples</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill" style="background:var(--rd-bg);color:var(--rd);">1GL</span></td><td>Machine language</td><td>Binary — 0s and 1s</td><td>Direct CPU instructions. No abstraction.</td></tr>
+            <tr><td><span class="pill" style="background:var(--am-bg);color:var(--am);">2GL</span></td><td>Assembly language</td><td>MOV, ADD, JMP</td><td>Assembler converts to machine code. Hardware-specific.</td></tr>
+            <tr><td><span class="pill" style="background:var(--bl-bg);color:var(--bl);">3GL</span></td><td>Compiled languages</td><td>C, C++, Java, FORTRAN, COBOL</td><td>Compiler translates to executable. JavaScript = interpreted (no compiler). Compiled code POSES MORE RISK — malicious code hidden in binary.</td></tr>
+            <tr><td><span class="pill" style="background:var(--tl-bg);color:var(--tl);">4GL</span></td><td>Natural language / declarative</td><td>SQL, Focus, Natural</td><td>Approximates natural language. Databases use 4GL (SQL has SUDIGR: Select, Update, Delete, Insert, Grant, Revoke).</td></tr>
+            <tr><td><span class="pill" style="background:var(--pu-bg);color:var(--pu);">5GL</span></td><td>Visual / AI languages</td><td>Prolog, LISP (AI), visual IDEs</td><td>Constraint-based. Used for AI/expert systems. Logic-based programming.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Project management tools</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Gantt chart</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Bar chart showing interrelationships over time between projects and schedules. Provides graphical illustration of a schedule. Helps plan, coordinate, and track specific tasks. Shows task dependencies and durations. WBS (Work Breakdown Structure) is a subpart of Gantt.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PERT chart</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Program Evaluation and Review Technique. Used to judge size of software product in development and calculate standard deviation for risk assessment. Relates: lowest possible size, most likely size, and highest possible size of each component. Directs improvements to project management and software coding.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Compiler vs interpreter</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Compiler: translates entire higher-level program into an executable file before running. Interpreter: reads and executes higher-level code ONE LINE AT A TIME — slower but easier to debug. JavaScript = interpreted. Java, C, C++ = compiled. Compiled code is HARDER to analyse for malicious content.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURE CODING -->
+  <div id="tab-secure" class="tp">
+    <div class="sec">
+      <div class="sh">OWASP Top 10 — most critical web app security risks</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>OWASP (Open Web Application Security Project) is the most authoritative source on web application security issues. The Top 10 represents the most critical risks — exam frequently tests these. OWASP ZAP and Burp Suite are the standard testing tools.</div>
+      <div class="owasp-grid">
+        <div class="owasp-card">
+          <div class="owasp-rank">A01</div>
+          <div class="owasp-name">Broken Access Control</div>
+          <div class="owasp-desc">Users can act outside their intended permissions. Includes IDOR (Insecure Direct Object References), privilege escalation, CORS misconfigurations. Prevention: deny by default, server-side enforcement.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A02</div>
+          <div class="owasp-name">Cryptographic Failures</div>
+          <div class="owasp-desc">Sensitive data exposed due to weak/missing encryption. Weak algorithms (MD5, SHA-1, DES), data in cleartext, improper key management. Prevention: use strong algorithms (AES-256, SHA-256+), TLS everywhere.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A03</div>
+          <div class="owasp-name">Injection</div>
+          <div class="owasp-desc">SQL, NoSQL, OS, LDAP injection — untrusted data sent to interpreter. SQL injection: attacker manipulates database queries. Prevention: parameterised queries, bind variables, input validation, stored procedures.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A04</div>
+          <div class="owasp-name">Insecure Design</div>
+          <div class="owasp-desc">Missing or ineffective security controls at design stage. Cannot fix poor design with implementation controls alone. Prevention: threat modelling, secure design patterns, security requirements in design phase.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A05</div>
+          <div class="owasp-name">Security Misconfiguration</div>
+          <div class="owasp-desc">Default credentials, unnecessary features enabled, unpatched systems, verbose error messages. Most commonly found vulnerability. Prevention: hardening guides, remove defaults, automated configuration checking.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A06</div>
+          <div class="owasp-name">Vulnerable Components</div>
+          <div class="owasp-desc">Using components with known vulnerabilities — libraries, frameworks, modules. Prevention: inventory all components, check NVD/CVE, update regularly, remove unused components.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A07</div>
+          <div class="owasp-name">Auth &amp; Identification Failures</div>
+          <div class="owasp-desc">Broken authentication — weak passwords, credential stuffing, session fixation, missing MFA. Prevention: MFA, strong passwords, secure session management, lockout policies.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A08</div>
+          <div class="owasp-name">Software &amp; Data Integrity Failures</div>
+          <div class="owasp-desc">Code and infrastructure not protected against integrity violations. Includes insecure deserialization, auto-update without verification. Prevention: digital signatures, hash verification, CI/CD pipeline integrity.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A09</div>
+          <div class="owasp-name">Security Logging Failures</div>
+          <div class="owasp-desc">Insufficient logging and monitoring — attacks undetected. Without logs, breaches go unnoticed for months. Prevention: log all auth events, access controls, input validation failures. Centralise in SIEM.</div>
+        </div>
+        <div class="owasp-card">
+          <div class="owasp-rank">A10</div>
+          <div class="owasp-name">Server-Side Request Forgery (SSRF)</div>
+          <div class="owasp-desc">Application fetches remote resource using attacker-supplied URL — bypasses firewall, VPN, ACLs. Allows access to internal services. Prevention: validate and sanitise all user-supplied URLs, network-layer controls.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Common web application attacks</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SQL Injection</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Directly attacks a database through a web application. Classic example: ' OR '1'='1 or using semicolon to escape. CARROT technique: comment out remainder of query. Prevention: parameterised queries/prepared statements, bind variables, stored procedures, input validation. ORM frameworks help but are not foolproof.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Cross-Site Scripting (XSS)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Uses reflected input to trick a user's browser into executing untrusted code from a trusted site. Stored XSS: malicious script saved in database. Reflected XSS: script in URL/input reflected back. DOM-based XSS: client-side script manipulation. Prevention: output encoding, Content Security Policy (CSP), input validation.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">CSRF — Cross-Site Request Forgery</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attacks exploit the trust that sites have in a user's browser by forcing submission of authenticated requests to third-party sites. Differs from XSS: XSS exploits trust in a site; CSRF exploits trust in user's browser. Prevention: anti-CSRF tokens, SameSite cookie attribute, re-authentication for sensitive actions.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Buffer overflow</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Writing more data to a buffer than it can hold — overwrites adjacent memory including return address. Can redirect execution to attacker's code. Prevention: bounds checking, input validation, safe string functions, ASLR (Address Space Layout Randomisation), DEP (Data Execution Prevention), stack canaries.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Directory traversal</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Attacker manipulates file path input to navigate up the directory tree and access files outside the web root. Example: %252E%252Fetc/passwd (%252E = dot, %252F = slash). Prevention: validate and sanitise file paths, use chroot jails, whitelist allowed directories.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Race condition / TOC-TOU</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Time of Check to Time of Use — window between when a condition is checked and when it is used. Attacker changes state in that window. Prevention: atomic operations, file locking, transactions with proper isolation. Common in file permission checks and authentication flows.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Input validation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">ONLY way to eliminate buffer overflows is proper data validation. Validate: type, length, format, range. Whitelist approach (allow only known good) is stronger than blacklist. Server-side validation is mandatory — client-side only is never sufficient. Bind variables in SQL = best practice for DB input.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">API key security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">API keys are like passwords — must be treated as very sensitive information. Never hardcode API keys in source code. Store in secure locations (secrets manager). Transmit only over encrypted channels (HTTPS). If API key compromised, attacker can interact as legitimate user. Rotate regularly, limit scope.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Secure coding principles</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Defence in depth in code</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Multiple layers of security controls — if one fails, others remain. Input validation + parameterised queries + WAF + network controls. Never rely on a single control. Error messages must not reveal internal details (stack traces, SQL errors). Fail securely — deny by default.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Least privilege in code</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Application should run with minimum permissions needed. Database connections should use accounts with only required permissions (no DBA access for web app). Application accounts should not be admin. Service accounts: minimal necessary privileges. Limit what compromised code can do.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Credential management</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Never store passwords in plaintext — always hash with salt (bcrypt, PBKDF2, Argon2). Separate credential storage from application code. Use secrets managers (HashiCorp Vault, AWS Secrets Manager). Rotate credentials regularly. API keys and database passwords treated as secrets.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Error handling</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Never expose internal details in error messages — no stack traces, SQL errors, or file paths visible to users. Log errors internally with full detail. Return generic error messages to users. Fail securely — system should be in known secure state after an error. Error handling should not create security bypass opportunities.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATABASE SECURITY -->
+  <div id="tab-db" class="tp">
+    <div class="sec">
+      <div class="sh">Database concepts — ACID model</div>
+      <div class="tbox"><i class="ti ti-bulb bi"></i>ACID = Atomicity, Consistency, Isolation, Durability. These four properties ensure database transactions are processed reliably and protect data integrity even in failure scenarios.</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Atomicity</div><div class="kv-v">All-or-nothing</div><div class="kv-n">Transaction completes entirely or is rolled back completely. No partial transactions. If any part fails, entire transaction is rolled back as if it never occurred.</div></div>
+        <div class="kv"><div class="kv-k">Consistency</div><div class="kv-v">Valid state only</div><div class="kv-n">All transactions begin and end in a consistent state — all database rules maintained. No other transaction can use inconsistent intermediate data.</div></div>
+        <div class="kv"><div class="kv-k">Isolation</div><div class="kv-v">Transactions separate</div><div class="kv-n">Transactions operate independently. If two transactions modify same data, one must complete before the other can start. Prevents dirty reads and lost updates.</div></div>
+        <div class="kv"><div class="kv-k">Durability</div><div class="kv-v">Committed = permanent</div><div class="kv-n">Once committed, transactions are preserved even through system failure. Ensured through transaction logs, journaling, and backup mechanisms.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Database structure terminology</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Tuple</div><div class="kv-v">Row / Record</div><div class="kv-n">A single entry in a relational database table. Also called a record.</div></div>
+        <div class="kv"><div class="kv-k">Attribute</div><div class="kv-v">Column / Field</div><div class="kv-n">A characteristic of an entity. Degree of DB = number of attributes (columns).</div></div>
+        <div class="kv"><div class="kv-k">Primary key</div><div class="kv-v">Unique row identifier</div><div class="kv-n">Cannot be null, cannot change. Uniquely identifies each record. Only one per table.</div></div>
+        <div class="kv"><div class="kv-k">Foreign key</div><div class="kv-v">Reference to another table</div><div class="kv-n">Links tables together. Enforces referential integrity. Must reference a valid primary key.</div></div>
+        <div class="kv"><div class="kv-k">Candidate key</div><div class="kv-v">Potential primary key</div><div class="kv-n">Any attribute that could uniquely identify a record. One is chosen as primary key; others are alternate keys.</div></div>
+        <div class="kv"><div class="kv-k">View</div><div class="kv-v">Virtual table</div><div class="kv-n">Content-dependent access control. Retrieves specific columns from one or more tables. Does not store data — queries on access.</div></div>
+        <div class="kv"><div class="kv-k">DDL</div><div class="kv-v">Data Definition Language</div><div class="kv-n">Defines structure and schema — CREATE, ALTER, DROP tables.</div></div>
+        <div class="kv"><div class="kv-k">DML</div><div class="kv-v">Data Manipulation Language</div><div class="kv-n">Manipulates data — SELECT, INSERT, UPDATE, DELETE. SQL SUDIGR: Select, Update, Delete, Insert, Grant, Revoke.</div></div>
+        <div class="kv"><div class="kv-k">DCL</div><div class="kv-v">Data Control Language</div><div class="kv-n">Controls access — GRANT and REVOKE statements. Manages database permissions.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Database security threats</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Aggregation attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Combining multiple pieces of non-sensitive information to create something of higher sensitivity or value. SQL aggregate functions (SUM, COUNT, AVG) combine data. Prevention: restrict query capabilities, limit what aggregate queries can return, access controls on combined queries. Also called privilege creep in IAM context.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Inference attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Gaining access to higher-classification information through logical deduction from lower-level data. Uses human deductive reasoning rather than raw mathematical ability. Countermeasure: polyinstantiation — providing different data to users of different clearance levels for the same primary key. Makes inference impossible.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Database contamination</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Mixing data with different classification levels or need-to-know requirements. Significant security challenge in multilevel databases. Solution: deploy trusted front end to add multilevel security to legacy DBMS. Database partitioning splits database by security level.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Concurrency issues</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Dirty reads: reading uncommitted data written by another transaction. Lost updates: one transaction overwrites another's data. Incorrect summaries: aggregate function running during modification produces wrong results. Prevention: proper transaction isolation levels (serialisable is strictest), database locking mechanisms.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Data warehousing &amp; mining</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Data warehouse: large database storing data from multiple sources for analysis. Data mining: analysing warehouse data for patterns and correlations. Security concern: mining can reveal sensitive patterns not visible in individual records (aggregation risk). Metadata stored in a more secure container called a Data Mart.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Object-relational mapping (ORM)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">ODBC (Open Database Connectivity): allows applications to communicate with different database types without being directly programmed for each. Acts as a proxy. ORMs (Object Relational Mappers) map database tables to code objects — can prevent SQL injection if used correctly. Must still be configured securely.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MALWARE -->
+  <div id="tab-malware" class="tp">
+    <div class="sec">
+      <div class="sh">Malware types — complete reference</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Virus</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Reproduces using a HOST application — inserts/attaches itself to the file. Requires user action to spread. Types: Boot sector (overwrites boot record), System infector (infects OS files), Companion (stores in separate file), Stealth (hides modifications), Polymorphic (changes garble pattern each spread — hard to detect), Multipart (infects both boot and executables), Macro virus (Word/VBA — most common in office docs), Memory resident. Antivirus: Signature-based (cannot detect new malware). Heuristic/behavioural (CAN detect new malware).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Worm</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Reproduces ON ITS OWN without a host application. Self-propagating — spreads across networks automatically. Capacity to propagate independent of user action. Can consume enormous bandwidth. Famous example: Stuxnet = worm targeting Iranian nuclear capability (SCADA/PLC rootkit). Morris Worm = first internet worm (1988).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Trojan horse</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Program DISGUISED as a useful/legitimate program/tool. Pretends to do one thing while performing another. Does NOT self-replicate. RAT (Remote Access Trojan): remote control program that allows unauthorised remote access (Back Orifice, Sub7, NetBus). Users must be tricked into running it.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Logic bomb</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Executes when a certain event happens (like accessing a bank account, employee being fired) or a specific date/time occurs. Triggered by condition — dormant until trigger. Example: "Execute on April 1, 2025." Often planted by disgruntled insiders. Very difficult to detect when dormant.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Ransomware</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Encrypts victim's files and demands ransom for decryption key. Attacks availability primarily. Spreads like worm or through phishing. Prevention: regular offline backups (not connected to network), patching, email filtering, user training. NEVER guaranteed that paying ransom restores access.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Rootkit</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Malware that achieves deep-level access and hides itself and other malware from the OS. Operates at kernel level (Ring 0) — extremely difficult to detect and remove. May require complete OS reinstall. UEFI rootkits persist across OS reinstalls. Stuxnet contained a rootkit component.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Botnet / zombie</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Network of compromised systems running zombie code. Command and control (C&C) server directs bots. Used for: DDoS attacks, spam campaigns, credential stuffing, cryptomining, click fraud. Botnet operators rent access to botnets. Individual bots may not show obvious signs of infection.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Spyware / adware</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Spyware: secretly monitors user activity — keyloggers, screen capture, browser history. Often bundled with legitimate software. Adware: displays unwanted advertisements. Some adware also functions as spyware. Prevention: anti-spyware tools, browser protection, careful software installation.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Drive-by download</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Malware installs itself without user's knowledge when visiting a website. Takes advantage of vulnerabilities in browser or browser plug-ins (Java, Flash, PDF reader). No user interaction required beyond visiting the page. Prevention: keep browsers and plugins patched, use NoScript, disable unnecessary plugins.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Phlashing attack</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Malicious variation of official BIOS or firmware update that introduces remote control or other malicious features. Permanently damages the device (PDoS — Permanent Denial of Service). UEFI is the modern replacement for BIOS. Firmware version control = manual updates from trusted sources only.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Malware defence strategies</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Signature-based AV</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Compares files against a database of known malware signatures (hashes, byte sequences). Fast and accurate for KNOWN malware. CANNOT detect new or zero-day malware — signature must exist first. Requires constant updates. Polymorphic viruses can evade by changing their signature.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Heuristic / behavioural AV</div><i class="ti ti-chevron-down ca"></i></div><div class="cb">Analyses behaviour and characteristics rather than signatures. CAN detect new/unknown malware. May produce false positives. Sandboxing: runs suspicious code in isolated environment to observe behaviour. More resource-intensive than signature scanning. Used together with signature-based for best protection.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Application whitelisting</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Only authorised applications can be installed or run. Strongest defence against malware — if it's not on the whitelist, it cannot execute. High administrative overhead. Effective in controlled environments (ATMs, SCADA). Mobile: app store controls = form of whitelisting.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEVSECOPS & OOP -->
+  <div id="tab-devops" class="tp">
+    <div class="sec">
+      <div class="sh">DevSecOps — integrating security into DevOps</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>DevOps = Development + Operations. DevSecOps = Development + Security + Operations. Security must be shifted LEFT — integrated early in the development process rather than being a gate at the end. Working software is the primary measure of success in Agile/DevOps.</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">DevOps principles</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Integrates: Software Development, Quality Assurance, IT Operations. Note: DevOps as originally defined does NOT include Security — DevSecOps explicitly adds it. Continuous Integration (CI): developers merge code frequently. Continuous Delivery (CD): code always in deployable state. Continuous Deployment: automatic deployment to production.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Security in CI/CD pipeline</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">SAST: static analysis on every code commit (shift-left). Dependency scanning: check third-party libraries for vulnerabilities. Secret scanning: prevent credentials committed to code repo. DAST: automated testing of running application. Container scanning: check Docker images for vulnerabilities. Infrastructure as Code (IaC) security scanning.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Separation of environments</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Development → Testing/QA → Staging → Production. DEVELOPERS MUST NOT HAVE ACCESS TO PRODUCTION (separation of duties). Each environment should have appropriate security controls. Production data should NEVER be used in development/testing (use anonymised/synthetic data). Change management process governs promotion between environments.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Threat modelling in DevSecOps</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Reduce the number of security-related design and coding flaws AND reduce severity of remaining flaws — NOT to reduce number of threat vectors. Apply STRIDE during design. Update threat model when features change. Automate threat modelling in CI/CD pipeline using tools. Security champions in dev teams.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Object-Oriented Programming (OOP) — security concepts</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Core OOP concepts</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Class: blueprint defining attributes and methods. Object: instance of a class. Method: code defining an action an object performs in response to a message. Message: communication sent to an object to perform an action. Behaviour: results exhibited by object in response to a message. Inheritance: subclass accesses methods of superclass. Polymorphism: objects of different classes responding differently to same message. Encapsulation (data hiding): object hides internal state — only exposes defined interface.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">OOP security benefits</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Encapsulation limits attack surface — internal state hidden. Supports code reuse — reduces development risk. Natural representation of real-world entities. High cohesion (module works without others) = better security. Low coupling (changes don't cascade) = easier security maintenance. Abstraction = black-box security — users don't need to know internals.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">ORBs and middleware</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Object Request Brokers (ORBs): middleware that locates and distributes objects across networks. CORBA (Common Object Request Broker Architecture): enables programs in different languages and platforms to communicate via IDL (Interface Definition Language). COM/DCOM (Microsoft): supports object exchange between programs. Security: trust is an issue with distributed systems — mutual authentication required.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Software licensing types</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Public domain: anyone can use. Open source: source code available with licence granting rights to study, change, distribute. Freeware: proprietary, no charge but cannot modify/redistribute. Shrink-wrap: licence terms on outside of software packaging (legally binding). Click-through: agreement accepted during installation. Cloud licence: displayed on screen. UCITA = Uniform Computer Information Transactions Act — law against breach of licensing.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Intellectual property in software</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Copyright: covers source code and binary — 70 years after author's death. DMCA protects against circumventing copyright protection. Patent: protects inventions including software algorithms — 20 years from filing. Trade secret: proprietary algorithms or designs — protected only by security controls (no registration, no time limit). Trademark: brand names and logos — 10 years renewable.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Covert channels in software</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Storage covert channel: one process communicates with another via shared storage. Timing covert channel: one process communicates by modulating resource usage timing. LOKI: tool that creates covert channel by writing data after ICMP header. EAL6 systems have fewer covert channels than EAL3 — covert channels are normally a design flaw. Countermeasure: code review and auditing.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Expert systems &amp; AI concepts</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Expert systems</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Embody accumulated knowledge of experts on a specific subject. Two main components: Knowledge Base (domain knowledge as IF-THEN rules = forward chaining) and Inference Engine (decision programme that applies knowledge base). Forward chaining: acquires info and reaches conclusion. Backward chaining: backtracks to determine if a hypothesis is correct.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Neural networks</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Complex computations that partially replace human mind functions. Based on biological neuron function. Works with weighted inputs — if threshold exceeded, output generated. Single-layer and multi-level architectures. Training period needed to determine input vectors. Adaptability = learning process. Used in anomaly detection and fraud detection in security.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Mobile code security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Java applets: sandboxed — isolated from system resources. No warnings on execution. ActiveX: Microsoft answer to Java applets — authenticode and digital signatures. NOT sandboxed — full access to Windows environment. Annoying dialogs people click away. Local caches: ARP cache poisoning, DNS poisoning, browser cache. CSRF can use cached credentials.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Security in software procurement &amp; third parties</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Contracting &amp; procurement security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Any services or applications being onboarded must be reviewed before signing. Ask vendors: What controls protect organisation's information? What sensitive information is stored/processed/transmitted? What security audits does the vendor perform? What access does the client have to those audit reports? Review before onboarding = due diligence.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Software escrow</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Source code maintained by a neutral third party. Released to licensee if vendor goes out of business. Protects against vendor business failure disrupting critical systems. Escrow agreement defines trigger conditions for release. Essential for mission-critical commercial software with no open-source alternative.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Open source vs closed source</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Open source: source code viewable — more eyes find more bugs — "Linus's Law." Closed source: source code proprietary — can still be reverse-engineered or decompiled. Open system: published APIs allow third-party integration. Closed system: proprietary, no third-party support. Does not define security level — both can be secure or insecure.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tabs -->
+
+<!-- COMPLETION BANNER -->
+<div style="background:linear-gradient(135deg,#0f2744 0%,#1e3a5f 100%);border-radius:16px;padding:2rem;text-align:center;margin-bottom:2rem;">
+  <div style="font-size:28px;margin-bottom:8px;">🏆</div>
+  <div style="font-size:20px;font-weight:600;color:#f8fafc;margin-bottom:6px;">All 8 Domains Complete — Alhamdulillah!</div>
+  <div style="font-size:14px;color:#94a3b8;margin-bottom:14px;">You now have a complete interactive reference for every domain of the CISSP exam. May Allah make your path to certification easy.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+    <span style="background:rgba(59,130,246,.2);color:#93c5fd;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(59,130,246,.3);">✓ Domain 1</span>
+    <span style="background:rgba(13,148,136,.2);color:#5eead4;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(13,148,136,.3);">✓ Domain 2</span>
+    <span style="background:rgba(124,58,237,.2);color:#c4b5fd;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(124,58,237,.3);">✓ Domain 3</span>
+    <span style="background:rgba(59,130,246,.2);color:#93c5fd;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(59,130,246,.3);">✓ Domain 4</span>
+    <span style="background:rgba(16,185,129,.2);color:#6ee7b7;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(16,185,129,.3);">✓ Domain 5</span>
+    <span style="background:rgba(234,88,12,.2);color:#fdba74;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(234,88,12,.3);">✓ Domain 6</span>
+    <span style="background:rgba(59,130,246,.2);color:#93c5fd;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(59,130,246,.3);">✓ Domain 7</span>
+    <span style="background:rgba(167,139,250,.2);color:#c4b5fd;font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid rgba(167,139,250,.3);">✓ Domain 8</span>
+  </div>
+</div>
+
+<script id="qdata" type="application/json">[{"q": "At which SDLC stage is it cheapest to find and fix a security flaw?", "opts": ["Testing phase", "Production/operations", "Requirements and design phase", "Acceptance phase"], "answer": "Requirements and design phase", "exp": "Cost to fix a defect multiplies at each SDLC stage: Design (~100x cheaper than production). 'Security baked in, not bolted on.' Threat modelling during design has the highest security ROI. A flaw fixed in design costs ~$100; the same flaw in production can cost $10,000+."}, {"q": "The Agile manifesto values which of the following OVER comprehensive documentation?", "opts": ["Contract negotiation", "Processes and tools", "Working software", "Following a plan"], "answer": "Working software", "exp": "Agile Manifesto: Individuals/interactions OVER processes/tools. Working software OVER comprehensive documentation. Customer collaboration OVER contract negotiation. Responding to change OVER following a plan. Working software is the PRIMARY measure of success in Agile."}, {"q": "SQL injection is BEST prevented by:", "opts": ["Input length validation only", "Encrypting the database", "Using parameterised queries / prepared statements", "Firewall rules"], "answer": "Using parameterised queries / prepared statements", "exp": "SQL injection prevention: parameterised queries/prepared statements (best practice), bind variables, stored procedures, ORMs. Encryption does not prevent injection - attacker's SQL still executes. Firewalls cannot inspect encrypted DB traffic. Input validation is complementary but not sufficient alone."}, {"q": "OWASP A01 (Broken Access Control) includes which vulnerability?", "opts": ["SQL injection", "Insecure direct object references (IDOR)", "Weak password storage", "Cross-site scripting"], "answer": "Insecure direct object references (IDOR)", "exp": "OWASP A01 Broken Access Control = users acting outside intended permissions. Includes: IDOR (accessing other users' data by changing IDs), privilege escalation, missing function-level access control, CORS misconfigurations. Prevention: deny by default, server-side enforcement, log access control failures."}, {"q": "XSS differs from CSRF in that:", "opts": ["XSS exploits trust in user's browser; CSRF exploits trust in a trusted site", "XSS exploits trust in a trusted site; CSRF exploits trust in user's browser", "Both exploit identical trust relationships", "XSS requires user interaction; CSRF does not"], "answer": "XSS exploits trust in a trusted site; CSRF exploits trust in user's browser", "exp": "XSS = exploits USER's trust in a site - injects malicious scripts into trusted content. CSRF = exploits a SITE's trust in a user's browser - forces authenticated requests to third-party sites. This distinction is frequently tested. XSS prevention: CSP, output encoding. CSRF prevention: anti-CSRF tokens, SameSite cookies."}, {"q": "The transition from REACTIVE to PROACTIVE software development occurs at which CMM level boundary?", "opts": ["Level 1 to 2", "Level 2 to 3", "Level 3 to 4", "Level 4 to 5"], "answer": "Level 2 to 3", "exp": "CMM: Levels 1-2 = REACTIVE. Levels 3-5 = PROACTIVE. Biggest jump = Level 2 (Repeatable - basic project management) to Level 3 (Defined - engineering processes, code reuse, QA, configuration management). This represents systematic organisational capability vs ad-hoc project success."}, {"q": "Compiled code poses MORE security risk than interpreted code because:", "opts": ["It executes faster", "Malicious code hidden in binary is harder to detect", "It requires more resources", "It lacks error handling"], "answer": "Malicious code hidden in binary is harder to detect", "exp": "Compiled code = translated to machine code. Malicious code can be embedded and is much harder to detect than source code. Interpreted code (JavaScript, Python) = more visible and reviewable line by line. SAST tools can analyse compiled binaries but it is significantly more difficult."}, {"q": "A virus that changes its signature each time it spreads to evade antivirus detection is:", "opts": ["Logic bomb", "Stealth virus", "Polymorphic virus", "Companion virus"], "answer": "Polymorphic virus", "exp": "Polymorphic virus = changes its garble pattern/signature each spread - defeating signature-based AV. Stealth virus = hides its modifications from OS. Multipart = infects both boot sector and executables. Companion = stores separately from host. Defence: HEURISTIC/BEHAVIOURAL AV can detect polymorphic viruses without matching signatures."}, {"q": "Which development methodology includes explicit risk analysis at the START of each iteration?", "opts": ["Waterfall", "Agile", "Spiral", "Cleanroom"], "answer": "Spiral", "exp": "Spiral model = risk-driven iterative development. Four quadrants per cycle: Planning, Risk Analysis, Engineering, Evaluation. RISK ANALYSIS at the START of each iteration. Ideal for large, complex, high-risk projects. Angular axis = progress. Radial axis = cumulative cost."}, {"q": "ACID database properties - what does ISOLATION mean?", "opts": ["Data is encrypted at rest", "Transactions operate independently of each other", "Committed data survives failures", "All-or-nothing execution"], "answer": "Transactions operate independently of each other", "exp": "ACID: Atomicity (all-or-nothing), Consistency (valid state), ISOLATION (transactions operate independently - prevents dirty reads and lost updates), Durability (committed = permanent). Isolation prevents one transaction from reading uncommitted changes of another - critical for financial systems."}, {"q": "Polyinstantiation in database security provides different data values to users based on:", "opts": ["Their username", "Their clearance level", "Time of access", "Network location"], "answer": "Their clearance level", "exp": "Polyinstantiation = countermeasure for INFERENCE attacks in multilevel databases. Same primary key returns different data values depending on the user's clearance/classification level. Lower-classified user sees different (possibly false) data than higher-classified user - preventing inference of sensitive information."}, {"q": "A worm differs from a virus in that a worm:", "opts": ["Requires a host application to propagate", "Self-propagates WITHOUT a host application", "Only infects boot sectors", "Cannot spread across networks"], "answer": "Self-propagates WITHOUT a host application", "exp": "Worm = SELF-PROPAGATING - reproduces on its own, spreads across networks automatically. Virus = requires a HOST APPLICATION to attach to and propagate. Worm's ability to propagate independently makes it uniquely dangerous for rapid network spread. Famous example: Stuxnet = worm with rootkit targeting SCADA/PLC."}, {"q": "ACID's ATOMICITY property means:", "opts": ["Data is accessible when needed", "Transactions are processed in isolation", "Transaction completes entirely or rolls back completely", "Committed data survives system failures"], "answer": "Transaction completes entirely or rolls back completely", "exp": "Atomicity = ALL or NOTHING. If any part of a transaction fails, the ENTIRE transaction rolls back as if it never happened. No partial transactions. Essential for financial systems (cannot debit without crediting). Consistency = valid state. Isolation = independent transactions. Durability = committed = permanent."}, {"q": "DevOps as ORIGINALLY defined integrates which three disciplines?", "opts": ["Development, Security, Operations", "Development, QA, Operations", "Development, Architecture, Operations", "Planning, Development, Operations"], "answer": "Development, QA, Operations", "exp": "DevOps = Development + Quality Assurance + IT Operations. IMPORTANT EXAM TRAP: DevOps as originally defined does NOT include Security. DevSecOps explicitly adds security (shift-left). Security must be integrated into the pipeline - not added as a gate at the end."}, {"q": "The Waterfall model can return to which previous stage?", "opts": ["Any previous stage", "Only one step back", "Requirements only", "No return possible"], "answer": "Only one step back", "exp": "Waterfall = sequential - each phase completes before next begins. Can go back ONLY ONE STEP. Simple but rigid - assumes phases end at specific times. System Requirements > Software Requirements > Analysis > Program Design > Coding > Testing > Operations. Does NOT iterate."}, {"q": "SQL GRANT and REVOKE are part of which SQL sublanguage?", "opts": ["DDL (Data Definition Language)", "DML (Data Manipulation Language)", "DCL (Data Control Language)", "TCL (Transaction Control Language)"], "answer": "DCL (Data Control Language)", "exp": "DCL = GRANT and REVOKE. DDL = CREATE, ALTER, DROP (defines structure). DML = SELECT, UPDATE, DELETE, INSERT (manipulates data). SUDIGR mnemonic: Select, Update, Delete, Insert, Grant, Revoke. TCL = COMMIT, ROLLBACK, SAVEPOINT (transaction control)."}, {"q": "Java applets vs ActiveX - the critical security difference is:", "opts": ["Java is sandboxed; ActiveX has full Windows access", "ActiveX is sandboxed; Java has full access", "Both have identical security models", "Java only works in non-Windows environments"], "answer": "Java applets are sandboxed; ActiveX has full Windows access", "exp": "Java applets = SANDBOXED - isolated from system resources. ActiveX = NOT sandboxed - full access to Windows environment. Uses Authenticode and digital signatures but users click through warning dialogs. This is why ActiveX is significantly more dangerous than Java applets in security assessments."}, {"q": "A logic bomb is MOST accurately described as:", "opts": ["Self-replicating network worm", "Code that executes when a specific condition or date/time is met", "Virus that modifies its own signature", "Software creating covert network channels"], "answer": "Code that executes when a specific condition or date/time is met", "exp": "Logic bomb = dormant code that TRIGGERS when a specific condition is met - date/time, event (employee fired), or transaction occurs. Often planted by malicious insiders. Very difficult to detect when dormant. Example: 'Delete all records on April 1, 2025.' Distinct from viruses (which replicate) and worms (which spread)."}, {"q": "Software escrow protects the licensee against:", "opts": ["IP theft", "Vendor business failure losing source code access", "Licence violations", "Security vulnerabilities in software"], "answer": "Vendor business failure losing source code access", "exp": "Software escrow: source code held by neutral third party, released to licensee if vendor goes out of business. Protects against vendor failure disrupting critical business operations dependent on proprietary software. Trigger conditions defined in escrow agreement. Essential for mission-critical commercial software."}, {"q": "Which testing verifies that new changes do NOT break existing functionality or security controls?", "opts": ["Unit testing", "Integration testing", "Regression testing", "Fuzz testing"], "answer": "Regression testing", "exp": "Regression testing = verifies new changes do NOT break existing functionality or security controls. Uses known inputs and compares against earlier version results. Requires automated processes at scale. Critical in CI/CD pipelines where code changes frequently. Nonregression testing = code works as planned."}]</script>
+
+<!-- QUIZ -->
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 8 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="pf">
+  <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 8 — Software Development Security</p>
+  <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams &amp; Memory Palace. For educational purposes.</p>
+</div>
+
+</div>
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function tg(el){el.classList.toggle('open');}
+</script>
+
+<script>
+var QS = JSON.parse(document.getElementById('qdata').textContent);
+var qst = {i:0, s:0};
+function openQuiz(){document.getElementById('quizOv').style.display='flex';qst={i:0,s:0};renderQ();}
+function closeQ(){document.getElementById('quizOv').style.display='none';}
+function renderQ(){
+  var t=document.getElementById('qTitle'), b=document.getElementById('qBody');
+  if(qst.i>=QS.length){
+    var p=Math.round(qst.s/QS.length*100);
+    t.textContent='Quiz complete';
+    b.innerHTML='<div style="text-align:center;padding:1.5rem 0;">'
+      +'<div style="font-size:48px;margin-bottom:.5rem;">'+(p>=80?'&#127942;':p>=60?'&#9989;':'&#128218;')+'</div>'
+      +'<div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qst.s+'/'+QS.length+'</div>'
+      +'<div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(p>=80?'Excellent &#8212; exam ready!':p>=60?'Good &#8212; review weak areas':'Needs more review &#8212; keep studying')+'</div>'
+      +'<button onclick="qst={i:0,s:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button>'
+      +'<button onclick="closeQ()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button>'
+      +'</div>';
+    return;
+  }
+  var q=QS[qst.i];
+  t.textContent='Question '+(qst.i+1)+' of '+QS.length;
+  var pct=Math.round(qst.i/QS.length*100);
+  var h='<div>';
+  h+='<div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div>';
+  h+='<div id="qopts" style="display:flex;flex-direction:column;gap:8px;">';
+  q.opts.forEach(function(opt,i){
+    h+='<button data-i="'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;transition:all .15s;">'
+      +'<span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';
+  });
+  h+='</div><div id="qexp"></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;">';
+  h+='<span style="font-size:12px;color:#94a3b8;">Score: '+qst.s+'</span>';
+  h+='<div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div>';
+  h+='<span style="font-size:12px;color:#94a3b8;">'+pct+'%</span></div></div>';
+  b.innerHTML=h;
+}
+function ansQ(chosen){
+  var q=QS[qst.i];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){
+    b.onclick=null; b.style.cursor='default';
+    if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}
+    if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}
+  });
+  var ok=(chosen===correct);
+  if(ok) qst.s++;
+  var next=qst.i+1;
+  document.getElementById('qexp').innerHTML=
+    '<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'
+    +(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecada;')
+    +'"><span style="font-weight:700;">'+(ok?'&#10003; Correct! ':'&#10007; Incorrect. ')+'</span>'+q.exp+'</div>'
+    +'<div style="margin-top:10px;display:flex;justify-content:flex-end;">'
+    +'<button onclick="qst.i++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'
+    +(next<QS.length?'Next &#8594;':'See results')+'</button></div>';
+}
+</script>
+</body>
+</html>

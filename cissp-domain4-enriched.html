@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 4 – Communication & Network Security | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;
+  --border:#e2e8f0;--border2:#cbd5e1;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --blue:#3b82f6;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
+  --teal:#0d9488;--teal-bg:#f0fdfa;--teal-bd:#99f6e4;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-bd:#fde68a;
+  --red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-bd:#ddd6fe;
+  --green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;
+  --navy:#0f2744;
+  --r:10px;--rs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.06);--shm:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+.pw{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+
+.hero{background:linear-gradient(135deg,#042c53 0%,#0f3d6e 55%,#0a2540 100%);border-radius:16px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(59,130,246,.18);}
+.hero::after{content:'';position:absolute;bottom:-40px;left:30%;width:180px;height:180px;border-radius:50%;background:rgba(13,148,136,.12);}
+.hi{position:relative;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,.25);color:#93c5fd;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(59,130,246,.35);}
+.hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;color:#f8fafc;margin-bottom:6px;}
+.hero p{color:#94a3b8;font-size:14px;margin-bottom:16px;}
+.hpills{display:flex;flex-wrap:wrap;gap:8px;}
+.hpill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:11px;padding:3px 10px;border-radius:20px;}
+
+.tw{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh);}
+.tn{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface2);scrollbar-width:none;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;background:none;border:none;padding:12px 16px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;letter-spacing:.3px;}
+.tb:hover{color:var(--text);background:rgba(0,0,0,.03);}
+.tb.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--surface);}
+.tb i{font-size:15px;}
+.tp{display:none;padding:1.5rem;}
+.tp.active{display:block;}
+
+.sec{margin-bottom:1.75rem;}
+.sec-hd{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sec-hd::after{content:'';flex:1;height:1px;background:var(--border);}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;}
+.card:hover{border-color:var(--border2);box-shadow:var(--shm);}
+.card.open{border-color:var(--blue-bd);background:var(--blue-bg);}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.cl{font-size:13px;font-weight:600;color:var(--text);}
+.card.open .cl{color:var(--blue);}
+.ca{color:var(--text3);font-size:16px;transition:transform .2s;flex-shrink:0;}
+.card.open .ca{transform:rotate(180deg);color:var(--blue);}
+.cb{display:none;font-size:13px;color:var(--text2);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.card.open .cb{display:block;}
+
+.osi-stack{display:flex;flex-direction:column;gap:4px;margin-bottom:14px;}
+.osi-row{display:grid;grid-template-columns:32px 110px 1fr 120px;gap:0;border-radius:var(--rs);overflow:hidden;border:1px solid var(--border);}
+.osi-num{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;padding:8px 4px;}
+.osi-name{padding:8px 10px;font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;border-left:1px solid var(--border);}
+.osi-pdu{padding:8px 10px;font-size:11px;color:var(--text2);display:flex;align-items:center;border-left:1px solid var(--border);}
+.osi-proto{padding:8px 10px;font-size:10px;color:var(--text2);display:flex;align-items:center;border-left:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+
+.fw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.fw-card{border-radius:var(--r);padding:13px 14px;border:1px solid;}
+.fw-gen{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.fw-name{font-size:13px;font-weight:700;margin-bottom:6px;}
+.fw-list{font-size:11px;line-height:1.8;list-style:none;}
+.fw-list li::before{content:'› ';color:var(--text3);}
+
+.proto-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.proto-table th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text2);border-bottom:2px solid var(--border);background:var(--surface2);}
+.proto-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55;}
+.proto-table tr:last-child td{border-bottom:none;}
+.proto-table tr:hover td{background:var(--surface2);}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;}
+
+.vpn-compare{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.vpn-compare th{padding:8px 10px;font-size:11px;font-weight:600;color:var(--text2);border:1px solid var(--border);background:var(--surface2);text-align:center;}
+.vpn-compare th:first-child{text-align:left;}
+.vpn-compare td{padding:8px 10px;border:1px solid var(--border);text-align:center;color:var(--text2);font-size:12px;}
+.vpn-compare td:first-child{text-align:left;font-weight:600;color:var(--text);}
+.vpn-compare tr:nth-child(even) td{background:var(--surface2);}
+
+.attack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}
+.attack-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;}
+.attack-name{font-weight:600;font-size:13px;color:var(--text);margin-bottom:3px;}
+.attack-def{font-size:12px;color:var(--text2);line-height:1.5;}
+
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:14px;}
+.kv{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;}
+.kv-key{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px;}
+.kv-val{font-size:13px;color:var(--text);font-weight:500;}
+.kv-note{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4;}
+
+.info-box{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#1e40af;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.warn-box{background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.tip-box{background:var(--green-bg);border:1px solid var(--green-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#14532d;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.bi{font-size:16px;flex-shrink:0;margin-top:1px;}
+
+.pf{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--text3);}
+.pf a{color:var(--blue);text-decoration:none;}
+.pf a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="pw">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hi">
+    <div class="hbadge"><i class="ti ti-network"></i> CISSP · Domain 4 · 14% of exam</div>
+    <h1>Communication &amp; Network Security</h1>
+    <p>OSI model · Network protocols · Firewalls · VPNs · Wireless · Attacks &amp; countermeasures · Secure communications</p>
+    <div class="hpills">
+      <span class="hpill">OSI 7 Layers</span>
+      <span class="hpill">TCP/IP Protocols</span>
+      <span class="hpill">Firewall Types</span>
+      <span class="hpill">IPSec / VPN</span>
+      <span class="hpill">WPA / WPA2</span>
+      <span class="hpill">Network Attacks</span>
+      <span class="hpill">NAT / VLAN</span>
+      <span class="hpill">Converged Protocols</span>
+    </div>
+  </div>
+
+    <button onclick="openQuiz()" style="display:inline-flex;align-items:center;gap:8px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);color:#fbbf24;font-size:12px;font-weight:600;padding:8px 16px;border-radius:20px;cursor:pointer;margin-top:12px;">
+      <i class="ti ti-brain" style="font-size:16px"></i> Take 20-question practice quiz
+    </button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tw">
+  <div class="tn">
+    <button class="tb active" onclick="sw('osi',this)"><i class="ti ti-layers-difference"></i> OSI Model</button>
+    <button class="tb" onclick="sw('proto',this)"><i class="ti ti-route"></i> Protocols</button>
+    <button class="tb" onclick="sw('fw',this)"><i class="ti ti-wall"></i> Firewalls &amp; NAT</button>
+    <button class="tb" onclick="sw('vpn',this)"><i class="ti ti-lock-access"></i> VPN &amp; IPSec</button>
+    <button class="tb" onclick="sw('wireless',this)"><i class="ti ti-wifi"></i> Wireless</button>
+    <button class="tb" onclick="sw('attacks',this)"><i class="ti ti-bug"></i> Attacks</button>
+    <button class="tb" onclick="sw('secure',this)"><i class="ti ti-shield-check"></i> Secure comms</button>
+  </div>
+
+  <!-- OSI MODEL -->
+  <div id="tab-osi" class="tp active">
+    <div class="sec">
+      <div class="sec-hd">OSI Reference Model — 7 layers</div>
+      <div class="tip-box"><i class="ti ti-bulb bi"></i><b>Mnemonic top→down:</b> All People Seem To Need Data Processing &nbsp;|&nbsp; <b>Bottom→top:</b> Please Do Not Touch Steve's Pet Alligator. Encapsulation = adding headers going DOWN. Decapsulation = removing headers going UP.</div>
+      <div class="osi-stack">
+        <div class="osi-row"><div class="osi-num" style="background:#7c3aed">7</div><div class="osi-name">Application</div><div class="osi-pdu">Data stream</div><div class="osi-proto">HTTP HTTPS FTP SMTP DNS SNMP</div></div>
+        <div class="osi-row"><div class="osi-num" style="background:#6d28d9">6</div><div class="osi-name">Presentation</div><div class="osi-pdu">Data stream</div><div class="osi-proto">JPEG GIF SSL/TLS encryption/compression</div></div>
+        <div class="osi-row"><div class="osi-num" style="background:#5b21b6">5</div><div class="osi-name">Session</div><div class="osi-pdu">Data stream</div><div class="osi-proto">RPC NFS SQL NetBIOS</div></div>
+        <div class="osi-row"><div class="osi-num" style="background:#2563eb">4</div><div class="osi-name">Transport</div><div class="osi-pdu">Segment / Datagram</div><div class="osi-proto">TCP UDP SSL/TLS SPX</div></div>
+        <div class="osi-row"><div class="osi-num" style="background:#0369a1">3</div><div class="osi-name">Network</div><div class="osi-pdu">Packet</div><div class="osi-proto">IP ICMP IGMP IPSec IGRP OSPF RIP</div></div>
+        <div class="osi-row"><div class="osi-num" style="background:#0d9488">2</div><div class="osi-name">Data Link</div><div class="osi-pdu">Frame</div><div class="osi-proto">Ethernet MAC ARP RARP PPP HDLC</div></div>
+        <div class="osi-row"><div class="osi-num" style="background:#16a34a">1</div><div class="osi-name">Physical</div><div class="osi-pdu">Bits</div><div class="osi-proto">Cables hubs modems voltage signals</div></div>
+      </div>
+      <div class="info-box"><i class="ti ti-info-circle bi"></i>Exam tip: Most protocols starting with "I" are Layer 3 — IP, ICMP, IGMP, IGRP, IPSec, IKE, ISAKMP. IMAP is the exception — it works at Layer 7. Routers = Layer 3. Switches = Layer 2. Hubs = Layer 1.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Layer details — tap to expand</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 1 — Physical</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Converts frames to bits (encapsulation going down) and bits back to frames (decapsulation going up). Deals with cables, voltage, hubs, signals. Twisted pair = least secure, cheapest. Fibre optic = most secure, most expensive. Topologies: Bus, Ring, Star (switch = single point of failure), Mesh (most fault-tolerant).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 2 — Data Link</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Converts packets to frames. LLC (Logical Link Control) handles error detection. MAC (Media Access Control) uses physical hardware addresses. ARP maps IP → MAC. RARP maps MAC → IP. Access methods: CSMA/CD (IEEE 802.3 Ethernet — collision detection), CSMA/CA (IEEE 802.11 wireless — collision avoidance), Token Passing (no collision — system needs token to transmit).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 3 — Network</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Adds routing and addressing. Does NOT guarantee delivery (that's Layer 4). Routers isolate broadcast domains. Switches used for VLAN-based broadcast isolation (cheaper than routers). Layer 3 switch needed for inter-VLAN communication. Routing: Distance Vector (BGP, RIP, IGRP — direction + hops), Link State (OSPF — shortest path).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 4 — Transport</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">End-to-end data transport and logical connections. TCP = connection-oriented, reliable, slow (3-way handshake: SYN→SYN-ACK→ACK). UDP = connectionless, fast, unreliable (streaming, gaming, DNS). SYN flood attack exploits the 3-way handshake. Fraggle attack uses UDP. SSL/TLS spans Layers 4–7.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 5 — Session</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Establishes, manages and terminates sessions between applications. Create → Transfer → Release. Simplex: one-way only. Half Duplex: both ways but not simultaneously. Full Duplex: both ways simultaneously. Protocols: RPC, NFS, SQL, NetBIOS.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 6 — Presentation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Formats data for the application layer. Handles: Formatting (JPEG, GIF, MP3), Encryption/Decryption, Compression (removes redundancy). No specific protocols — it is a translation service. SSL/TLS encryption can operate here.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Layer 7 — Application</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Defines protocols for application-to-application communication. HTTP (80), HTTPS (443), FTP (20/21), SFTP (22), SMTP (25), POP3 (110), IMAP (143), DNS (53), SNMP (161), Telnet (23), SSH (22), LDAP (389). Proxy firewalls operate at this layer.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Port ranges</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Well-known ports: 0–1023 (assigned by IANA). Registered ports: 1024–49151 (registered software). Dynamic/Ephemeral ports: 49152–65535 (random/temporary). TCP Wrapper = application that acts like a firewall restricting access to ports based on user/system IDs (port-based access control).</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Network devices by OSI layer</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-key">Layer 1</div><div class="kv-val">Hub, Repeater, Modem</div><div class="kv-note">Hub sends all data to all ports — no addressing, creates collisions</div></div>
+        <div class="kv"><div class="kv-key">Layer 2</div><div class="kv-val">Switch, Bridge</div><div class="kv-note">Switch uses MAC address to direct traffic, reduces collisions. Bridge connects two different network types.</div></div>
+        <div class="kv"><div class="kv-key">Layer 3</div><div class="kv-val">Router</div><div class="kv-note">Connects similar networks, routes by IP address. Isolates broadcast domains.</div></div>
+        <div class="kv"><div class="kv-key">Layer 4–7</div><div class="kv-val">Gateway, Proxy</div><div class="kv-note">Gateways connect networks using different protocols. Proxy inspects application-layer traffic.</div></div>
+        <div class="kv"><div class="kv-key">VLAN</div><div class="kv-val">Virtual LAN</div><div class="kv-note">Logically segments a network without altering physical topology. Layer 3 switch required for inter-VLAN routing.</div></div>
+        <div class="kv"><div class="kv-key">WAP</div><div class="kv-val">Wireless Access Point</div><div class="kv-note">Connects wireless devices to the wired network. Rogue APs enable MITM attacks.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROTOCOLS -->
+  <div id="tab-proto" class="tp">
+    <div class="sec">
+      <div class="sec-hd">Key TCP/IP protocols by layer</div>
+      <div style="overflow-x:auto">
+        <table class="proto-table">
+          <thead><tr><th>Protocol</th><th>Layer</th><th>Port</th><th>Purpose &amp; key facts</th></tr></thead>
+          <tbody>
+            <tr><td><strong>HTTP</strong></td><td>7</td><td class="mono">80</td><td>Hypertext Transfer Protocol — unencrypted web</td></tr>
+            <tr><td><strong>HTTPS</strong></td><td>7</td><td class="mono">443</td><td>HTTP over TLS/SSL — encrypted web traffic</td></tr>
+            <tr><td><strong>FTP</strong></td><td>7</td><td class="mono">20/21</td><td>File transfer — unencrypted, use SFTP instead</td></tr>
+            <tr><td><strong>SFTP / SSH</strong></td><td>7</td><td class="mono">22</td><td>Secure file transfer and remote shell — replaces Telnet and FTP</td></tr>
+            <tr><td><strong>SMTP</strong></td><td>7</td><td class="mono">25</td><td>Send email. No built-in encryption — use with TLS</td></tr>
+            <tr><td><strong>POP3</strong></td><td>7</td><td class="mono">110</td><td>Downloads emails from server, deletes from server</td></tr>
+            <tr><td><strong>IMAP</strong></td><td>7</td><td class="mono">143</td><td>Downloads OR keeps email on server — exception to Layer 3 "I" rule</td></tr>
+            <tr><td><strong>DNS</strong></td><td>7</td><td class="mono">53</td><td>Resolves hostnames to IP addresses. UDP by default, TCP for zone transfers</td></tr>
+            <tr><td><strong>SNMP</strong></td><td>7</td><td class="mono">161</td><td>Network device monitoring. SNMPv3 adds encryption and authentication</td></tr>
+            <tr><td><strong>LDAP</strong></td><td>7</td><td class="mono">389</td><td>Directory services. LDAPS (636) = encrypted version</td></tr>
+            <tr><td><strong>Telnet</strong></td><td>7</td><td class="mono">23</td><td>Remote access — unencrypted, replaced by SSH</td></tr>
+            <tr><td><strong>TCP</strong></td><td>4</td><td>—</td><td>Connection-oriented, reliable. 3-way handshake (SYN→SYN-ACK→ACK)</td></tr>
+            <tr><td><strong>UDP</strong></td><td>4</td><td>—</td><td>Connectionless, fast, unreliable. Used by DNS, streaming, VoIP, gaming</td></tr>
+            <tr><td><strong>IP</strong></td><td>3</td><td>—</td><td>Logical addressing and routing. IPv4 (32-bit), IPv6 (128-bit)</td></tr>
+            <tr><td><strong>ICMP</strong></td><td>3</td><td>—</td><td>Error messages and diagnostics (ping). Exploited by Smurf, Ping of Death, Loki</td></tr>
+            <tr><td><strong>ARP</strong></td><td>2</td><td>—</td><td>Maps IP → MAC. ARP poisoning changes cached MAC to attacker's — enables MITM</td></tr>
+            <tr><td><strong>RARP</strong></td><td>2</td><td>—</td><td>Maps MAC → IP (reverse ARP)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Converged protocols</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">FCoE — Fibre Channel over Ethernet</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Allows high-speed (16 Gbps) Fibre Channel storage traffic to run over standard Ethernet networks. Works at Layer 3. Used as a network data storage solution — eliminates the need for separate storage networks.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">iSCSI</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Internet Small Computer System Interface. Enables location-independent file storage and retrieval over LAN, WAN. Cheaper alternative to Fibre Channel. Used for SANs (Storage Area Networks) over standard IP networks.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">MPLS</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Multi-Protocol Label Switching. High performance, high throughput — routes data using short path labels instead of long network addresses. Cost-effective, provides QoS for VoIP, more secure than public internet. Can create VPN connections.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">VoIP</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Voice over IP — converts analog voice to digital signals over TCP/IP. Lacks authentication mechanisms — vulnerable to toll fraud, eavesdropping, vishing, SPIT (Spam over Internet Telephony). Performance issues: Latency (fixed delay) and Jitter (variable delay). Direct Inward System Access (DISA) exploited by phreakers.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SDN — Software Defined Networking</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Separates the infrastructure layer from the control layer (network virtualisation). Makes organisations vendor-independent. Centralised network management. Enables dynamic, programmable network configuration.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">CDN — Content Delivery Network</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Collection of resources deployed in data centres across the internet to provide low latency and high performance. Caches content geographically close to users. Layer 3 concept. Examples: Cloudflare, Akamai, AWS CloudFront.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">IP addressing</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-key">Class A private</div><div class="kv-val mono">10.0.0.0/8</div><div class="kv-note">Large enterprises — 16 million hosts</div></div>
+        <div class="kv"><div class="kv-key">Class B private</div><div class="kv-val mono">172.16.0.0–172.31.x.x</div><div class="kv-note">Medium networks</div></div>
+        <div class="kv"><div class="kv-key">Class C private</div><div class="kv-val mono">192.168.0.0/16</div><div class="kv-note">Home/small business — 254 hosts per subnet</div></div>
+        <div class="kv"><div class="kv-key">Loopback</div><div class="kv-val mono">127.x.x.x</div><div class="kv-note">Software entity / self-test — never routed externally</div></div>
+        <div class="kv"><div class="kv-key">APIPA</div><div class="kv-val mono">169.254.x.x</div><div class="kv-note">Auto-assigned when DHCP fails — link-local only</div></div>
+        <div class="kv"><div class="kv-key">NAT purpose</div><div class="kv-val">Hide internal IPs</div><div class="kv-note">Layer 3. Static (1:1), Dynamic (many:few), PAT (many:1)</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">WAN technologies</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Circuit switching</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Dedicated channel created between two parties — consistent connection, all data follows same path. Examples: PSTN, ISDN, DSL, T-carriers. Disadvantages: backdoor risk, slow, vulnerable to war-dialing. Defence: dial-back systems, caller ID restriction, modem tone after 4+ rings.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Packet switching</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Message broken into packets, each finds its own route to destination. More efficient use of bandwidth. Technologies: X.25 (low performance), Frame Relay (uses CIR — Committed Information Rate), ATM (53-byte cells — cell switching), VOIP, MPLS, cable modems.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PVC vs SVC</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">PVC (Permanent Virtual Circuit) = dedicated leased line, always ready. Like a walkie-talkie radio channel. SVC (Switched Virtual Circuit) = dial-up connection established on demand. Like a ham radio that must call first. Frame Relay uses PVC.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">ISDN</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Integrated Services Digital Network. Fully digital telephone network supporting voice and data. BRI (Basic Rate Interface) = 2B + 1D channels. PRI (Primary Rate Interface) = 23B + 1D channels. ADSL is faster than ISDN.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREWALLS & NAT -->
+  <div id="tab-fw" class="tp">
+    <div class="sec">
+      <div class="sec-hd">Firewall generations</div>
+      <div class="fw-grid">
+        <div class="fw-card" style="background:var(--blue-bg);border-color:var(--blue-bd)">
+          <div class="fw-gen" style="color:var(--blue)">1st generation</div>
+          <div class="fw-name" style="color:var(--blue)">Packet filter</div>
+          <ul class="fw-list"><li>Uses ACLs (rules)</li><li>Not stateful</li><li>Inspects Layer 3 (IP, ports)</li><li>Cannot block viruses</li><li>No application inspection</li><li>Fast but limited</li></ul>
+        </div>
+        <div class="fw-card" style="background:var(--teal-bg);border-color:var(--teal-bd)">
+          <div class="fw-gen" style="color:var(--teal)">2nd generation</div>
+          <div class="fw-name" style="color:var(--teal)">Application-level (proxy)</div>
+          <ul class="fw-list"><li>Works at Layer 7</li><li>Deep packet inspection</li><li>Logging + auditing</li><li>Extra security layer</li><li>Slower — inspects every packet</li><li>Also called proxy firewall</li></ul>
+        </div>
+        <div class="fw-card" style="background:var(--purple-bg);border-color:var(--purple-bd)">
+          <div class="fw-gen" style="color:var(--purple)">2nd generation</div>
+          <div class="fw-name" style="color:var(--purple)">Circuit-level (proxy)</div>
+          <ul class="fw-list"><li>Works at Layer 5</li><li>Monitors TCP handshake</li><li>SOCKS is common implementation</li><li>Used between trusted partners</li><li>Does not inspect content</li></ul>
+        </div>
+        <div class="fw-card" style="background:var(--green-bg);border-color:var(--green-bd)">
+          <div class="fw-gen" style="color:var(--green)">3rd generation</div>
+          <div class="fw-name" style="color:var(--green)">Stateful inspection</div>
+          <ul class="fw-list"><li>Works at Layers 3 &amp; 4</li><li>Tracks connection state table</li><li>Blocks unsolicited replies</li><li>Content-dependent access control</li><li>Can DoS itself — fills state table</li><li>Disrupts active sessions on reboot</li></ul>
+        </div>
+      </div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Bastion host</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Hardened server exposed to the internet — designed to take abuse. Stripped of all non-essential services. Sits in the DMZ. Acts as the first line of defence before internal networks.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Screened subnet (DMZ)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Area between two firewalls — outer firewall faces the internet, inner firewall protects internal network. Public-facing servers (web, email, DNS) placed here. Compromising the DMZ does not give access to internal network.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">NAT — Network Address Translation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Hides internal IP addresses from external networks — Layer 3. Static NAT: one internal IP maps to one external IP (1:1). Dynamic NAT: multiple internal IPs share a pool of external IPs (many:many). PAT/Overloading: many internal IPs share ONE public IP using different port numbers (many:1). PAT disadvantage: single point of failure.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">VLAN security</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">VLANs logically segment a network without changing physical topology. Provides broadcast isolation cheaply (vs routers). Layer 2 switch provides proper VLAN isolation. Layer 3 switch required for inter-VLAN communication. VLAN hopping = attack bypassing VLAN isolation.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VPN & IPSec -->
+  <div id="tab-vpn" class="tp">
+    <div class="sec">
+      <div class="sec-hd">IPSec — Internet Protocol Security</div>
+      <div class="tip-box"><i class="ti ti-bulb bi"></i>IPSec works at Layer 3. Standard architecture for VPN. Provides P A I N (Privacy · Authentication · Integrity · Non-repudiation). Sets up a secure channel between two parties.</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">AH — Authentication Header</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Provides: Authentication, Integrity, and Non-Repudiation (P A I N). Prevents replay attacks. Does NOT provide confidentiality/encryption. Used when you need to verify sender identity without encrypting content.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">ESP — Encapsulating Security Payload</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Provides: Confidentiality (encryption) + limited authentication. More commonly used than AH. ESP provides some authentication but not to the same degree as AH. Encrypts the payload. Can be used alone or with AH.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Tunnel mode vs Transport mode</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tunnel mode: entire original IP packet is encapsulated — more secure, used for VPNs between networks. Transport mode: only the payload is encapsulated — better performance, used for host-to-host communications. Tunnel = security priority. Transport = performance priority.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Security Association (SA)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Unique identifier of a secure IPSec connection. Identified by: Destination Address + Security Parameter Index (SPI). SA is simplex (one-way) — a two-way channel requires TWO Security Associations.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">ISAKMP</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Internet Security Association Key Management Protocol. Functions: Authenticate communicating parties, Create and manage Security Associations, Provide key generation mechanism, Protect against threats. Oakley is used for key management within ISAKMP (uses Diffie-Hellman).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">IKE — Internet Key Exchange</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Replaced SKIP (Simple Key Management for IP). Used to establish Security Associations and exchange cryptographic keys for IPSec. IKEv2 is the current standard — more efficient, supports MOBIKE for mobile devices.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">VPN tunnelling protocols — comparison</div>
+      <div style="overflow-x:auto">
+        <table class="vpn-compare">
+          <thead><tr><th>Protocol</th><th>Authentication</th><th>Encryption</th><th>Protocol support</th><th>Connections</th></tr></thead>
+          <tbody>
+            <tr><td>PPTP</td><td><span class="pill" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)">Yes</span></td><td><span class="pill" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)">No</span></td><td>IP only</td><td>Point-to-point</td></tr>
+            <tr><td>L2F</td><td><span class="pill" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)">Yes</span></td><td><span class="pill" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)">No</span></td><td>IP only</td><td>Point-to-point</td></tr>
+            <tr><td>L2TP</td><td><span class="pill" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)">Yes</span></td><td><span class="pill" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)">No</span></td><td>Any</td><td>Point-to-point</td></tr>
+            <tr><td>IPSec</td><td><span class="pill" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)">Yes</span></td><td><span class="pill" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)">Yes</span></td><td>IP only</td><td>Multiple</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box"><i class="ti ti-info-circle bi"></i>L2TP + IPSec combined is the most common VPN solution — L2TP provides tunnelling for multiple protocols, IPSec adds encryption. Used in most enterprise and consumer VPN implementations.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Remote access authentication protocols</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">RADIUS</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Remote Authentication Dial-In User Service. RFC 2865. Centralised authentication for remote connections. Uses UDP on Port 1812 (auth) / 1813 (accounting). Encrypts only the password in the access-request packet. Commonly used for Wi-Fi authentication and network access control.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">TACACS+</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Terminal Access Controller Access Control System Plus. Cisco-introduced, now open public protocol. Uses TCP on Port 49. Encrypts the ENTIRE packet (unlike RADIUS). Separates Authentication, Authorisation, and Accounting into distinct functions. Preferred for network device administration.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">CHAP</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Challenge Handshake Authentication Protocol. Used over PPP. Encrypts user ID and password. Protects against replay attacks. Reauthenticates periodically. More secure than PAP.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PAP</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Password Authentication Protocol. Transmits user ID and password in clear text. Exam tip: There are technically no attacks against PAP because everything is already in cleartext — there is nothing to break.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">EAP</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Extensible Authentication Protocol. Framework that supports any type of authentication. PEAP (Protected EAP): encapsulates EAP inside a TLS tunnel for security. LEAP (Lightweight EAP): Cisco proprietary, broken by ASLEAP attack. EAP-TLS: strongest — mutual certificate-based auth.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PPP</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Point-to-Point Protocol. Full Duplex. Supports CHAP and PAP. Multi-vendor interoperability. Replaced SLIP (Serial Line Internet Protocol — no error correction/detection). Used for dial-up and DSL connections.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIRELESS -->
+  <div id="tab-wireless" class="tp">
+    <div class="sec">
+      <div class="sec-hd">IEEE 802.11 wireless standards</div>
+      <div style="overflow-x:auto">
+        <table class="proto-table">
+          <thead><tr><th>Standard</th><th>Speed</th><th>Frequency</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>802.11a</strong></td><td>54 Mbps</td><td>5 GHz</td><td>8 channels. Less interference but shorter range</td></tr>
+            <tr><td><strong>802.11b</strong></td><td>11 Mbps</td><td>2.4 GHz</td><td>Same frequency as home devices — most interference</td></tr>
+            <tr><td><strong>802.11g</strong></td><td>54 Mbps</td><td>2.4 GHz</td><td>Backward compatible with 802.11b</td></tr>
+            <tr><td><strong>802.11n</strong></td><td>200+ Mbps</td><td>2.4 or 5 GHz</td><td>MIMO antennas. b/g/n all use 2.4 GHz — backward compatible</td></tr>
+            <tr><td><strong>802.11ac</strong></td><td>1 Gbps+</td><td>5 GHz</td><td>MU-MIMO, beamforming. Current enterprise standard</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn-box"><i class="ti ti-alert-triangle bi"></i>Exam tip: b, g, and n all use 2.4 GHz and maintain backward compatibility. 802.1X/EAP provides individual user authentication for WPA2 enterprise deployments.</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Wireless encryption protocols</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">WEP — Wired Equivalent Privacy</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">64-bit and 128-bit encryption using RC4 stream cipher. Weak 24-bit Initialization Vector (IV) transmitted in cleartext. Easily crackable — broken in minutes. Only option for 802.11b devices. Shared authentication passwords. Do NOT use.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">WPA — Wi-Fi Protected Access</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Introduced TKIP (Temporal Key Integrity Protocol) to overcome WEP weaknesses. Still uses RC4 stream cipher underneath. Stronger IV than WEP. Interim fix while WPA2 was being developed. No longer considered secure.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">WPA2 — Most secure</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Uses AES block cipher with CCMP (Counter Mode Cipher Block Chaining Message Authentication Code Protocol). Not backward compatible with WEP. Two modes: Personal (PSK — pre-shared key) and Enterprise (802.1X/EAP — individual user credentials). Current gold standard.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Wireless security threats</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">War Driving: scanning for open Wi-Fi networks from a vehicle. Rogue Access Points: attacker sets up an unauthorised AP to intercept traffic (MITM). Air Snarfing: wireless packet sniffing. Evil Twin: fake AP mimicking legitimate SSID. Bluejacking: sending unsolicited messages via Bluetooth. Bluesnarfing: copying data from a Bluetooth device. Bluebugging: full phone control via Bluetooth.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Bluetooth attacks</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Bluejacking: sends SPAM messages to nearby Bluetooth devices. Bluesnarfing: copies information from a remote device without consent. Bluebugging: most serious — allows full use of the phone including making calls and eavesdropping. Countermeasures: disable discovery mode, disable automatic pairing.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTACKS -->
+  <div id="tab-attacks" class="tp">
+    <div class="sec">
+      <div class="sec-hd">Network attacks &amp; countermeasures</div>
+      <div class="attack-grid">
+        <div class="attack-item"><div class="attack-name">DoS / DDoS</div><div class="attack-def">Sends packets beyond bandwidth capacity. DDoS uses botnets. Countermeasure: firewall, load balancer, third-party DDoS mitigation, null routing.</div></div>
+        <div class="attack-item"><div class="attack-name">SYN Flood</div><div class="attack-def">Sends SYN packets without completing the 3-way handshake — fills the connection table. Layer 4 attack. Countermeasure: SYN cookies, firewall rate limiting.</div></div>
+        <div class="attack-item"><div class="attack-name">Smurf Attack</div><div class="attack-def">Sends ICMP echo requests to network broadcast address with spoofed source IP — all hosts reply to victim. DDoS using ICMP. Countermeasure: disable directed broadcasts.</div></div>
+        <div class="attack-item"><div class="attack-name">Fraggle Attack</div><div class="attack-def">Like Smurf but uses UDP packets. Layer 4 attack. Countermeasure: block UDP broadcast traffic at router/firewall.</div></div>
+        <div class="attack-item"><div class="attack-name">Ping of Death</div><div class="attack-def">Sends oversized ICMP packets that violate the maximum transmission unit (MTU) — crashes the target. Exploits ICMP at Layer 3.</div></div>
+        <div class="attack-item"><div class="attack-name">Teardrop</div><div class="attack-def">Sends fragmented packets in an order that cannot be properly reassembled — crashes the OS. Exploits fragment reassembly code.</div></div>
+        <div class="attack-item"><div class="attack-name">Loki</div><div class="attack-def">Covert channel using ICMP — hides data inside ICMP echo packets to exfiltrate data through firewalls that allow ping traffic.</div></div>
+        <div class="attack-item"><div class="attack-name">Session Hijacking</div><div class="attack-def">Captures an authenticated session to steal credentials or take over the session. Countermeasure: encrypted sessions (TLS), session tokens, re-authentication.</div></div>
+        <div class="attack-item"><div class="attack-name">ARP Poisoning / Spoofing</div><div class="attack-def">Inserts false MAC address into ARP cache — redirects traffic to attacker (MITM). Countermeasure: monitor ARP cache, use IDS, dynamic ARP inspection.</div></div>
+        <div class="attack-item"><div class="attack-name">DNS Poisoning</div><div class="attack-def">Corrupts DNS cache so hostname resolves to attacker's IP (Pharming). Countermeasure: DNSSEC, validate DNS responses.</div></div>
+        <div class="attack-item"><div class="attack-name">DNS Spoofing</div><div class="attack-def">Attacker sends false DNS replies. Resolution: upgrade to DNSSEC which signs DNS responses cryptographically.</div></div>
+        <div class="attack-item"><div class="attack-name">Man-in-the-Middle</div><div class="attack-def">Attacker intercepts and potentially modifies communication between two parties. Countermeasure: mutual authentication, PKI, certificate pinning, TLS.</div></div>
+        <div class="attack-item"><div class="attack-name">Sniffing / Eavesdropping</div><div class="attack-def">Listening to network traffic — captures credentials, data. Countermeasure: encryption (TLS, SSH, VPN), switch instead of hub (limits broadcast domain).</div></div>
+        <div class="attack-item"><div class="attack-name">War Dialing</div><div class="attack-def">Dials random phone numbers to identify modems behind them. Countermeasure: dial-back systems, caller ID restriction, modem tone after 4+ rings.</div></div>
+        <div class="attack-item"><div class="attack-name">Replay Attack</div><div class="attack-def">Intercepts valid packet and retransmits later. Countermeasure: timestamps, nonces, sequence numbers, one-time authentication tokens (OTP).</div></div>
+        <div class="attack-item"><div class="attack-name">Hyperlink / URL Spoofing</div><div class="attack-def">Displays deceptive link — redirects to malicious site. Clickjacking redirects user clicks. Countermeasure: verify hyperlinks before clicking, use URL inspection tools.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Attack countermeasure quick reference</div>
+      <div style="overflow-x:auto">
+        <table class="proto-table">
+          <thead><tr><th>Attack</th><th>Primary countermeasure</th></tr></thead>
+          <tbody>
+            <tr><td>DDoS</td><td>Firewall + third-party vendor + load balancer + null route</td></tr>
+            <tr><td>Eavesdropping</td><td>TLS, SSH, VPN encryption</td></tr>
+            <tr><td>Impersonation / Masquerading</td><td>One-time pads, token authentication, MFA</td></tr>
+            <tr><td>Replay attacks</td><td>One-time authentication, timestamps, nonces</td></tr>
+            <tr><td>Modification attacks</td><td>Digital signatures, packet checksums, integrity verification</td></tr>
+            <tr><td>ARP spoofing</td><td>Monitor ARP cache, IDS, dynamic ARP inspection</td></tr>
+            <tr><td>DNS poisoning/spoofing</td><td>DNSSEC — cryptographic signing of DNS responses</td></tr>
+            <tr><td>Session hijacking</td><td>Encrypted sessions, re-authentication, short session timeouts</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURE COMMS -->
+  <div id="tab-secure" class="tp">
+    <div class="sec">
+      <div class="sec-hd">Secure communication protocols</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SSL / TLS</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">SSL (Secure Sockets Layer) — protects communication between web server and browser. TLS (Transport Layer Security) — stronger replacement for SSL, better authentication and encryption. Supports 2-way mutual authentication using digital certificates. Can be implemented at Layer 3 (OpenVPN), can encrypt UDP and SIP. Spans Layers 4–7.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SSH — Secure Shell</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Replaces Telnet and rlogin for remote shell access. Port 22. Provides encrypted terminal sessions, file transfer (SFTP/SCP), and port forwarding. Uses public key cryptography for authentication. Essential for secure server administration.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">S/MIME</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Secure/Multipurpose Internet Mail Extensions. Uses RSA and X.509 certificates. Provides P A I N for email. Two types: Signed (P A I N — authentication, integrity, non-repudiation) and Enveloped (P A I N — confidentiality). Most enterprise email security standard.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PGP — Pretty Good Privacy</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Uses IDEA symmetric algorithm (PGP is a good IDEA). Web of trust model rather than PKI hierarchy. Provides P A I N for email. Encrypt with recipient's public key, sign with sender's private key. Used for personal email encryption — less common in enterprise.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Link vs End-to-End encryption</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Link Encryption: encrypts everything including headers (tunnel mode) — slow but secure, works on lower OSI layers, decrypts at each hop. End-to-End Encryption: encrypts only payload (transport mode) — fast, higher OSI layers, data remains encrypted throughout. TLS = end-to-end. VPN tunnel = link encryption.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">DKIM / SPF / DMARC</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">SPF (Sender Policy Framework): verifies the sending mail server is authorised for the domain. DKIM (DomainKeys Identified Mail): cryptographic signature that proves email wasn't altered in transit. DMARC (Domain Message Authentication Reporting and Conformance): policy layer built on SPF + DKIM — filters spoofed messages, generates reports. All three together are essential email anti-spoofing controls.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SET — Secure Electronic Transaction</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Uses RSA and DES to secure credit card transactions over the internet. Developed by Visa and Mastercard. Provides P A I N. Largely superseded by TLS-based payment systems but still referenced in CISSP.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">SRPC — Secure Remote Procedure Call</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Authentication service that prevents unauthorised code execution on a remote system. Secures RPC communications — used in distributed computing environments where processes call functions on remote systems.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Email protocol security</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-key">POP3</div><div class="kv-val">Port 110</div><div class="kv-note">Downloads and deletes email from server — no server-side access after download</div></div>
+        <div class="kv"><div class="kv-key">IMAP</div><div class="kv-val">Port 143</div><div class="kv-note">User can download or keep email on server — multi-device friendly</div></div>
+        <div class="kv"><div class="kv-key">SMTP</div><div class="kv-val">Port 25</div><div class="kv-note">Sends email. Spamming and mail bombing hard to stop — addresses are spoofed</div></div>
+        <div class="kv"><div class="kv-key">POP3S</div><div class="kv-val">Port 995</div><div class="kv-note">POP3 over TLS/SSL — encrypted</div></div>
+        <div class="kv"><div class="kv-key">IMAPS</div><div class="kv-val">Port 993</div><div class="kv-note">IMAP over TLS/SSL — encrypted</div></div>
+        <div class="kv"><div class="kv-key">SMTPS</div><div class="kv-val">Port 465/587</div><div class="kv-note">SMTP over TLS — encrypted submission</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hd">Virtualisation &amp; network security boundaries</div>
+      <div class="cgrid">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Security boundary</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Line of intersection between any two areas, subnets, or environments with different security requirements. Created using data classification, logical segmentation (VLANs), and physical separation. Every boundary crossing must be monitored and controlled.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Virtual networking</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">SAN (Storage Area Network): dedicated high-speed network for storage devices. SDN (Software Defined Networking): makes organisations vendor-independent by separating network control from data forwarding. Virtual Desktop Infrastructure (VDI): extends virtualisation concept to user desktops.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Network security controls</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Transparency: security mechanisms invisible to end users. Integrity verification: hashing confirms data not altered in transit. Transmission mechanism: logs all transmission records for auditing. IDS/IPS: detects and/or blocks suspicious traffic patterns. SPAN port: copies all switch traffic to a monitoring device.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Technology convergence</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tendency for different technology solutions to evolve and merge over time. Examples: smartphones combining phone + camera + GPS + computer. Security concern: convergence increases attack surface — a single device compromise can affect multiple functions.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tabs -->
+
+<script id="qdata" type="application/json">[{"q": "At which OSI layer do routers operate?", "opts": ["Layer 1", "Layer 2", "Layer 3", "Layer 4"], "answer": "Layer 3", "exp": "Routers operate at Layer 3 (Network) - route packets using IP addresses. Switches = Layer 2 (MAC addresses). Hubs = Layer 1 (no addressing, broadcasts to all). Gateways = Layers 4-7. Bridges = Layer 2. Exam tip: most protocols starting with I are Layer 3 except IMAP which is Layer 7."}, {"q": "ARP maps which addresses?", "opts": ["IP to hostname", "MAC to IP", "IP to MAC", "Hostname to MAC"], "answer": "IP to MAC", "exp": "ARP (Address Resolution Protocol) maps IP addresses to MAC addresses (Layer 2). RARP maps MAC to IP. ARP poisoning inserts false MAC entries into ARP cache to redirect traffic - enables MITM attacks. Defence: dynamic ARP inspection, monitor ARP cache."}, {"q": "A stateful inspection firewall primarily operates at which layers?", "opts": ["Layer 7 only", "Layer 2-3", "Layers 3-4", "Layers 5-7"], "answer": "Layers 3-4", "exp": "Stateful inspection (3rd generation) = Layers 3-4. Tracks connection state table. Can block unsolicited replies. Weakness: can DoS itself by filling state table. Packet filter = Layer 3. Circuit-level = Layer 5. Application-level proxy = Layer 7."}, {"q": "What is the PRIMARY difference between IPSec AH and ESP?", "opts": ["AH encrypts; ESP authenticates", "AH authenticates only; ESP encrypts (and partially authenticates)", "Both provide identical protection", "AH is tunnel mode only; ESP is transport mode only"], "answer": "AH authenticates only; ESP encrypts (and partially authenticates)", "exp": "AH = authentication, integrity, non-repudiation - NO encryption. ESP = confidentiality (encryption) + limited authentication. Tunnel mode = entire packet encapsulated (more secure, for VPNs). Transport mode = payload only (better performance, host-to-host). L2TP + IPSec = most common VPN solution."}, {"q": "Which wireless encryption uses AES with CCMP and is the current gold standard?", "opts": ["WEP", "WPA", "WPA2", "WPA3"], "answer": "WPA2", "exp": "WPA2 = AES block cipher with CCMP. Not backward compatible with WEP. Two modes: Personal (PSK) and Enterprise (802.1X/EAP). WEP = RC4 with weak 24-bit IV (easily crackable). WPA = TKIP with RC4 (interim fix). WPA2 Enterprise requires individual user authentication via RADIUS."}, {"q": "RADIUS encrypts which portion of the authentication packet?", "opts": ["Entire packet", "Only the username", "Only the password", "Nothing - plaintext"], "answer": "Only the password", "exp": "RADIUS (UDP, ports 1812/1813) encrypts ONLY the password in the access-request packet. TACACS+ (TCP, port 49) encrypts the ENTIRE packet - making it more secure. RADIUS is common for Wi-Fi authentication. TACACS+ is preferred for network device administration. Diameter is the more modern RADIUS replacement."}, {"q": "Which firewall generation operates at Layer 7 and provides the deepest packet inspection?", "opts": ["Packet filter", "Circuit-level proxy", "Application-level (proxy) firewall", "Stateful inspection"], "answer": "Application-level (proxy) firewall", "exp": "Application-level proxy (2nd generation) = Layer 7. Deep packet inspection, logging, auditing. Disadvantage: slow - inspects every packet. Circuit-level = Layer 5, monitors TCP handshake (SOCKS). Packet filter = Layer 3, uses ACLs. Stateful = Layers 3-4, tracks connections."}, {"q": "Which attack sends spoofed ICMP packets to a broadcast address causing all hosts to flood the victim?", "opts": ["Teardrop", "Smurf", "Fraggle", "Ping of Death"], "answer": "Smurf", "exp": "Smurf = ICMP echo to broadcast address with spoofed source IP - all hosts reply to victim. Fraggle = identical but uses UDP. Teardrop = malformed fragmented packets that cannot reassemble, crashing OS. Ping of Death = oversized ICMP packets violating MTU."}, {"q": "Bluesnarfing is a Bluetooth attack that:", "opts": ["Sends unsolicited messages", "Allows full phone control", "Copies data from device without consent", "Prevents Bluetooth pairing"], "answer": "Copies data from device without consent", "exp": "Bluetooth attacks: Bluejacking = sends spam/unsolicited messages. Bluesnarfing = copies information from device WITHOUT consent. Bluebugging = most serious - full phone control including calls. Countermeasures: disable discovery mode, disable automatic pairing."}, {"q": "Which VPN protocol provides authentication but NOT encryption on its own?", "opts": ["IPSec", "SSL/TLS", "L2TP", "PPTP"], "answer": "L2TP", "exp": "L2TP = authentication but NO encryption - must be combined with IPSec. PPTP = authentication only, supports IP only (not recommended). IPSec = both authentication AND encryption. L2TP + IPSec = most common enterprise VPN solution combining L2TP tunnelling with IPSec encryption."}, {"q": "802.11b, 802.11g, and 802.11n all share which characteristic?", "opts": ["5 GHz frequency only", "2.4 GHz frequency (b and g are backward compatible)", "Same maximum speed", "MU-MIMO support"], "answer": "2.4 GHz frequency (b and g are backward compatible)", "exp": "802.11b (11 Mbps), 802.11g (54 Mbps), and 802.11n (200+ Mbps) ALL use 2.4 GHz and are backward compatible. 802.11a and 802.11ac = 5 GHz only. The 2.4 GHz band experiences more interference from household devices (microwaves, cordless phones)."}, {"q": "DNS cache poisoning directs users to malicious sites. The primary countermeasure is:", "opts": ["HTTPS on all sites", "DNSSEC - cryptographic signing of DNS responses", "Firewall filtering", "IP whitelisting"], "answer": "DNSSEC - cryptographic signing of DNS responses", "exp": "DNSSEC (DNS Security Extensions) cryptographically signs DNS responses, allowing resolvers to verify authenticity. Prevents cache poisoning and DNS spoofing. DNS pharming = poisoning the resolver cache. DNS spoofing = real-time false replies. Both redirect users without their knowledge."}, {"q": "PAP transmits credentials in what form?", "opts": ["Encrypted with AES", "Hashed with SHA", "Cleartext", "Encrypted with 3DES"], "answer": "Cleartext", "exp": "PAP (Password Authentication Protocol) transmits user ID and password in CLEARTEXT. Exam trap: there are technically no specific attacks against PAP because everything is already visible - nothing to decrypt. Replace PAP with CHAP (challenge/response) or certificate-based authentication."}, {"q": "NAT overloading (PAT) allows many internal IPs to share:", "opts": ["Multiple public IPs", "One public IP differentiated by port numbers", "A range of private IPs", "One public IP differentiated by MAC addresses"], "answer": "One public IP differentiated by port numbers", "exp": "PAT (Port Address Translation) = NAT overloading. Many internal IPs share ONE public IP - differentiated by unique port numbers (ephemeral ports). Disadvantage: single public IP = single point of failure. Hides internal IP addressing from external networks."}, {"q": "MPLS is used primarily for:", "opts": ["Wireless network encryption", "High-performance routing using short path labels", "VoIP quality management", "Firewall rule processing"], "answer": "High-performance routing using short path labels", "exp": "MPLS (Multi-Protocol Label Switching) routes data using short labels instead of IP addresses. Advantages: high performance, high throughput, cost-effective, provides QoS for VoIP, more secure than public internet. Can create VPN connections. Used by ISPs for backbone infrastructure."}, {"q": "The strongest EAP variant for wireless authentication uses:", "opts": ["LEAP", "PEAP", "EAP-TLS", "EAP-TTLS"], "answer": "EAP-TLS", "exp": "EAP-TLS = strongest - mutual certificate-based authentication (both server AND client present certificates). PEAP = server certificate only, encapsulates EAP in TLS tunnel. LEAP (Cisco) = broken, vulnerable to ASLEAP attack. EAP-TLS requires PKI infrastructure for client certificates."}, {"q": "S/MIME provides NON-REPUDIATION for email by:", "opts": ["Encrypting with recipient's public key", "Signing with sender's private key", "Using HMAC with symmetric key", "Applying TLS to the email session"], "answer": "Signing with sender's private key", "exp": "S/MIME Signed (non-repudiation): sender signs with THEIR PRIVATE KEY - only they could have produced the signature. S/MIME Enveloped (confidentiality): encrypt with RECIPIENT'S public key. For full P-A-I-N: digitally sign AND encrypt the message."}, {"q": "Which protocol replaced NTLM as the authentication standard in Windows Active Directory?", "opts": ["RADIUS", "TACACS+", "Kerberos", "SAML"], "answer": "Kerberos", "exp": "Kerberos replaced NTLM in Windows environments (built into Active Directory). Uses symmetric key cryptography (AES). Requires time synchronisation within 5 minutes. Addresses confidentiality, integrity, and authentication - NOT availability (KDC = single point of failure)."}, {"q": "A SYN flood attack fills the server's:", "opts": ["Hard drive with log entries", "Connection state table with half-open connections", "ARP cache with false entries", "DNS cache with malicious entries"], "answer": "Connection state table with half-open connections", "exp": "SYN flood = sends many SYN packets without completing the 3-way handshake (SYN, SYN-ACK, ACK). Server allocates resources for each half-open connection until the state table fills up. Countermeasures: SYN cookies, firewall rate limiting, IPS, connection timeouts."}, {"q": "Which converged protocol enables SCSI storage commands to run over standard IP networks?", "opts": ["FCoE", "iSCSI", "MPLS", "SDN"], "answer": "iSCSI", "exp": "iSCSI (Internet Small Computer System Interface) enables location-independent file storage over LAN/WAN using standard IP networks. Cheaper alternative to native Fibre Channel. FCoE (Fibre Channel over Ethernet) runs FC at Layer 3. iSCSI is commonly used for SANs in organisations without dedicated FC infrastructure."}]</script>
+
+<!-- QUIZ -->
+<div id="quizOv" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center;padding:1rem;" onclick="if(event.target===this)closeQ()">
+  <div onclick="event.stopPropagation()" style="background:#fff;border-radius:16px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.3);">
+    <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:2px;">Domain 4 Practice Quiz</div>
+        <div id="qTitle" style="font-size:15px;font-weight:600;color:#0f172a;"></div>
+      </div>
+      <button onclick="closeQ()" style="background:#f1f5f9;border:none;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;color:#475569;line-height:1;">&#215;</button>
+    </div>
+    <div id="qBody" style="padding:1.25rem 1.5rem;"></div>
+  </div>
+</div>
+<div class="pf">
+  <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 4 — Communication &amp; Network Security</p>
+  <p style="margin-top:4px">Content based on ISC² CBK. For educational purposes. All frameworks subject to exam version updates.</p>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function tg(el){el.classList.toggle('open');}
+</script>
+
+<script>
+var QS = JSON.parse(document.getElementById('qdata').textContent);
+var qst = {i:0, s:0};
+function openQuiz(){document.getElementById('quizOv').style.display='flex';qst={i:0,s:0};renderQ();}
+function closeQ(){document.getElementById('quizOv').style.display='none';}
+function renderQ(){
+  var t=document.getElementById('qTitle'), b=document.getElementById('qBody');
+  if(qst.i>=QS.length){
+    var p=Math.round(qst.s/QS.length*100);
+    t.textContent='Quiz complete';
+    b.innerHTML='<div style="text-align:center;padding:1.5rem 0;">'
+      +'<div style="font-size:48px;margin-bottom:.5rem;">'+(p>=80?'&#127942;':p>=60?'&#9989;':'&#128218;')+'</div>'
+      +'<div style="font-size:32px;font-weight:700;color:#0f172a;margin-bottom:4px;">'+qst.s+'/'+QS.length+'</div>'
+      +'<div style="font-size:16px;color:#475569;margin-bottom:1.5rem;">'+(p>=80?'Excellent &#8212; exam ready!':p>=60?'Good &#8212; review weak areas':'Needs more review &#8212; keep studying')+'</div>'
+      +'<button onclick="qst={i:0,s:0};renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;margin-right:8px;">Retry quiz</button>'
+      +'<button onclick="closeQ()" style="background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;">Close</button>'
+      +'</div>';
+    return;
+  }
+  var q=QS[qst.i];
+  t.textContent='Question '+(qst.i+1)+' of '+QS.length;
+  var pct=Math.round(qst.i/QS.length*100);
+  var h='<div>';
+  h+='<div style="background:#f1f5f9;border-radius:8px;padding:12px 14px;font-size:13.5px;color:#0f172a;line-height:1.65;font-weight:500;margin-bottom:14px;">'+q.q+'</div>';
+  h+='<div id="qopts" style="display:flex;flex-direction:column;gap:8px;">';
+  q.opts.forEach(function(opt,i){
+    h+='<button data-i="'+i+'" onclick="ansQ('+i+')" style="text-align:left;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:13px;color:#0f172a;cursor:pointer;transition:all .15s;">'
+      +'<span style="color:#94a3b8;font-weight:700;margin-right:8px;">'+String.fromCharCode(65+i)+'.</span>'+opt+'</button>';
+  });
+  h+='</div><div id="qexp"></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid #e2e8f0;">';
+  h+='<span style="font-size:12px;color:#94a3b8;">Score: '+qst.s+'</span>';
+  h+='<div style="flex:1;height:4px;margin:0 12px;background:#e2e8f0;border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:#0f172a;border-radius:4px;transition:width .3s;"></div></div>';
+  h+='<span style="font-size:12px;color:#94a3b8;">'+pct+'%</span></div></div>';
+  b.innerHTML=h;
+}
+function ansQ(chosen){
+  var q=QS[qst.i];
+  var correct=q.opts.indexOf(q.answer);
+  var btns=document.querySelectorAll('#qopts button');
+  btns.forEach(function(b,i){
+    b.onclick=null; b.style.cursor='default';
+    if(i===correct){b.style.background='#f0fdf4';b.style.borderColor='#16a34a';b.style.color='#14532d';}
+    if(i===chosen&&chosen!==correct){b.style.background='#fef2f2';b.style.borderColor='#dc2626';b.style.color='#991b1b';}
+  });
+  var ok=(chosen===correct);
+  if(ok) qst.s++;
+  var next=qst.i+1;
+  document.getElementById('qexp').innerHTML=
+    '<div style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12.5px;line-height:1.6;'
+    +(ok?'background:#f0fdf4;color:#14532d;border:1px solid #bbf7d0;':'background:#fef2f2;color:#991b1b;border:1px solid #fecada;')
+    +'"><span style="font-weight:700;">'+(ok?'&#10003; Correct! ':'&#10007; Incorrect. ')+'</span>'+q.exp+'</div>'
+    +'<div style="margin-top:10px;display:flex;justify-content:flex-end;">'
+    +'<button onclick="qst.i++;renderQ();" style="background:#0f172a;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;">'
+    +(next<QS.length?'Next &#8594;':'See results')+'</button></div>';
+}
+</script>
+</body>
+</html>
