@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISSP Domain 6 – Security Assessment & Testing | CISSP Made Easy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#f8fafc;--sf:#fff;--s2:#f1f5f9;
+  --bd:#e2e8f0;--bd2:#cbd5e1;
+  --tx:#0f172a;--t2:#475569;--t3:#94a3b8;
+  --or:#c2410c;--or-bg:#fff7ed;--or-bd:#fed7aa;
+  --bl:#3b82f6;--bl-bg:#eff6ff;--bl-bd:#bfdbfe;
+  --tl:#0d9488;--tl-bg:#f0fdfa;--tl-bd:#99f6e4;
+  --am:#d97706;--am-bg:#fffbeb;--am-bd:#fde68a;
+  --rd:#dc2626;--rd-bg:#fef2f2;--rd-bd:#fecaca;
+  --pu:#7c3aed;--pu-bg:#f5f3ff;--pu-bd:#ddd6fe;
+  --gn:#16a34a;--gn-bg:#f0fdf4;--gn-bd:#bbf7d0;
+  --r:10px;--rs:6px;
+  --sh:0 1px 3px rgba(0,0,0,.06);--shm:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-size:15px;line-height:1.6;}
+.pw{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.hero{background:linear-gradient(135deg,#431407 0%,#7c2d12 55%,#3b0f04 100%);border-radius:16px;padding:2rem 2rem 1.75rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-40px;width:210px;height:210px;border-radius:50%;background:rgba(234,88,12,.2);}
+.hero::after{content:'';position:absolute;bottom:-30px;left:35%;width:160px;height:160px;border-radius:50%;background:rgba(124,58,237,.1);}
+.hi{position:relative;}
+.hbadge{display:inline-flex;align-items:center;gap:6px;background:rgba(234,88,12,.25);color:#fdba74;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(234,88,12,.35);}
+.hero h1{font-size:clamp(22px,4vw,30px);font-weight:600;color:#f8fafc;margin-bottom:6px;}
+.hero p{color:#94a3b8;font-size:14px;margin-bottom:16px;}
+.hpills{display:flex;flex-wrap:wrap;gap:8px;}
+.hpill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cbd5e1;font-size:11px;padding:3px 10px;border-radius:20px;}
+.tw{background:var(--sf);border:1px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh);}
+.tn{display:flex;overflow-x:auto;border-bottom:1px solid var(--bd);background:var(--s2);scrollbar-width:none;}
+.tn::-webkit-scrollbar{display:none;}
+.tb{flex-shrink:0;background:none;border:none;padding:12px 16px;font-size:12px;font-weight:600;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.tb:hover{color:var(--tx);background:rgba(0,0,0,.03);}
+.tb.active{color:var(--or);border-bottom-color:var(--or);background:var(--sf);}
+.tb i{font-size:15px;}
+.tp{display:none;padding:1.5rem;}
+.tp.active{display:block;}
+.sec{margin-bottom:1.75rem;}
+.sh{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sh::after{content:'';flex:1;height:1px;background:var(--bd);}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .2s;}
+.card:hover{border-color:var(--bd2);box-shadow:var(--shm);}
+.card.open{border-color:var(--or-bd);background:var(--or-bg);}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.cl{font-size:13px;font-weight:600;color:var(--tx);}
+.card.open .cl{color:var(--or);}
+.ca{color:var(--t3);font-size:16px;transition:transform .2s;flex-shrink:0;}
+.card.open .ca{transform:rotate(180deg);color:var(--or);}
+.cb{display:none;font-size:13px;color:var(--t2);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
+.card.open .cb{display:block;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
+.tbl th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--t2);border-bottom:2px solid var(--bd);background:var(--s2);}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top;line-height:1.55;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--s2);}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;}
+.pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;}
+.kv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:14px;}
+.kv{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;}
+.kv-k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);margin-bottom:4px;}
+.kv-v{font-size:13px;color:var(--tx);font-weight:500;}
+.kv-n{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.4;}
+.ibox{background:var(--bl-bg);border:1px solid var(--bl-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#1e40af;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.wbox{background:var(--am-bg);border:1px solid var(--am-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#92400e;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.tbox{background:var(--gn-bg);border:1px solid var(--gn-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#14532d;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.rbox{background:var(--rd-bg);border:1px solid var(--rd-bd);border-radius:var(--rs);padding:10px 14px;font-size:12.5px;color:#991b1b;line-height:1.6;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+.bi{font-size:16px;flex-shrink:0;margin-top:1px;}
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:14px;}
+.pt-card{border-radius:var(--r);padding:13px 14px;border:1px solid;}
+.pt-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.pt-title{font-size:13px;font-weight:700;margin-bottom:6px;}
+.pt-list{font-size:11px;line-height:1.8;list-style:none;}
+.pt-list li::before{content:'› ';color:var(--t3);}
+.test-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:14px;}
+.test-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px;}
+.test-name{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:3px;}
+.test-desc{font-size:11px;color:var(--t2);line-height:1.5;}
+.steps-flow{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.sf-step{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 14px;}
+.sf-num{font-size:11px;font-weight:700;color:var(--or);min-width:22px;flex-shrink:0;margin-top:1px;}
+.sf-text{font-size:12.5px;color:var(--tx);line-height:1.55;}
+.sf-text strong{font-weight:600;}
+.soc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.soc-card{border-radius:var(--r);padding:14px;border:1px solid;}
+.soc-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.soc-sub{font-size:11px;margin-bottom:8px;}
+.soc-list{font-size:11px;line-height:1.8;list-style:none;}
+.soc-list li::before{content:'› ';color:var(--t3);}
+.pf{text-align:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--bd);font-size:12px;color:var(--t3);}
+.pf a{color:var(--or);text-decoration:none;}
+.pf a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="pw">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hi">
+    <div class="hbadge"><i class="ti ti-flask"></i> CISSP · Domain 6 · 12% of exam</div>
+    <h1>Security Assessment &amp; Testing</h1>
+    <p>Vulnerability assessment · Penetration testing · Audit strategies · Code review · Log analysis · SOC reports</p>
+    <div class="hpills">
+      <span class="hpill">Vulnerability scanning</span>
+      <span class="hpill">Pen testing methodology</span>
+      <span class="hpill">Black / Grey / White box</span>
+      <span class="hpill">STRIDE &amp; DREAD</span>
+      <span class="hpill">Code review &amp; SAST/DAST</span>
+      <span class="hpill">Log management</span>
+      <span class="hpill">SOC 1 / 2 / 3</span>
+      <span class="hpill">Audit types</span>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tw">
+  <div class="tn">
+    <button class="tb active" onclick="sw('vuln',this)"><i class="ti ti-radar"></i> Vulnerability assessment</button>
+    <button class="tb" onclick="sw('pentest',this)"><i class="ti ti-sword"></i> Penetration testing</button>
+    <button class="tb" onclick="sw('code',this)"><i class="ti ti-code"></i> Code &amp; software testing</button>
+    <button class="tb" onclick="sw('logs',this)"><i class="ti ti-file-analytics"></i> Log analysis</button>
+    <button class="tb" onclick="sw('audit',this)"><i class="ti ti-clipboard-check"></i> Audits &amp; SOC reports</button>
+    <button class="tb" onclick="sw('threat',this)"><i class="ti ti-alert-triangle"></i> Threat modelling</button>
+  </div>
+
+  <!-- VULNERABILITY ASSESSMENT -->
+  <div id="tab-vuln" class="tp active">
+    <div class="sec">
+      <div class="sh">Vulnerability assessment overview</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Vulnerability assessments automatically probe systems, applications, and networks looking for weaknesses that may be exploited. ALWAYS get management approval FIRST before any security testing. The purpose is to find weaknesses — not to exploit them (that is penetration testing).</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Network discovery scanning</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">IP probes / IP sweeps / Ping sweeps: automated tools attempt to ping each address in a range — active systems are logged for further analysis. Nmap is the most common tool — identifies port status: Open (application accepting connections), Closed (no application), Filtered (firewall blocking). Default scans miss ~64K ports. First step in reconnaissance — then port scans, then vulnerability scans.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Port scanning techniques</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">TCP SYN scanning (half-open): sends SYN, if SYN-ACK returned = port open. Requires elevated privileges. TCP Connect scanning: opens full connection — used when no root privileges. TCP ACK scanning: sends ACK flag to probe firewall rules. Xmas scanning: sets FIN, PSH, URG flags — "lit up like a Christmas tree." War dialing: scans phone numbers for modems.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Vulnerability scanning tools</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Nessus (Tenable): most popular — combines port scanning with vulnerability detection, checks for known patches. OpenVAS: open-source alternative. Qualys: cloud-based. Core Impact, Nexpose. These tools contain databases of known vulnerabilities and probe targeted systems. Nikto, Burp Suite, Wapiti: web application vulnerability scanners specifically for XSS, SQL injection.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Authenticated vs unauthenticated scans</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Unauthenticated: external attacker perspective — finds vulnerabilities visible from outside, misses internal configuration issues. Authenticated: uses read-only credentials to access config files — finds more vulnerabilities including patching gaps, misconfigured services. Authenticated scans are more thorough and preferred for internal assessments.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Passive vs active scanning</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Active scanning: sends probe packets to targets — can be detected and may cause disruption. Passive scanning: monitors traffic without sending probes — used in wireless to look for rogue devices. Cannot find all vulnerabilities. IDS/IPS may alert on active scans. Schedule active scans during maintenance windows for critical systems.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Bluetooth scanning</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Time-consuming due to many personal devices. Active scan: tests strength of PIN, security mode, pairing configurations. Passive scan: only monitors active connections — must visit same location multiple times to get complete picture. Used to find unauthorized Bluetooth devices in the environment.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Key performance &amp; risk indicators to monitor</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Open vulnerabilities</div><div class="kv-v">Number tracked over time</div><div class="kv-n">Trending up = degrading security posture. Should decrease after patching cycles.</div></div>
+        <div class="kv"><div class="kv-k">Time to resolve</div><div class="kv-v">Days from discovery to patch</div><div class="kv-n">MTTV — mean time to vulnerability. Lower is better. Critical vulns should be patched within 24–72 hours.</div></div>
+        <div class="kv"><div class="kv-k">Compromised accounts</div><div class="kv-v">Number per period</div><div class="kv-n">Zero target. Any compromised account triggers incident response.</div></div>
+        <div class="kv"><div class="kv-k">Pre-production flaws</div><div class="kv-v">Defects caught before release</div><div class="kv-n">Higher is better — catching flaws early is far cheaper than post-production.</div></div>
+        <div class="kv"><div class="kv-k">Repeat audit findings</div><div class="kv-v">Same issue found again</div><div class="kv-n">Indicates remediation process is failing. Management attention required.</div></div>
+        <div class="kv"><div class="kv-k">Malicious site visits</div><div class="kv-v">User attempts blocked</div><div class="kv-n">Indicator of phishing exposure and security awareness gaps.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">CVE, CVSS &amp; NVD</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">CVE — Common Vulnerabilities and Exposures</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Standard convention for identifying and naming vulnerabilities. Maintained by MITRE. Each CVE has a unique identifier (e.g. CVE-2021-44228 = Log4Shell). Provides a common language for discussing vulnerabilities across tools, vendors, and researchers.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">CVSS — Common Vulnerability Scoring System</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Metrics and calculation tools for: Exploitability, Impact, Maturity of exploit code, and Remediation options. Scores range from 0.0 to 10.0. Critical = 9.0–10.0. High = 7.0–8.9. Medium = 4.0–6.9. Low = 0.1–3.9. Also used to score vulnerabilities against unique organisational requirements.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">NVD — National Vulnerability Database</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">NIST-maintained database of vulnerability information. Contains CVSS scores, remediation guidance, and references for all published CVEs. Free, publicly accessible. Primary reference for vulnerability management programmes. Integrates with Nessus, Qualys, and other scanners.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">NSRL — National Software Reference Library</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Maintained by NIST. Contains hash values of over 130 million applications. Used in forensics to distinguish known-good software from potentially malicious files. If a file's hash matches NSRL, it is a known application — not malware. Critical for malware analysis and digital forensics.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PENETRATION TESTING -->
+  <div id="tab-pentest" class="tp">
+    <div class="sec">
+      <div class="sh">Penetration testing — knowledge levels</div>
+      <div class="wbox"><i class="ti ti-alert-triangle bi"></i>Always obtain WRITTEN management approval before any penetration test. Pen testing without authorisation = illegal. Define scope clearly — what systems are in/out of scope. Document the rules of engagement. Never attempt to "hack back" or avenge a crime.</div>
+      <div class="pt-grid">
+        <div class="pt-card" style="background:var(--rd-bg);border-color:var(--rd-bd)">
+          <div class="pt-label" style="color:var(--rd)">Zero knowledge</div>
+          <div class="pt-title" style="color:var(--rd)">Black box</div>
+          <ul class="pt-list"><li>Tester has no prior knowledge</li><li>Simulates external attacker</li><li>Most realistic scenario</li><li>Stealthy — organisation unaware</li><li>Most time-consuming</li></ul>
+        </div>
+        <div class="pt-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+          <div class="pt-label" style="color:var(--am)">Partial knowledge</div>
+          <div class="pt-title" style="color:var(--am)">Grey box</div>
+          <ul class="pt-list"><li>Some knowledge of system</li><li>Acts as a privileged user</li><li>Can see code, acts as user</li><li>Balance of realism vs efficiency</li><li>Common for internal testing</li></ul>
+        </div>
+        <div class="pt-card" style="background:var(--gn-bg);border-color:var(--gn-bd)">
+          <div class="pt-label" style="color:var(--gn)">Full knowledge</div>
+          <div class="pt-title" style="color:var(--gn)">White box</div>
+          <ul class="pt-list"><li>Complete system knowledge</li><li>Access to source code</li><li>Acts as a developer</li><li>Most comprehensive</li><li>Least expensive — least time</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Pen test team types</div>
+      <div class="kv-grid">
+        <div class="kv"><div class="kv-k">Blue team</div><div class="kv-v">Defensive / internal</div><div class="kv-n">Has knowledge of the organisation. Can be done frequently and at least expense. Defenders who know the environment.</div></div>
+        <div class="kv"><div class="kv-k">Red team</div><div class="kv-v">Offensive / external</div><div class="kv-n">External and stealthy — simulates real attacker. No prior knowledge. Most realistic. More expensive.</div></div>
+        <div class="kv"><div class="kv-k">Purple team</div><div class="kv-v">Collaborative</div><div class="kv-n">Red and blue teams work together in real time. Blue team learns from red team's techniques. Accelerates security improvements.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Penetration testing methodology — phases</div>
+      <div class="steps-flow">
+        <div class="sf-step"><span class="sf-num">1</span><span class="sf-text"><strong>Planning &amp; authorisation</strong> — Define scope, rules of engagement, goals. Obtain written management approval. Legal agreements signed. Define what is in/out of scope.</span></div>
+        <div class="sf-step"><span class="sf-num">2</span><span class="sf-text"><strong>Reconnaissance / Discovery</strong> — Passive (OSINT, Google dorking, LinkedIn, WHOIS) and active information gathering. Footprinting the network. Identify live hosts, open ports, services.</span></div>
+        <div class="sf-step"><span class="sf-num">3</span><span class="sf-text"><strong>Enumeration</strong> — Port scans, service identification, OS fingerprinting, banner grabbing. Identify user accounts, group memberships, network shares, running services.</span></div>
+        <div class="sf-step"><span class="sf-num">4</span><span class="sf-text"><strong>Vulnerability analysis</strong> — Map discovered services to known vulnerabilities. Use Nessus, OpenVAS, Nikto. Identify kernel flaws, buffer overflows, misconfigurations, default credentials.</span></div>
+        <div class="sf-step"><span class="sf-num">5</span><span class="sf-text"><strong>Exploitation / Attack</strong> — Attempt to exploit identified vulnerabilities. Privilege escalation, lateral movement, data exfiltration simulation. Document every action with timestamps.</span></div>
+        <div class="sf-step"><span class="sf-num">6</span><span class="sf-text"><strong>Post-exploitation</strong> — Assess impact of successful compromise. Maintain access simulation. Identify what an attacker could access. Demonstrate blast radius.</span></div>
+        <div class="sf-step"><span class="sf-num">7</span><span class="sf-text"><strong>Reporting</strong> — Document all findings, vulnerabilities exploited, evidence. Classify by severity (CVSS). Provide remediation recommendations. Executive summary + technical detail. Egregious holes = report immediately, don't wait.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Pen testing strategies</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">External testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tests from the internet — simulates external attacker. Targets public-facing systems: web servers, email servers, DNS, VPN endpoints. Evaluates perimeter defences. Most commonly requested by management.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Internal testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tests from inside the network — simulates insider threat or post-breach attacker. Evaluates internal segmentation, lateral movement potential, privilege escalation paths. Often reveals more critical findings than external testing.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Blind testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tester has minimal information. Organisation's security team is aware the test is happening and may actively defend. Tests both offensive techniques and defensive response capabilities simultaneously.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Double-blind testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Neither the tester nor the organisation's security team knows when or how the test will occur. Most realistic simulation of an actual attack. Tests security team's response without advance preparation. Most controversial — risk of incident response overreaction.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">War driving</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Driving a vehicle with a laptop/device to find open or weakly secured wireless access points. Used in pen tests to identify rogue APs, weak encryption, and coverage extending beyond facility boundaries. Detect improperly configured guest networks.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Flaw hypotheses methodology</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">A form of operating system penetration testing. Testers develop hypotheses about flaws based on architecture, design documentation, and code review, then test those specific hypotheses. Systematic — reduces time by targeting likely vulnerabilities first.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CODE & SOFTWARE TESTING -->
+  <div id="tab-code" class="tp">
+    <div class="sec">
+      <div class="sh">Code review &amp; testing types</div>
+      <div class="tbox"><i class="ti ti-bulb bi"></i>Code review is the FOUNDATION of software assessment programmes. Earlier defects are found in the SDLC, the cheaper they are to fix. Compiled code poses MORE risk than interpreted code — malicious code can be embedded and is harder to detect.</div>
+      <div class="test-row">
+        <div class="test-card">
+          <div class="test-name">Static testing (SAST)</div>
+          <div class="test-desc">Evaluates security WITHOUT running the code. Analyses source code or compiled binary. Requires access to source code. Finds: buffer overflows, injection flaws, hardcoded credentials. Tools: Checkmarx, Veracode, SonarQube.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Dynamic testing (DAST)</div>
+          <div class="test-desc">Evaluates security IN a runtime environment. Does NOT require source code access. Finds: runtime behaviour issues, XSS, SQL injection in running apps. Tools: Nikto, Burp Suite, OWASP ZAP. More realistic — tests as attacker would.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">White-box (crystal)</div>
+          <div class="test-desc">Detailed exam of logical paths. Checks all possible conditions. Requires access to source code. Tester sees code as a developer. Most thorough — covers all code paths.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Black-box</div>
+          <div class="test-desc">Observes external system behaviour only. No internal details known. Tester sees the system as an end user. Tests what matters to the end user. Cannot assess internal logic flaws.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Grey-box</div>
+          <div class="test-desc">Partial knowledge of system internals. Tester has some access — simulates privileged insider or authenticated user. Balances thoroughness with efficiency.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Fuzz testing</div>
+          <div class="test-desc">Specialised dynamic technique. Provides many different/invalid inputs to stress software and find undetected flaws. Mutation fuzzing: alters existing valid inputs. Generational / intelligent fuzzing: creates inputs from models. zzuf tool automates mutation fuzzing.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Misuse / abuse case testing</div>
+          <div class="test-desc">Evaluates vulnerability to known risks and adversarial usage. Misuse case diagrams show threats and mitigations. Tests what a malicious user would attempt rather than what a normal user would do.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Regression testing</div>
+          <div class="test-desc">Verifies that new changes do NOT break previously working functionality. Uses known inputs and compares results to earlier version results. Requires automated process to repeat tests. Nonregression testing = code works as planned.</div>
+        </div>
+        <div class="test-card">
+          <div class="test-name">Interface testing</div>
+          <div class="test-desc">Assesses performance of modules against interface specifications. Tests APIs, UIs, and physical interfaces. Ensures separately developed modules work together properly. Critical in complex multi-team development.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Formal code review — Fagan inspection</div>
+      <div class="steps-flow">
+        <div class="sf-step"><span class="sf-num">1</span><span class="sf-text"><strong>Planning</strong> — Select reviewers, schedule, prepare materials. Define roles: author, moderator, reviewers, recorder.</span></div>
+        <div class="sf-step"><span class="sf-num">2</span><span class="sf-num" style="background:none;color:var(--or)"> </span></div>
+        <div class="sf-step"><span class="sf-num">2</span><span class="sf-text"><strong>Overview</strong> — Author presents the code/document to reviewers. Team gains understanding of the work product.</span></div>
+        <div class="sf-step"><span class="sf-num">3</span><span class="sf-text"><strong>Preparation</strong> — Reviewers individually study the code and identify potential defects before the formal inspection meeting.</span></div>
+        <div class="sf-step"><span class="sf-num">4</span><span class="sf-text"><strong>Inspection</strong> — Formal meeting where reviewers present their findings. Defects are identified, classified, and recorded. No solutions discussed — only defects logged.</span></div>
+        <div class="sf-step"><span class="sf-num">5</span><span class="sf-text"><strong>Rework</strong> — Author corrects all defects identified during inspection. Creates updated work product.</span></div>
+        <div class="sf-step"><span class="sf-num">6</span><span class="sf-text"><strong>Follow-up</strong> — Moderator verifies all defects were corrected. Determines if re-inspection is required. Closes the inspection cycle.</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Testing levels in SDLC</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Unit testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tests small individual components (functions, modules) in isolation during development. Done by developers and QA. Ensures quality units are produced for integration. Cheapest and earliest testing level — most cost-effective to find bugs here.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Integration testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Tests data transfer and control across a program's interfaces. Focused on interactions between pairs of components — does NOT test all functions. Finds bugs in the relationships and handoffs between modules. Important when multiple teams develop different components.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">System testing</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Demonstrates that all specified functionality exists and that the software product is trustworthy. Tests the complete integrated system against requirements. Includes security testing, performance testing, and user acceptance testing.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Test coverage analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Method to assess how well testing covered potential use of an application. Code coverage report includes: functions covered, statements covered, branches covered, conditions covered. Test coverage = tested use cases / total use cases. Higher coverage = more thorough testing.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Synthetic &amp; real user monitoring</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Real user monitoring (RUM)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Captures and analyses every transaction of actual users. Provides insight into real-world performance and behaviour. Detects issues only real users encounter. Privacy consideration — captures actual user data.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Synthetic performance monitoring</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Uses scripted or recorded data to simulate user transactions. Proactive monitoring — external agents run scripted transactions against a web application. Database monitoring: availability of DB. TCP port monitoring: availability of website/service. Does NOT capture real user sessions.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOG ANALYSIS -->
+  <div id="tab-logs" class="tp">
+    <div class="sec">
+      <div class="sh">Log types &amp; sources</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Centralised logging assists in maintaining integrity to make evidence legally eligible. Logs taken in the normal course of business are admissible as an exception to the hearsay rule. NTP synchronisation is critical — inconsistent timestamps often caused by improperly set time zones.</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Network flow logs</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">NetFlow (Cisco): captures IP network traffic as it enters/exits an interface. Provides: source/destination of traffic, class of service, causes of congestion, protocol usage. Does NOT capture payload content — only metadata. SPAN port copies all switch traffic to a monitoring device.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Audit logs</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Records events on systems for security review. Must contain: transaction date/time, who processed the transaction, at which terminal/system, what action was performed. Critical for accountability — traces actions to subjects. Audit trails are hearsay but admissible when created in normal course of business.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Syslog</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Message logging standard commonly used by network devices, Linux/Unix systems, and firewalls. Log levels: Emergency, Alert, Critical, Error, Warning, Notice, Informational, Debug. Event types: Errors (significant problem), Warnings (future problem), Information (successful operations), Success Audits, Failure Audits.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">IDS/IPS logs</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Intrusion detection and prevention system logs — record detected attacks and suspicious activity. Combined with network flow data, packet captures, and firewall logs to provide complete picture. NIST 800-4: guidelines for IDS/IPS configuration and monitoring. Passive monitoring only works after issues have occurred.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Firewall logs</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Record all traffic permitted and denied by firewall rules. Essential for detecting attack patterns, policy violations, and data exfiltration attempts. Should be sent to a centralised SIEM — local storage is insufficient and can be tampered with.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Application logs</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Logs generated by applications and web servers. Critical for detecting SQL injection, privilege escalation, authentication failures, and application-layer attacks. Include: login attempts, data access events, errors, and exceptions. Database logs track data access and modification.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">SIEM — Security Information &amp; Event Management</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">What SIEM does</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Automates much of the routine work of log review. Provides real-time analysis of events occurring on systems throughout the organisation. Aggregates logs from multiple sources. Correlates events to detect attack patterns. Generates alerts for suspicious activity. Does NOT scan outgoing traffic (that is DLP).</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">DLP — Data Loss Prevention</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Scans data looking for sensitive keywords and patterns. Network-based DLP: placed at edge, scans all outgoing data. Endpoint-based DLP: scans files on a system and files sent to external devices (USB, printers). Will detect and block sensitive data from leaving the organisation. Will NOT modify classification labels in real time.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Protecting logs</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Logs must be protected for confidentiality AND integrity. Archival process prevents loss by overwriting. Set maximum log size carefully — if too small, attacker can generate events to push evidence out of the window. Modified logs often indicate intrusion or malicious intent. Send to write-once media or remote SIEM.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Clipping levels</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Predefined thresholds for the number of certain error types allowed before the activity is considered suspicious. Example: 5 failed logins = alert. Distinguishes between genuine mistakes and an attack. Companies can set clipping levels as baselines for normal behaviour.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">NTP &amp; time synchronisation</div>
+      <div class="ibox"><i class="ti ti-clock bi"></i>NTP (Network Time Protocol): one critical consideration is ensuring logs have accurate timestamps consistent throughout the environment. Set up an internal NTP server synchronised to a trusted public time source. All systems synchronise to the internal NTP server. Without accurate timestamps, log correlation is unreliable and evidence may be inadmissible.</div>
+    </div>
+  </div>
+
+  <!-- AUDITS & SOC REPORTS -->
+  <div id="tab-audit" class="tp">
+    <div class="sec">
+      <div class="sh">SOC reports — Service Organisation Control</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>Refer to SOC reports when evaluating cloud vendors. SAS 70 is outdated (replaced in 2011 by ISAE 3402). SOC 1 = financial. SOC 2 = security/operations. SOC 3 = public summary. Type 1 = point in time (design). Type 2 = period of time (design AND operating effectiveness).</div>
+      <div class="soc-grid">
+        <div class="soc-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+          <div class="soc-title" style="color:var(--bl)">SOC 1</div>
+          <div class="soc-sub" style="color:#1e40af">Financial reporting controls</div>
+          <ul class="soc-list"><li>Internal controls over financial reporting</li><li>Also known as SSAE 16</li><li>For financial auditors</li><li>Relevant for payroll processors, claims processors</li><li>Type 1 or Type 2 available</li></ul>
+        </div>
+        <div class="soc-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+          <div class="soc-title" style="color:var(--tl)">SOC 2</div>
+          <div class="soc-sub" style="color:#0f766e">Security, availability, integrity, privacy</div>
+          <ul class="soc-list"><li>Covers Trust Service Criteria</li><li>Design and operational effectiveness</li><li>For business partners and auditors</li><li>NOT publicly available — restricted</li><li>Type 1 or Type 2 available</li><li>Type 2 preferred — shows sustained controls</li></ul>
+        </div>
+        <div class="soc-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+          <div class="soc-title" style="color:var(--pu)">SOC 3</div>
+          <div class="soc-sub" style="color:#5b21b6">Public summary report</div>
+          <ul class="soc-list"><li>Variation on SOC 2 — same information</li><li>Presented for a general audience</li><li>Publicly shareable — website seal</li><li>Supports organisation's CIA claims</li><li>Less common than SOC 2</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Audit types</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Internal audit</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Conducted by the organisation's own audit team. Less expensive. May lack independence — familiarity with the environment can bias findings. Useful for frequent reviews and continuous monitoring. Results shared internally. QC = quality control based on internal standards.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">External audit</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Conducted by a third-party auditor. More objective — no bias from familiarity. Required for regulatory compliance (PCI DSS, HIPAA, SOX). More expensive. QA = quality assurance based on external standards. Results often shared with regulators, partners, and customers.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Third-party audit</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">External entity audits a supplier or vendor on your behalf. Used in vendor risk management. Example: PCI DSS Qualified Security Assessor (QSA) conducting payment card compliance assessment. Provides assurance about third-party security controls without direct access.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Control assessment (SCA)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Security Control Assessment: formal evaluation of a security infrastructure's individual mechanisms against a baseline of reliability expectations. Generally implemented by federal agencies based on NIST 800-53. Goals: 1. Ensure effectiveness of security mechanisms. 2. Evaluate quality of RM process. 3. Produce report of strengths and weaknesses.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Verification &amp; validation</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Verification: objective evidence that design outputs of an SDLC phase meet specified requirements. "Are we building the system right?" May involve third-party verification. Validation: develops level of confidence that software meets all requirements and expectations. "Are we building the right system?" Software improves over time through both V&amp;V cycles.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Deming Cycle (Plan-Do-Check-Act)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Plan: identify opportunity and plan for change. Do: implement change on small scale. Check: use data to analyse results of change. Act: if change successful, implement on wider scale; if fails, begin cycle again. Continuous improvement framework applicable to security programmes.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Security testing considerations — scheduling factors</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Factors affecting test scheduling</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Availability of testing resources. Criticality of systems protected by the tested controls. Sensitivity of information on tested systems. Likelihood of technical failure of the control. Likelihood of misconfiguration jeopardising security. Risk of system coming under attack. Rate of change of control configuration. Difficulty and time required. Impact on normal business operations.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">OPSEC process</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Operations Security: understanding your day-to-day operations from the viewpoint of a competitor, enemy, or hacker and then developing and applying countermeasures. Five steps: Identify critical information → Analyse threats → Analyse vulnerabilities → Assess risk → Apply countermeasures.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREAT MODELLING -->
+  <div id="tab-threat" class="tp">
+    <div class="sec">
+      <div class="sh">STRIDE — Microsoft threat modelling framework</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>STRIDE is used to consider the range of compromise concerns against applications or operating systems. Purpose: reduce the number of security-related design and coding defects and reduce the severity of remaining defects. Can be applied proactively (design/development) or reactively (deployed product).</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Letter</th><th>Threat</th><th>Definition</th><th>Violates</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:var(--or)">S</strong></td><td>Spoofing</td><td>Gaining access by falsifying identity — IP, MAC, username, SSID</td><td>Authentication</td><td>ARP poisoning, phishing, identity impersonation</td></tr>
+            <tr><td><strong style="color:var(--or)">T</strong></td><td>Tampering</td><td>Unauthorised modification of data in transit or at rest</td><td>Integrity</td><td>Man-in-the-middle data modification, SQL injection</td></tr>
+            <tr><td><strong style="color:var(--or)">R</strong></td><td>Repudiation</td><td>User/attacker denies having performed an action</td><td>Non-repudiation</td><td>Deleting logs, forging digital signatures</td></tr>
+            <tr><td><strong style="color:var(--or)">I</strong></td><td>Information disclosure</td><td>Exposing data to unauthorised individuals</td><td>Confidentiality</td><td>Eavesdropping, data breach, directory traversal</td></tr>
+            <tr><td><strong style="color:var(--or)">D</strong></td><td>Denial of Service</td><td>Making a system unavailable to legitimate users</td><td>Availability</td><td>DDoS, SYN flood, resource exhaustion</td></tr>
+            <tr><td><strong style="color:var(--or)">E</strong></td><td>Elevation of privilege</td><td>Limited account transformed into higher privilege account</td><td>Authorisation</td><td>Kernel exploits, buffer overflow privilege escalation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">DREAD — risk rating model</div>
+      <div class="ibox"><i class="ti ti-info-circle bi"></i>DREAD provides a flexible risk rating solution based on five questions. Each category scored 0–10. Total score / 5 = risk rating. Higher = more dangerous threat. Used to prioritise which threats to address first.</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Letter</th><th>Factor</th><th>Question asked</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:var(--pu)">D</strong></td><td>Damage potential</td><td>How severe is the damage likely to be if the threat is realised?</td></tr>
+            <tr><td><strong style="color:var(--pu)">R</strong></td><td>Reproducibility</td><td>How complicated is it for the attacker to reproduce the exploit?</td></tr>
+            <tr><td><strong style="color:var(--pu)">E</strong></td><td>Exploitability</td><td>How hard is it to perform the attack? Skill level required?</td></tr>
+            <tr><td><strong style="color:var(--pu)">A</strong></td><td>Affected users</td><td>How many users are likely to be affected?</td></tr>
+            <tr><td><strong style="color:var(--pu)">D</strong></td><td>Discoverability</td><td>How hard is it for an attacker to discover the weakness?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Other threat assessment approaches</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Fault tree analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Boolean/tree-based analysis of how failures propagate in a system. Starts with an undesired event (top event) and works backward to identify causes. Uses AND/OR gates to model combinations of failures. Used in safety-critical systems and BCP/DRP planning.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Failure Mode &amp; Effects Analysis (FMEA)</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Systematic analysis of potential failure modes in a system and their effects. For each component: identify failure mode → determine effects → assess severity → identify causes → assign risk priority number (RPN). Common in hardware and safety engineering — applicable to security systems.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Attack surface analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Identifies all points where an attacker could enter or extract data from a system. Attack surface = exposure. Reduce attack surface by: disabling unnecessary services, applying least privilege, removing unused accounts, closing unnecessary ports, minimising code. Smaller attack surface = lower risk.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Threat intelligence</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Collecting and analysing information about threats to inform security decisions. Sources: open-source (OSINT), commercial feeds, ISACs (Information Sharing and Analysis Centres), government (CISA, FBI). Indicators of Compromise (IoCs): IP addresses, domain names, file hashes, email addresses associated with attacks.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">PASTA — Process for Attack Simulation &amp; Threat Analysis</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Seven-stage risk-centric threat modelling framework. Aligns business objectives with technical requirements. Stages: 1. Define objectives, 2. Define technical scope, 3. Application decomposition, 4. Threat analysis, 5. Vulnerability/weakness analysis, 6. Attack modelling, 7. Risk/impact analysis.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Honeypots &amp; honeynets</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Honeypot: decoy system designed to attract attackers and study their methods. Pseudo-flaw = false vulnerability in a system to attract an attacker. Enticement: legal — luring an intruder into a honeypot. Entrapment: illegal — inducing a crime the individual had no prior intent to commit. Honeynet: network of honeypots.</div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sh">Reconnaissance attack types</div>
+      <div class="cg">
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">IP probes / ping sweeps</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">First type of network reconnaissance against a targeted network. Automated tools ping each address in a range. Active systems are logged for further analysis. Inactive addresses assumed unused. Widespread on the internet — public IP systems receive pings within hours. Strong case for disabling external ping responses.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Port scans</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">After IP sweep, identifies which services are running on active systems. Scans commonly used ports to find specific service types. Nmap is the most common tool. Port scan tools used in legitimate pen testing AND by attackers. Can be detected by IDS — often triggers security alerts.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Darknet</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Unused network space that may detect unauthorised activity. Any traffic to darknet space indicates reconnaissance or misconfiguration — no legitimate systems should be there. Useful for detecting internal network scanning and lateral movement.</div></div>
+        <div class="card" onclick="tg(this)"><div class="ch"><span class="cl">Superzapping</span><i class="ti ti-chevron-down ca"></i></div><div class="cb">Using a system utility or application that bypasses all access controls and audit/logging functions to make updates to code or data. Named after IBM utility. When used by administrators, it bypasses normal change control — requires compensating controls such as peer review and dual control.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tabs -->
+
+<div class="pf">
+  <p>© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · CISSP Domain 6 — Security Assessment &amp; Testing</p>
+  <p style="margin-top:4px">Content based on ISC² CBK, Sybex 9E, Shon Harris Practice Exams &amp; Memory Palace. For educational purposes.</p>
+</div>
+
+</div><!-- /page-wrap -->
+<script>
+function sw(id,btn){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function tg(el){el.classList.toggle('open');}
+// Remove duplicate step 2
+document.querySelectorAll('.sf-step').forEach(s=>{if(s.querySelector('.sf-num+.sf-num'))s.remove();});
+</script>
+</body>
+</html>

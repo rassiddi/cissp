@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to CISSP Made Easy — Interactive Study Guide | cisspmadeeasy.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{
+  --bg:#f8fafc;--sf:#fff;--s2:#f1f5f9;
+  --bd:#e2e8f0;--bd2:#cbd5e1;
+  --tx:#0f172a;--t2:#475569;--t3:#94a3b8;
+  --bl:#3b82f6;--bl-bg:#eff6ff;--bl-bd:#bfdbfe;
+  --tl:#0d9488;--tl-bg:#f0fdfa;--tl-bd:#99f6e4;
+  --am:#d97706;--am-bg:#fffbeb;--am-bd:#fde68a;
+  --pu:#7c3aed;--pu-bg:#f5f3ff;--pu-bd:#ddd6fe;
+  --gn:#16a34a;--gn-bg:#f0fdf4;--gn-bd:#bbf7d0;
+  --rd:#dc2626;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.7;}
+.pw{max-width:800px;margin:0 auto;padding:2.5rem 1.25rem 5rem;}
+
+/* GRATITUDE HERO */
+.gratitude{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0f2744 100%);border-radius:20px;padding:3rem 2.5rem;margin-bottom:2.5rem;text-align:center;position:relative;overflow:hidden;}
+.gratitude::before{content:'';position:absolute;top:-80px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(59,130,246,.1);}
+.gratitude::after{content:'';position:absolute;bottom:-60px;left:-40px;width:220px;height:220px;border-radius:50%;background:rgba(13,148,136,.08);}
+.grat-inner{position:relative;}
+.grat-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(251,191,36,.2);color:#fbbf24;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:1.25rem;border:1px solid rgba(251,191,36,.3);}
+.grat-h1{font-family:'Crimson Pro',serif;font-size:clamp(28px,5vw,44px);font-weight:600;color:#f8fafc;margin-bottom:1rem;line-height:1.2;}
+.grat-h1 em{font-style:italic;color:#93c5fd;}
+.grat-sub{font-size:16px;color:#94a3b8;max-width:560px;margin:0 auto 1.75rem;line-height:1.7;}
+.grat-sig{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:1.75rem;}
+.sig-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#0d9488);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff;flex-shrink:0;}
+.sig-text{text-align:left;}
+.sig-name{font-size:14px;font-weight:600;color:#f8fafc;}
+.sig-title{font-size:12px;color:#64748b;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--bd);margin:2.5rem 0;}
+
+/* SECTION HEADER */
+.sec-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px;}
+.sec-h2{font-family:'Crimson Pro',serif;font-size:clamp(22px,4vw,32px);font-weight:600;color:var(--tx);margin-bottom:12px;line-height:1.3;}
+.sec-lead{font-size:16px;color:var(--t2);line-height:1.75;margin-bottom:1.5rem;}
+
+/* STORY */
+.story{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:2rem;margin-bottom:2rem;}
+.story-p{font-family:'Crimson Pro',serif;font-size:18px;color:var(--t2);line-height:1.8;margin-bottom:1rem;}
+.story-p:last-child{margin-bottom:0;}
+.story-p strong{color:var(--tx);font-weight:600;}
+
+/* WHAT IS THIS */
+.what-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:2rem;}
+.what-card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;}
+.what-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;}
+.what-title{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:6px;}
+.what-desc{font-size:13px;color:var(--t2);line-height:1.6;}
+
+/* DOMAIN TABLE */
+.domain-list{display:flex;flex-direction:column;gap:8px;margin-bottom:2rem;}
+.domain-row{display:flex;align-items:center;gap:14px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;transition:box-shadow .2s;}
+.domain-row:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.domain-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:#fff;}
+.domain-info{flex:1;}
+.domain-name{font-size:14px;font-weight:600;color:var(--tx);}
+.domain-topics{font-size:12px;color:var(--t3);margin-top:2px;}
+.domain-pct{font-size:12px;font-weight:700;padding:3px 8px;border-radius:20px;flex-shrink:0;}
+
+/* HOW TO USE */
+.steps{display:flex;flex-direction:column;gap:8px;margin-bottom:2rem;}
+.step-row{display:flex;align-items:flex-start;gap:14px;background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--tx);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-body{flex:1;}
+.step-title{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:3px;}
+.step-desc{font-size:13px;color:var(--t2);line-height:1.6;}
+
+/* BENEFIT GRID */
+.benefit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:2rem;}
+.benefit-card{border-radius:14px;padding:1.25rem;border:1px solid;}
+.benefit-icon{font-size:22px;margin-bottom:8px;}
+.benefit-title{font-size:13px;font-weight:700;margin-bottom:5px;}
+.benefit-desc{font-size:12px;line-height:1.6;}
+
+/* QUOTE */
+.quote-block{background:var(--bl-bg);border-left:4px solid var(--bl);border-radius:0 12px 12px 0;padding:1.25rem 1.5rem;margin-bottom:2rem;}
+.quote-text{font-family:'Crimson Pro',serif;font-size:19px;font-style:italic;color:#1e40af;line-height:1.7;margin-bottom:8px;}
+.quote-attr{font-size:12px;color:#3b82f6;font-weight:600;}
+
+/* EXAM TIPS BOX */
+.tips-box{background:var(--am-bg);border:1px solid var(--am-bd);border-radius:14px;padding:1.5rem;margin-bottom:2rem;}
+.tips-title{font-size:15px;font-weight:600;color:#92400e;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.tips-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.tips-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#92400e;line-height:1.6;}
+.tips-list li::before{content:'✓';font-weight:700;flex-shrink:0;margin-top:1px;}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);border-radius:20px;padding:2.5rem 2rem;text-align:center;margin-bottom:2rem;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(59,130,246,.12);}
+.cta-inner{position:relative;}
+.cta-h2{font-family:'Crimson Pro',serif;font-size:clamp(22px,4vw,32px);font-weight:600;color:#f8fafc;margin-bottom:10px;}
+.cta-sub{font-size:15px;color:#94a3b8;margin-bottom:1.75rem;line-height:1.6;}
+.cta-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:1.75rem;}
+.cta-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#cbd5e1;font-size:12px;padding:4px 12px;border-radius:20px;display:flex;align-items:center;gap:5px;}
+.cta-note{font-size:12px;color:#64748b;margin-top:12px;}
+
+/* FOOTER */
+.post-footer{text-align:center;padding-top:2rem;border-top:1px solid var(--bd);font-size:13px;color:var(--t3);}
+.post-footer a{color:var(--bl);text-decoration:none;}
+.post-footer strong{color:var(--tx);}
+</style>
+</head>
+<body>
+<div class="pw">
+
+  <!-- GRATITUDE HERO -->
+  <div class="gratitude">
+    <div class="grat-inner">
+      <div class="grat-badge"><i class="ti ti-heart" aria-hidden="true"></i> A personal note of thanks</div>
+      <h1 class="grat-h1">JazakAllah Khair for<br><em>joining this journey</em></h1>
+      <p class="grat-sub">Your trust and support mean more than words can express. You didn't just purchase a study resource — you joined a mission to make the world's hardest cybersecurity certification genuinely accessible to every Muslim professional.</p>
+      <div class="grat-sig">
+        <div class="sig-avatar">RS</div>
+        <div class="sig-text">
+          <div class="sig-name">Rashid Siddiqui (Newton)</div>
+          <div class="sig-title">CISSP · CCSP · AZ900 · AI900 · AAISM · CCNP · ITIL — Sydney, Australia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERSONAL STORY -->
+  <div class="sec-badge" style="background:var(--tl-bg);color:var(--tl);border:1px solid var(--tl-bd);"><i class="ti ti-book-2" aria-hidden="true"></i> Why I built this</div>
+  <div class="story">
+    <p class="story-p">I still remember sitting with the Sybex official study guide — all 1,100 pages of it — trying to make sense of Bell-LaPadula's "no write down" rule at 11pm after a full day of work. <strong>CISSP is not just an exam. It is a mindset shift.</strong> And no amount of passive reading could get me there.</p>
+    <p class="story-p">What finally worked was <strong>active recall, visual pattern recognition, and understanding WHY</strong> each concept exists — not just memorising what it is. I kept thinking: there has to be a better way to share this with others who are on the same path.</p>
+    <p class="story-p">This interactive guide is the resource I wish I had when I was studying. Every tab, every expandable card, every colour-coded model — built from my own notes, the official CBK, Sybex 9th Edition, Shon Harris, and years of real-world experience in securities finance, information security, and network engineering.</p>
+    <p class="story-p"><strong>Alhamdulillah</strong> — I passed. And now I want to help you pass too, insha'Allah.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IS THIS -->
+  <div class="sec-badge" style="background:var(--bl-bg);color:var(--bl);border:1px solid var(--bl-bd);"><i class="ti ti-devices" aria-hidden="true"></i> What you have access to</div>
+  <h2 class="sec-h2">An interactive reference — not just another PDF</h2>
+  <p class="sec-lead">This is not a static document. Each domain is a fully interactive web page you can open on any device — phone, tablet, laptop — and engage with actively. Tap to reveal definitions, scan colour-coded models, and track concepts visually, the way your brain actually learns.</p>
+
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="what-icon" style="background:var(--bl-bg);color:var(--bl);"><i class="ti ti-layout-grid" aria-hidden="true"></i></div>
+      <div class="what-title">8 Interactive domain pages</div>
+      <div class="what-desc">One fully interactive HTML page per CISSP domain — covering all 8 domains in the 2024 exam outline with tab-based navigation.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-icon" style="background:var(--tl-bg);color:var(--tl);"><i class="ti ti-hand-click" aria-hidden="true"></i></div>
+      <div class="what-title">Tap-to-reveal concept cards</div>
+      <div class="what-desc">Every definition, formula, and model is hidden behind an expandable card — forcing active recall rather than passive reading.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-icon" style="background:var(--pu-bg);color:var(--pu);"><i class="ti ti-palette" aria-hidden="true"></i></div>
+      <div class="what-title">Colour-coded mental models</div>
+      <div class="what-desc">Bell-LaPadula vs Biba, CIA triad, OSI layers, risk formulas — all visually encoded so patterns stick in memory, not just words.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-icon" style="background:var(--am-bg);color:var(--am);"><i class="ti ti-table" aria-hidden="true"></i></div>
+      <div class="what-title">Comparison tables &amp; matrices</div>
+      <div class="what-desc">Symmetric vs asymmetric, DAC vs MAC vs RBAC, SOC 1 vs 2 vs 3 — side-by-side comparisons for exam-critical distinctions.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-icon" style="background:var(--gn-bg);color:var(--gn);"><i class="ti ti-arrows-right" aria-hidden="true"></i></div>
+      <div class="what-title">Process flows &amp; timelines</div>
+      <div class="what-desc">Kerberos authentication steps, NIST RMF, EDRM, BCP/DRP cycle, PKI certificate lifecycle — mapped as visual flows you can trace.</div>
+    </div>
+    <div class="what-card">
+      <div class="what-icon" style="background:var(--or-bg, #fff7ed);color:#c2410c;"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
+      <div class="what-title">Works on any device</div>
+      <div class="what-desc">Fully responsive — study on your phone during commute, on a tablet at a café, or on a laptop at your desk. No app required.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DOMAINS COVERED -->
+  <div class="sec-badge" style="background:var(--pu-bg);color:var(--pu);border:1px solid var(--pu-bd);"><i class="ti ti-certificate" aria-hidden="true"></i> All 8 domains covered</div>
+  <h2 class="sec-h2">Complete coverage of the CISSP CBK</h2>
+  <p class="sec-lead">Each domain page is built from the ISC² CBK, Sybex 9th Edition, Shon Harris Practice Exams 5th Edition, and real CISSP exam experience. New domains are added as they are completed — you have lifetime access.</p>
+
+  <div class="domain-list">
+    <div class="domain-row">
+      <div class="domain-num" style="background:#1d4ed8;">1</div>
+      <div class="domain-info">
+        <div class="domain-name">Security &amp; Risk Management</div>
+        <div class="domain-topics">Risk formulas · SLE/ALE/ARO · NIST RMF · Controls matrix · Social engineering · Laws &amp; ethics</div>
+      </div>
+      <div class="domain-pct" style="background:var(--bl-bg);color:var(--bl);">15%</div>
+    </div>
+    <div class="domain-row">
+      <div class="domain-num" style="background:#0d9488;">2</div>
+      <div class="domain-info">
+        <div class="domain-name">Asset Security</div>
+        <div class="domain-topics">Data classification · Ownership roles · Lifecycle · Retention · Privacy · GDPR · Sanitisation</div>
+      </div>
+      <div class="domain-pct" style="background:var(--tl-bg);color:var(--tl);">10%</div>
+    </div>
+    <div class="domain-row">
+      <div class="domain-num" style="background:#7c3aed;">3</div>
+      <div class="domain-info">
+        <div class="domain-name">Security Architecture &amp; Engineering</div>
+        <div class="domain-topics">Cryptography · Bell-LaPadula/Biba/Clark-Wilson · TCSEC · Common Criteria · Protection rings · Physical security</div>
+      </div>
+      <div class="domain-pct" style="background:var(--pu-bg);color:var(--pu);">13%</div>
+    </div>
+    <div class="domain-row">
+      <div class="domain-num" style="background:#0369a1;">4</div>
+      <div class="domain-info">
+        <div class="domain-name">Communication &amp; Network Security</div>
+        <div class="domain-topics">OSI model · Protocols · Firewalls · IPSec/VPN · WPA2 · Network attacks · Wireless</div>
+      </div>
+      <div class="domain-pct" style="background:var(--bl-bg);color:var(--bl);">14%</div>
+    </div>
+    <div class="domain-row">
+      <div class="domain-num" style="background:#16a34a;">5</div>
+      <div class="domain-info">
+        <div class="domain-name">Identity &amp; Access Management</div>
+        <div class="domain-topics">IAAA · Biometrics · Kerberos · SSO · SAML/OAuth · DAC/MAC/RBAC · Account lifecycle</div>
+      </div>
+      <div class="domain-pct" style="background:var(--gn-bg);color:var(--gn);">13%</div>
+    </div>
+    <div class="domain-row">
+      <div class="domain-num" style="background:#c2410c;">6</div>
+      <div class="domain-info">
+        <div class="domain-name">Security Assessment &amp; Testing</div>
+        <div class="domain-topics">Vulnerability scanning · Pen testing · STRIDE/DREAD · Code review · Logs · SOC reports</div>
+      </div>
+      <div class="domain-pct" style="background:#fff7ed;color:#c2410c;">12%</div>
+    </div>
+    <div class="domain-row" style="border-style:dashed;">
+      <div class="domain-num" style="background:#64748b;">7</div>
+      <div class="domain-info">
+        <div class="domain-name">Security Operations <span style="font-size:11px;color:var(--tl);font-weight:600;">— Coming soon</span></div>
+        <div class="domain-topics">Incident response · Forensics · BCP/DRP · Change management · Recovery sites</div>
+      </div>
+      <div class="domain-pct" style="background:var(--s2);color:var(--t3);">13%</div>
+    </div>
+    <div class="domain-row" style="border-style:dashed;">
+      <div class="domain-num" style="background:#64748b;">8</div>
+      <div class="domain-info">
+        <div class="domain-name">Software Development Security <span style="font-size:11px;color:var(--tl);font-weight:600;">— Coming soon</span></div>
+        <div class="domain-topics">SDLC · Secure coding · Database security · DevSecOps · OWASP</div>
+      </div>
+      <div class="domain-pct" style="background:var(--s2);color:var(--t3);">10%</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HOW TO USE -->
+  <div class="sec-badge" style="background:var(--gn-bg);color:var(--gn);border:1px solid var(--gn-bd);"><i class="ti ti-route" aria-hidden="true"></i> How to get the most out of this</div>
+  <h2 class="sec-h2">A recommended study approach</h2>
+  <p class="sec-lead">The CISSP exam tests your ability to think like a senior security manager — not just recall definitions. Use this guide as an active review tool alongside your primary study material.</p>
+
+  <div class="steps">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Read your primary material first</div>
+        <div class="step-desc">Work through the Sybex Official Study Guide or another primary resource for each domain. Build your foundational understanding before using this guide.</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Use this guide for active recall</div>
+        <div class="step-desc">Open the domain page. For each card, read the label and try to recall the definition BEFORE clicking to expand. This active retrieval is more powerful than re-reading.</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Spend extra time on comparison tables</div>
+        <div class="step-desc">The exam loves testing you on distinctions — Bell-LaPadula vs Biba, DAC vs MAC, SOC 1 vs 2, SAST vs DAST. The tables in each domain are built specifically for these exam traps.</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Follow the process flows step by step</div>
+        <div class="step-desc">Kerberos, NIST RMF, BCP phases, pen test methodology — cover each step, try to recall the next one from memory, then reveal. This builds the sequential thinking the exam demands.</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Review weak areas repeatedly</div>
+        <div class="step-desc">After practice exams, identify your weakest domains by score. Return to those domain pages and work through every card again. The tab structure makes it easy to drill specific sub-topics.</div>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">One final review the day before</div>
+        <div class="step-desc">Do not try to learn anything new the day before the exam. Use this guide for a light review of key mnemonics, formulas, and critical distinctions. Keep it calm and confident.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHY THIS HELPS -->
+  <div class="sec-badge" style="background:var(--am-bg);color:var(--am);border:1px solid var(--am-bd);"><i class="ti ti-brain" aria-hidden="true"></i> Why this approach works</div>
+  <h2 class="sec-h2">The science behind interactive learning</h2>
+  <p class="sec-lead">The CISSP pass rate sits below 20% — not because the content is impossible, but because most people study passively. Research in cognitive science consistently shows that <strong>active retrieval</strong> and <strong>spaced repetition</strong> are far more effective than re-reading.</p>
+
+  <div class="benefit-grid">
+    <div class="benefit-card" style="background:var(--bl-bg);border-color:var(--bl-bd)">
+      <div class="benefit-icon" style="color:var(--bl);"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+      <div class="benefit-title" style="color:var(--bl);">Active recall</div>
+      <div class="benefit-desc" style="color:#1e40af;">Tapping to reveal forces your brain to attempt retrieval before seeing the answer. This effort — even when you fail — strengthens the memory trace far more than passive reading.</div>
+    </div>
+    <div class="benefit-card" style="background:var(--tl-bg);border-color:var(--tl-bd)">
+      <div class="benefit-icon" style="color:var(--tl);"><i class="ti ti-eye" aria-hidden="true"></i></div>
+      <div class="benefit-title" style="color:var(--tl);">Visual encoding</div>
+      <div class="benefit-desc" style="color:#0f766e;">Colour-coded models, tiered layouts, and comparison tables exploit your brain's superior visual memory. You remember WHERE on the page and WHAT COLOUR — and the content comes with it.</div>
+    </div>
+    <div class="benefit-card" style="background:var(--pu-bg);border-color:var(--pu-bd)">
+      <div class="benefit-icon" style="color:var(--pu);"><i class="ti ti-topology-star" aria-hidden="true"></i></div>
+      <div class="benefit-title" style="color:var(--pu);">Pattern recognition</div>
+      <div class="benefit-desc" style="color:#5b21b6;">The CISSP exam presents scenarios — not definitions. Seeing concepts grouped by theme and relationship helps your brain recognise the pattern in an exam question and apply the right framework.</div>
+    </div>
+    <div class="benefit-card" style="background:var(--am-bg);border-color:var(--am-bd)">
+      <div class="benefit-icon" style="color:var(--am);"><i class="ti ti-clock" aria-hidden="true"></i></div>
+      <div class="benefit-title" style="color:var(--am);">Efficient revision</div>
+      <div class="benefit-desc" style="color:#92400e;">Tab-based navigation means you can jump to the exact sub-topic you need to review in seconds. No scrolling through a 200-page PDF to find the one concept you need to reinforce.</div>
+    </div>
+    <div class="benefit-card" style="background:var(--gn-bg);border-color:var(--gn-bd)">
+      <div class="benefit-icon" style="color:var(--gn);"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
+      <div class="benefit-title" style="color:var(--gn);">Study anywhere</div>
+      <div class="benefit-desc" style="color:#14532d;">Five minutes on a train, ten minutes at lunch, twenty minutes before bed. Micro-study sessions add up faster than you think. The mobile-responsive design makes this possible.</div>
+    </div>
+    <div class="benefit-card" style="background:var(--s2);border-color:var(--bd)">
+      <div class="benefit-icon" style="color:var(--t2);"><i class="ti ti-layers-difference" aria-hidden="true"></i></div>
+      <div class="benefit-title" style="color:var(--tx);">Real-world context</div>
+      <div class="benefit-desc" style="color:var(--t2);">Every explanation is written by a practitioner — not a textbook author. Analogies, examples, and the "why behind the what" that textbooks leave out.</div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-block">
+    <div class="quote-text">"The CISSP exam doesn't ask what Bell-LaPadula is. It asks you what a senior security manager would DO in a scenario where Bell-LaPadula applies. That's the mindset shift — and it changes everything."</div>
+    <div class="quote-attr">— Rashid Siddiqui, CISSP · cisspmadeeasy.com</div>
+  </div>
+
+  <!-- EXAM TIPS -->
+  <div class="tips-box">
+    <div class="tips-title"><i class="ti ti-bulb" aria-hidden="true"></i> Exam mindset tips from a CISSP holder</div>
+    <ul class="tips-list">
+      <li>Your role in every question is CISO or Senior Manager — think policy and risk, not technical fixes.</li>
+      <li>When two answers look right, choose the one that addresses the broader risk or human safety first.</li>
+      <li>Human life is always the #1 priority in any BCP/DRP or physical security scenario.</li>
+      <li>Security should be "baked in, not bolted on" — always choose proactive over reactive options.</li>
+      <li>If in doubt: risk management starts with asset identification and valuation — always return to this.</li>
+      <li>Management approval always comes FIRST — before any test, implementation, or change.</li>
+      <li>The cheapest and most effective security control is almost always people and process, not technology.</li>
+      <li>Read every question twice — the CISSP exam is famous for qualifier words like "BEST", "FIRST", "MOST".</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CLOSING CTA -->
+  <div class="cta-box">
+    <div class="cta-inner">
+      <h2 class="cta-h2">Your certification is within reach — insha'Allah</h2>
+      <p class="cta-sub">Domains 1 through 6 are live now. Domains 7 and 8 are in progress and will be published here as they are completed — at no additional cost. You have lifetime access.</p>
+      <div class="cta-pills">
+        <span class="cta-pill"><i class="ti ti-check" aria-hidden="true"></i> Domain 1 — Live</span>
+        <span class="cta-pill"><i class="ti ti-check" aria-hidden="true"></i> Domain 2 — Live</span>
+        <span class="cta-pill"><i class="ti ti-check" aria-hidden="true"></i> Domain 3 — Live</span>
+        <span class="cta-pill"><i class="ti ti-check" aria-hidden="true"></i> Domain 4 — Live</span>
+        <span class="cta-pill"><i class="ti ti-check" aria-hidden="true"></i> Domain 5 — Live</span>
+        <span class="cta-pill"><i class="ti ti-check" aria-hidden="true"></i> Domain 6 — Live</span>
+        <span class="cta-pill" style="opacity:.6;"><i class="ti ti-clock" aria-hidden="true"></i> Domain 7 — Coming soon</span>
+        <span class="cta-pill" style="opacity:.6;"><i class="ti ti-clock" aria-hidden="true"></i> Domain 8 — Coming soon</span>
+      </div>
+      <p class="cta-note">Questions? Reach out at <a href="mailto:rashidsiddiqui.ec@gmail.com" style="color:#93c5fd;">rashidsiddiqui.ec@gmail.com</a> — I personally respond to every message.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="post-footer">
+    <p>May Allah make your path to certification easy and grant you barakah in your knowledge. <strong>Ameen.</strong></p>
+    <p style="margin-top:8px;">© Rashid Siddiqui · <a href="https://cisspmadeeasy.com">cisspmadeeasy.com</a> · Sydney, Australia</p>
+    <p style="margin-top:6px;font-size:11px;">Content based on ISC² CBK · Sybex Official Study Guide 9E · Shon Harris Practice Exams 5E · Memory Palace by Prashant Mohan</p>
+  </div>
+
+</div>
+</body>
+</html>
